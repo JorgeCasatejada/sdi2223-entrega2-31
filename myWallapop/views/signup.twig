@@ -1,0 +1,55 @@
+{% extends "layout.twig" %}
+
+{% block title %} Registrar usuario {% endblock %}
+
+{% block main_container %}
+  <h2>Registrar usuario</h2>
+  <form class="form-horizontal" method="post" action="/users/signup" >
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Email:</label>
+      <div class="col-sm-10">
+        <input id="email" type="email" class="form-control" name="email"
+            placeholder="email@email.com" required />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="name">Nombre:</label>
+      <div class="col-sm-10">
+        <input id="name" type="text" class="form-control" name="name"
+               placeholder="Pepe" required />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Apellidos:</label>
+      <div class="col-sm-10">
+        <input id="surname" type="text" class="form-control" name="surname"
+               placeholder="González Pérez" required />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="date">Fecha de nacimiento:</label>
+      <div class="col-sm-10">
+        <input id="date" type="date" class="form-control" name="date" min="1900-01-01" max="2022-12-31" required pattern="\d{2}/\d{2}/\d{4}"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="password">Contraseña:</label>
+      <div class="col-sm-10">          
+        <input  id="password" type="password"  class="form-control" name="password"
+        	placeholder="contraseña" required />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="passwordConfirm">Confirmación contraseña:</label>
+      <div class="col-sm-10">
+        <input  id="passwordConfirm" type="password"  class="form-control" name="passwordConfirm"
+                placeholder="confirmación de contraseña" required />
+      </div>
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Registrar</button>
+      </div>
+    </div>
+  </form>
+{% endblock %}
