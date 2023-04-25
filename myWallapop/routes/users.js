@@ -52,19 +52,68 @@ module.exports = function (app, usersRepository) {
 
           //Añadir usuario
           usersRepository.insertUser(user).then(userId => {
-            // req.session.user = user.email;
+            req.session.user = user.email;
             res.redirect("/users/userOffers" +
                 "?message=Nuevo usuario registrado"+
                 "&messageType=alert-info");
           }).catch(error => {
+            req.session.user = null;
             res.redirect("/users/signup" +
                 "?message=Se ha producido un error al registrar el usuario"+
                 "&messageType=alert-danger");
           });
         }
       }).catch(error => {
+        req.session.user = null;
         res.redirect("/users/login" +
             "?message=Se ha producido un error al buscar si había un usuario con ese email"+
+            "&messageType=alert-danger ");
+      });
+    }
+  });
+  app.get('/users/login', function (req, res) {
+    res.render("login.twig");
+  });
+  app.post('/users/login', function (req, res) {
+    //Validar datos
+    let responseFail = "/users/signup?message=";
+    if (req.body.email === null || typeof (req.body.email) == 'undefined' || req.body.email.trim().length == 0)
+      responseFail += "El email proporcionado no es válido\n";
+    if (req.body.password === null || typeof (req.body.password) == 'undefined' || req.body.password.trim().length == 0)
+      responseFail += "La contraseña proporcionada no es válida\n";
+    if (responseFail.length > 25){
+      res.redirect(responseFail + "&messageType=alert-danger");
+    } else {
+      //Recuperar contraseña
+      let securePassword = app.get("crypto").createHmac('sha256', app.get('clave'))
+          .update(req.body.password).digest('hex');
+      let filter = {
+        email: req.body.email,
+        password: securePassword
+      }
+      let options = {};
+      //Buscar usuario
+      usersRepository.findUser(filter, options).then(user => {
+        if (user == null) {
+          req.session.user = null;
+          res.redirect("/users/login" +
+              "?message=Email o password incorrecto" +
+              "&messageType=alert-danger ");
+        } else {
+          req.session.user = user.email;
+          if (user.profile === "Usuario Estándar")
+            res.redirect("/users/userOffers" +
+                "?message=Inicio de sesión correcto" +
+                "&messageType=alert-info ");
+          else
+            res.redirect("/users/users" +
+                "?message=Inicio de sesión correcto" +
+                "&messageType=alert-info ");
+        }
+      }).catch(error => {
+        req.session.user = null;
+        res.redirect("/users/login" +
+            "?message=Se ha producido un error al buscar el usuario" +
             "&messageType=alert-danger ");
       });
     }
