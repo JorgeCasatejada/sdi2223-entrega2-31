@@ -12,6 +12,9 @@ const { MongoClient } = require("mongodb");
 const url = "mongodb://localhost:27017";
 app.set('connectionStrings', url);
 
+const userSessionRouter = require('./routes/userSessionRouter');
+app.use("/users/userOffers",userSessionRouter);
+
 let crypto = require('crypto');
 app.set('clave','abcdefg');
 app.set('crypto',crypto);
@@ -26,6 +29,7 @@ app.use(expressSession({
   resave: true,
   saveUninitialized: true
 }));
+
 
 const usersRepository = require("./repositories/usersRepository.js");
 usersRepository.init(app, MongoClient);

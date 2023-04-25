@@ -1,6 +1,6 @@
 module.exports = function (app, usersRepository) {
   app.get('/users/signup', function (req, res) {
-    res.render("signup.twig");
+    res.render("signup.twig", {user: req.session.user});
   });
   app.post('/users/signup', function (req, res) {
     //Validación en el servidor
@@ -53,9 +53,7 @@ module.exports = function (app, usersRepository) {
           //Añadir usuario
           usersRepository.insertUser(user).then(userId => {
             req.session.user = user.email;
-            res.redirect("/users/userOffers" +
-                "?message=Nuevo usuario registrado"+
-                "&messageType=alert-info");
+            res.render("users/userOffers.twig", {user: req.session.user});
           }).catch(error => {
             req.session.user = null;
             res.redirect("/users/signup" +
@@ -72,7 +70,7 @@ module.exports = function (app, usersRepository) {
     }
   });
   app.get('/users/login', function (req, res) {
-    res.render("login.twig");
+    res.render("login.twig", {user: req.session.user});
   });
   app.post('/users/login', function (req, res) {
     //Validar datos
@@ -101,14 +99,14 @@ module.exports = function (app, usersRepository) {
               "&messageType=alert-danger ");
         } else {
           req.session.user = user.email;
-          if (user.profile === "Usuario Estándar")
-            res.redirect("/users/userOffers" +
-                "?message=Inicio de sesión correcto" +
-                "&messageType=alert-info ");
-          else
+          if (user.profile === "Usuario Estándar"){
+            res.render("users/userOffers.twig", {user: req.session.user});
+          }
+          else{
             res.redirect("/users/users" +
                 "?message=Inicio de sesión correcto" +
                 "&messageType=alert-info ");
+          }
         }
       }).catch(error => {
         req.session.user = null;
@@ -117,6 +115,12 @@ module.exports = function (app, usersRepository) {
             "&messageType=alert-danger ");
       });
     }
+  });
+  app.get('/users/logout', function (req, res) {
+    req.session.user = null;
+    res.redirect("/users/login" +
+        "?message=El usuario se ha desconectado correctamente" +
+        "&messageType=alert-info ");
   });
 }
 function validatePassword(password) {
