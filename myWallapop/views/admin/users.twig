@@ -1,0 +1,39 @@
+{% extends "layout.twig" %}
+{% block title %} Mis publicaciones {% endblock %}
+{% block main_container %}
+  <h2>Listado de usuarios</h2>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Email</th>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th class="col-md-1"></th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for user in response.users %}
+        <tr>
+          <td>{{ user.email }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.surname }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <!-- Paginación mostrar la actual y 2 anteriores y dos siguientes -->
+  <div class="row text-center">
+    <ul class="pagination">
+      {% for page in response.pages %}
+        <li class="page-item" id="pi-{{ page }}">
+          <a class="page-link" href="/users/?page={{ page }}"> {{ page }} </a>
+        </li>
+      {% endfor %}
+      <script>
+        $("#pi-" + "{{ currentPage }}").addClass("active");
+      </script>
+    </ul>
+  </div>
+{% endblock %}

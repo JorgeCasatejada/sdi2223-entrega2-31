@@ -103,9 +103,7 @@ module.exports = function (app, usersRepository) {
             res.render("users/userOffers.twig", {user: req.session.user});
           }
           else{
-            res.redirect("/users/users" +
-                "?message=Inicio de sesión correcto" +
-                "&messageType=alert-info ");
+            res.redirect("/users");
           }
         }
       }).catch(error => {
@@ -126,8 +124,6 @@ module.exports = function (app, usersRepository) {
 function validatePassword(password) {
   if (password === null || typeof (password) == 'undefined' || password.trim().length == 0)
     return "La contraseña proporcionada no es válida, está vacía\n";
-  if (!/[A-Z]/.test(password))
-    return "La contraseña debe contener al menos una letra mayúscula\n";
   if (password.trim().length < 6)
     return "La contraseña debe tener al menos 6 caracteres\n";
   return "";

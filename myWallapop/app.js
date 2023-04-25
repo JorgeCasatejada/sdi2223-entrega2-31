@@ -14,6 +14,7 @@ app.set('connectionStrings', url);
 
 const userSessionRouter = require('./routes/userSessionRouter');
 app.use("/users/userOffers",userSessionRouter);
+app.use("/admin/users",userSessionRouter);
 
 let crypto = require('crypto');
 app.set('clave','abcdefg');
@@ -35,6 +36,7 @@ const usersRepository = require("./repositories/usersRepository.js");
 usersRepository.init(app, MongoClient);
 
 require("./routes/users.js")(app, usersRepository);
+require("./routes/admin.js")(app, usersRepository);
 require("./routes/offers.js")(app);
 
 // view engine setup
@@ -47,7 +49,51 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/', (req, res, next) => {
+  let securePassword = app.get("crypto").createHmac('sha256', app.get('clave'))
+      .update("admin").digest('hex');
+  let admin = {
+    email: "admin@email.com",
+    name: "admin",
+    surname: "admin",
+    birthDate: "1991-06-12",
+    password: securePassword,
+    wallet: 100,
+    profile: "Usuario Administrador"
+  }
+
+  let filter = {
+    email: admin.email
+  }
+  usersRepository.findUser(filter, {}).then(user => {
+    if (user == null) {
+      usersRepository.insertUser(admin);
+      for (let i = 1; i <= 20; i++) {
+        if (i < 10) {
+          i = "0" + i;
+        }
+        let securePassword = app.get("crypto").createHmac('sha256', app.get('clave'))
+            .update("user" + i).digest('hex');
+        let user = {
+          email: "user" + i + "@email.com",
+          name: "user" + i,
+          surname: "user" + i,
+          birthDate: "1991-06-12",
+          password: securePassword,
+          wallet: 100,
+          profile: "Usuario Estándar"
+        }
+        usersRepository.insertUser(user);
+      }
+    }
+  }).catch(error => {
+    req.session.user = null;
+    res.redirect("/users/login" +
+        "?message=Se ha producido un error al buscar el usuario" +
+        "&messageType=alert-danger ");
+  });
+  next();
+}, indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
