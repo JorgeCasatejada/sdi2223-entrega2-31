@@ -39,7 +39,7 @@ usersRepository.init(app, MongoClient);
 const offersRepository = require("./repositories/offersRepository.js");
 offersRepository.init(app, MongoClient);
 
-require("./routes/users.js")(app, usersRepository);
+require("./routes/users.js")(app, usersRepository, offersRepository);
 require("./routes/admin.js")(app, usersRepository);
 require("./routes/offers.js")(app, offersRepository);
 
@@ -54,13 +54,36 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', (req, res, next) => {
+  createUsers();
+  createOffers();
+  next();
+}, indexRouter);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+function createUsers() {
+
   let securePassword = app.get("crypto").createHmac('sha256', app.get('clave'))
       .update("admin").digest('hex');
   let admin = {
     email: "admin@email.com",
     name: "admin",
     surname: "admin",
-    birthDate: "1991-06-12",
+    birthDate: "06-12-1991",
     password: securePassword,
     wallet: 100,
     profile: "Usuario Administrador"
@@ -82,7 +105,7 @@ app.use('/', (req, res, next) => {
           email: "user" + i + "@email.com",
           name: "user" + i,
           surname: "user" + i,
-          birthDate: "1991-06-12",
+          birthDate: i + "-12-1991",
           password: securePassword,
           wallet: 100,
           profile: "Usuario Estándar"
@@ -96,23 +119,6 @@ app.use('/', (req, res, next) => {
         "?message=Se ha producido un error al buscar el usuario" +
         "&messageType=alert-danger ");
   });
-  next();
-}, indexRouter);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+}
 
 module.exports = app;

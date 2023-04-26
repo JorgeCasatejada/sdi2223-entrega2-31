@@ -1,5 +1,5 @@
 {% extends "layout.twig" %}
-{% block title %} Mis publicaciones {% endblock %}
+{% block title %} Usuarios MyWallapop {% endblock %}
 {% block main_container %}
   <h2>Listado de usuarios</h2>
   <div class="table-responsive">
@@ -45,17 +45,3 @@
     </ul>
   </div>
 {% endblock %}
-
-
-{#{% for userRes in response.users %}#}
-{#    {% if userRes.name != "admin"  || userRes.email == user %}#}
-{#      <tr>#}
-{#        <td>{{ userRes.email }}</td>#}
-{#        <td>{{ userRes.name }}</td>#}
-{#        <td>{{ userRes.surname }}</td>#}
-{#        <td>#}
-{#          <input type="checkbox" name="id" value="{{ userRes.email }}">#}
-{#        </td>#}
-{#      </tr>#}
-{#    {% endif %}#}
-{#  {% endfor %}#}

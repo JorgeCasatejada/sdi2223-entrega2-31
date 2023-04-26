@@ -1,4 +1,4 @@
-module.exports = function (app, usersRepository) {
+module.exports = function (app, usersRepository, offersRepository) {
   app.get('/users/signup', function (req, res) {
     res.render("signup.twig", {user: req.session.user});
   });
@@ -125,7 +125,33 @@ module.exports = function (app, usersRepository) {
         "&messageType=alert-info ");
   });
   app.get('/user/offers', function (req, res) {
-    res.render("users/userOffers.twig", {user: req.session.user});
+    let filter = {author: req.session.user};
+    let options = {sort: {email: 1}};
+
+    let page = parseInt(req.query.page); // Es String !!!
+    if (typeof req.query.page === "undefined" || req.query.page === null || req.query.page === "0") {
+      page = 1;
+    }
+    offersRepository.getOffersPg(filter, options, page).then(result => {
+      let lastPage = result.total / 4;
+      if (result.total % 4 > 0) { // Sobran decimales
+        lastPage = lastPage + 1;
+      }
+      let pages = []; // paginas mostrar
+      for (let i = page - 2; i <= page + 2; i++) {
+        if (i > 0 && i <= lastPage) {
+          pages.push(i);
+        }
+      }
+      let response = {
+        offers: result.offers,
+        pages: pages,
+        currentPage: page
+      }
+      res.render("users/userOffers.twig", {user: req.session.user, response: response});
+    }).catch(error => {
+      res.send("Se ha producido un error al listar las canciones " + error)
+    })
   });
 }
 function validatePassword(password) {

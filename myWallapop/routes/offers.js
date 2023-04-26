@@ -17,7 +17,7 @@ module.exports = function (app, offersRepository) {
             let offer = {
                 title: req.body.title,
                 description: req.body.description,
-                date: Date.now(),
+                date: new Date().toLocaleDateString('es-ES'),
                 price: req.body.price,
                 author: req.session.user
             }
@@ -32,4 +32,7 @@ module.exports = function (app, offersRepository) {
             });
         }
     });
+}
+function formatDate(date) {
+    let d = new Date();
 }
