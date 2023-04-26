@@ -136,7 +136,8 @@ function createOffers() {
         description: "Descripción ejemplo " + j*i,
         date: new Date().toLocaleDateString('es-ES'),
         price: j*3,
-        author: "user" + i + "@email.com"
+        author: "user" + i + "@email.com",
+        state: "Disponible"
       }
       offersRepository.insertOffer(offer);
     }

@@ -126,7 +126,7 @@ module.exports = function (app, usersRepository, offersRepository) {
   });
   app.get('/user/offers', function (req, res) {
     let filter = {author: req.session.user};
-    let options = {sort: {email: 1}};
+    let options = {sort: {title: 1}};
 
     let page = parseInt(req.query.page); // Es String !!!
     if (typeof req.query.page === "undefined" || req.query.page === null || req.query.page === "0") {

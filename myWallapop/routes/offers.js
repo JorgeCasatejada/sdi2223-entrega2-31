@@ -1,3 +1,4 @@
+const {ObjectId} = require("mongodb");
 module.exports = function (app, offersRepository) {
     app.get('/offer/add', function (req, res) {
         res.render("offers/addOffer.twig", {user: req.session.user});
@@ -32,7 +33,41 @@ module.exports = function (app, offersRepository) {
             });
         }
     });
-}
-function formatDate(date) {
-    let d = new Date();
+    app.get('/offer/delete/:id', function (req, res){
+        let filter = {_id: ObjectId(req.params.id)};
+        userCanDeleteOffer(req.session.user, ObjectId(req.params.id)).then(canDelete => {
+            if (canDelete) {
+                offersRepository.deleteOffer(filter, {}).then(result => {
+                    if (result === null || result.deletedCount === 0) {
+                        res.send("No se ha podido eliminar la oferta");
+                    } else {
+                        res.redirect("/user/offers" +
+                            "?message=Se ha borrado correctamente la oferta"+
+                            "&messageType=alert-info");
+                    }
+                })
+            } else {
+                res.redirect("/user/offers" +
+                    "?message=No puedes eliminar esta oferta"+
+                    "&messageType=alert-danger");
+            }
+        }).catch(error => {
+            res.send("Se ha producido un error al comprobar si puede borrar la oferta " + error)
+        });
+    });
+
+    async function userCanDeleteOffer(user, offerId) {
+        let filter = {author: user, _id: offerId};
+
+        const offer = await offersRepository.findOffer(filter, {});
+        if (offer == null || typeof (offer) == 'undefined'){
+            return false;
+        } else {
+            if (offer.state == "Disponible"){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 }
