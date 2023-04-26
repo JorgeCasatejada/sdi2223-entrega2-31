@@ -1,5 +1,5 @@
 module.exports = function (app, usersRepository) {
-    app.get("/users", function (req, res) {
+    app.get("/admin/users", function (req, res) {
         let filter = {email: {$ne: 'admin@email.com'}};
 
         let options = {sort: {email: 1}};

@@ -1,18 +1,35 @@
-module.exports = function(app, swig) {
-    app.get("/offers", function(req, res) {
-        res.send("lista de ofertas");
+module.exports = function (app, offersRepository) {
+    app.get('/offer/add', function (req, res) {
+        res.render("offers/addOffer.twig", {user: req.session.user});
     });
-    app.get('/add', function(req, res) {
-        let response = req.query.num1 + req.query.num2;
-        res.send(response);
+    app.post('/offer/add', function (req, res){
+        //Validación en el servidor
+        let responseFail = "/offer/add?message=";
+        if (req.body.title === null || typeof (req.body.title) == 'undefined' || req.body.title.trim().length == 0)
+            responseFail += "El título proporcionado no es válido<br>";
+        if (req.body.description === null || typeof (req.body.description) == 'undefined' || req.body.description.trim().length == 0)
+            responseFail += "La descripción proporcionada no es válida<br>";
+        if (req.body.price === null || typeof (req.body.price) == 'undefined' || req.body.price <= 0)
+            responseFail += "El precio proporcionado no es válido, debe ser positivo<br>";
+        if (responseFail.length > 20){
+            res.redirect(responseFail + "&messageType=alert-danger");
+        } else {
+            let offer = {
+                title: req.body.title,
+                description: req.body.description,
+                date: Date.now(),
+                price: req.body.price,
+                author: req.session.user
+            }
+            offersRepository.insertOffer(offer).then(offerId => {
+                res.redirect("/user/offers" +
+                    "?message=Se ha añadido correctamente la oferta"+
+                    "&messageType=alert-info");
+            }).catch(error => {
+                res.redirect("/offer/add" +
+                    "?message=Se ha producido un error al añadir la oferta"+
+                    "&messageType=alert-danger");
+            });
+        }
     });
-    app.get('/songs/:id', function(req, res) {
-        let response = 'id: ' + req.params.id;
-        res.send(response);
-    });
-    app.get('/songs/:kind/:id', function(req, res) {
-        let response = 'id: ' + req.params.id + '<br>'
-            + 'Tipo de música: ' + req.params.kind;
-        res.send(response);
-    });
-};
+}

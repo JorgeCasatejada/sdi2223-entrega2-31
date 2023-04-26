@@ -8,13 +8,21 @@ let app = express();
 
 let indexRouter = require('./routes/index');
 
+let expressSession = require('express-session');
+app.use(expressSession({
+  secret: 'abcdefg',
+  resave: true,
+  saveUninitialized: true
+}));
+
 const { MongoClient } = require("mongodb");
 const url = "mongodb://localhost:27017";
 app.set('connectionStrings', url);
 
 const userSessionRouter = require('./routes/userSessionRouter');
-app.use("/users/userOffers",userSessionRouter);
 app.use("/admin/users",userSessionRouter);
+app.use("/offer/add",userSessionRouter);
+app.use("/user/offers",userSessionRouter);
 
 let crypto = require('crypto');
 app.set('clave','abcdefg');
@@ -24,20 +32,16 @@ let bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-let expressSession = require('express-session');
-app.use(expressSession({
-  secret: 'abcdefg',
-  resave: true,
-  saveUninitialized: true
-}));
-
 
 const usersRepository = require("./repositories/usersRepository.js");
 usersRepository.init(app, MongoClient);
 
+const offersRepository = require("./repositories/offersRepository.js");
+offersRepository.init(app, MongoClient);
+
 require("./routes/users.js")(app, usersRepository);
 require("./routes/admin.js")(app, usersRepository);
-require("./routes/offers.js")(app);
+require("./routes/offers.js")(app, offersRepository);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

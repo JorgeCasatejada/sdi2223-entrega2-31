@@ -6,21 +6,21 @@ module.exports = function (app, usersRepository) {
     //Validación en el servidor
     let responseFail = "/users/signup?message=";
     if (req.body.email === null || typeof (req.body.email) == 'undefined' || req.body.email.trim().length == 0)
-      responseFail += "El email proporcionado no es válido\n";
+      responseFail += "El email proporcionado no es válido<br>";
     if (req.body.name === null || typeof (req.body.name) == 'undefined' || req.body.name.trim().length == 0)
-      responseFail += "El nombre proporcionado no es válido\n";
+      responseFail += "El nombre proporcionado no es válido<br>";
     if (req.body.date === null || typeof (req.body.surname) == 'undefined' || req.body.surname.trim().length == 0)
-      responseFail += "Los apellidos proporcionados no son válidos\n";
+      responseFail += "Los apellidos proporcionados no son válidos<br>";
     const fechaValida = new Date();
     fechaValida.setFullYear(fechaValida.getFullYear() - 13);
     const fecha = new Date(req.body.date);
     if (req.body.date === null || typeof (req.body.date) == 'undefined' || fecha > fechaValida)
-      responseFail += "La fecha no es válida\n";
+      responseFail += "La fecha no es válida, debe tener más de 13 años<br>";
     const passwordValidationMessage = validatePassword(req.body.password);
     if (passwordValidationMessage !== "")
       responseFail += passwordValidationMessage;
     if (req.body.passwordConfirm !== req.body.password)
-      responseFail += "La confirmación de contraseña es distinta a la contraseña\n";
+      responseFail += "La confirmación de contraseña es distinta a la contraseña<br>";
     if (responseFail.length > 25){
       res.redirect(responseFail + "&messageType=alert-danger");
     } else {
@@ -76,9 +76,9 @@ module.exports = function (app, usersRepository) {
     //Validar datos
     let responseFail = "/users/signup?message=";
     if (req.body.email === null || typeof (req.body.email) == 'undefined' || req.body.email.trim().length == 0)
-      responseFail += "El email proporcionado no es válido\n";
+      responseFail += "El email proporcionado no es válido<br>";
     if (req.body.password === null || typeof (req.body.password) == 'undefined' || req.body.password.trim().length == 0)
-      responseFail += "La contraseña proporcionada no es válida\n";
+      responseFail += "La contraseña proporcionada no es válida<br>";
     if (responseFail.length > 25){
       res.redirect(responseFail + "&messageType=alert-danger");
     } else {
@@ -100,10 +100,14 @@ module.exports = function (app, usersRepository) {
         } else {
           req.session.user = user.email;
           if (user.profile === "Usuario Estándar"){
-            res.render("users/userOffers.twig", {user: req.session.user});
+            res.redirect("/user/offers" +
+                "?message=Inicio de sesión correcto" +
+                "&messageType=alert-info ");
           }
           else{
-            res.redirect("/users");
+            res.redirect("/admin/users" +
+                "?message=Inicio de sesión correcto (Administrador)" +
+                "&messageType=alert-info ");
           }
         }
       }).catch(error => {
@@ -120,11 +124,14 @@ module.exports = function (app, usersRepository) {
         "?message=El usuario se ha desconectado correctamente" +
         "&messageType=alert-info ");
   });
+  app.get('/user/offers', function (req, res) {
+    res.render("users/userOffers.twig", {user: req.session.user});
+  });
 }
 function validatePassword(password) {
   if (password === null || typeof (password) == 'undefined' || password.trim().length == 0)
-    return "La contraseña proporcionada no es válida, está vacía\n";
+    return "La contraseña proporcionada no es válida, está vacía<br>";
   if (password.trim().length < 6)
-    return "La contraseña debe tener al menos 6 caracteres\n";
+    return "La contraseña debe tener al menos 6 caracteres<br>";
   return "";
 }
