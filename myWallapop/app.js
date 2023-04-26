@@ -53,9 +53,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+let datosIns = false;
 app.use('/', (req, res, next) => {
-  createUsers();
-  createOffers();
+  if (!datosIns) {
+    datosIns = true;
+    addToDB();
+  }
   next();
 }, indexRouter);
 
@@ -75,7 +78,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-function createUsers() {
+function addToDB() {
 
   let securePassword = app.get("crypto").createHmac('sha256', app.get('clave'))
       .update("admin").digest('hex');
@@ -83,7 +86,7 @@ function createUsers() {
     email: "admin@email.com",
     name: "admin",
     surname: "admin",
-    birthDate: "06-12-1991",
+    birthDate: "26/12/1991",
     password: securePassword,
     wallet: 100,
     profile: "Usuario Administrador"
@@ -105,13 +108,14 @@ function createUsers() {
           email: "user" + i + "@email.com",
           name: "user" + i,
           surname: "user" + i,
-          birthDate: i + "-12-1991",
+          birthDate: i + "/12/1991",
           password: securePassword,
           wallet: 100,
           profile: "Usuario Estándar"
         }
         usersRepository.insertUser(user);
       }
+      createOffers();
     }
   }).catch(error => {
     req.session.user = null;
@@ -119,6 +123,24 @@ function createUsers() {
         "?message=Se ha producido un error al buscar el usuario" +
         "&messageType=alert-danger ");
   });
+}
+
+function createOffers() {
+  for (let i = 1; i <= 20; i++) {
+    if (i < 10) {
+      i = "0" + i;
+    }
+    for (let j = 1; j <= 10; j++){
+      let offer = {
+        title: "Ejemplo " + j*i,
+        description: "Descripción ejemplo " + j*i,
+        date: new Date().toLocaleDateString('es-ES'),
+        price: j*3,
+        author: "user" + i + "@email.com"
+      }
+      offersRepository.insertOffer(offer);
+    }
+  }
 }
 
 module.exports = app;

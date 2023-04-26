@@ -22,8 +22,10 @@ module.exports = {
             const database = client.db("myWallapop");
             const collectionName = 'offers';
             const offersCollection = database.collection(collectionName);
-            const offersCollectionCount = await offersCollection.count();
-            const cursor = offersCollection.find(filter, options).skip((page - 1) * limit).limit(limit)
+            const collectionFiltered = await offersCollection.find(filter, options);
+            const offersCollectionCount = await collectionFiltered.count();
+            const clonedCursor = collectionFiltered.clone();
+            const cursor = clonedCursor.skip((page - 1) * limit).limit(limit);
             const offers = await cursor.toArray();
             const result = {offers: offers, total: offersCollectionCount};
             return result;
