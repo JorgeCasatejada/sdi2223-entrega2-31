@@ -15,9 +15,8 @@ module.exports = {
         } catch (error) {
             throw (error);
         }
-    }, getOffersPg: async function (filter, options, page) {
+    }, getOffersPg: async function (filter, options, page, limit) {
         try {
-            const limit = 4;
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
             const database = client.db("myWallapop");
             const collectionName = 'offers';

@@ -55,6 +55,39 @@ module.exports = function (app, offersRepository) {
             res.send("Se ha producido un error al comprobar si puede borrar la oferta " + error)
         });
     });
+    app.get('/offers', function (req, res) {
+        let filter = {};
+        let options = {sort: {title: 1}};
+        if(req.query.search != null && typeof(req.query.search) != "undefined" && req.query.search != ""){
+            filter = {"title": {$regex: new RegExp(".*" + req.query.search + ".*", "i")}};
+        }
+
+        let page = parseInt(req.query.page); // Es String !!!
+        if (typeof req.query.page === "undefined" || req.query.page === null || req.query.page === "0") {
+            page = 1;
+        }
+        offersRepository.getOffersPg(filter, options, page, 5).then(result => {
+            let lastPage = result.total / 4;
+            if (result.total % 4 > 0) { // Sobran decimales
+                lastPage = lastPage + 1;
+            }
+            let pages = []; // paginas mostrar
+            for (let i = page - 2; i <= page + 2; i++) {
+                if (i > 0 && i <= lastPage) {
+                    pages.push(i);
+                }
+            }
+            let response = {
+                offers: result.offers,
+                pages: pages,
+                currentPage: page,
+                search: req.query.search
+            }
+            res.render("offers/allOffers.twig", {user: req.session.user, response: response});
+        }).catch(error => {
+            res.send("Se ha producido un error al listar las canciones " + error)
+        })
+    });
 
     async function userCanDeleteOffer(user, offerId) {
         let filter = {author: user, _id: offerId};

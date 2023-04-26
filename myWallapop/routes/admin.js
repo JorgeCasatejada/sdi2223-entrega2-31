@@ -39,7 +39,7 @@ module.exports = function (app, usersRepository) {
                     if (result === null || result.deletedCount === 0) {
                         res.send("No se ha podido eliminar el registro");
                     } else {
-                        res.redirect("/users");
+                        res.redirect("/admin/users");
                     }
                 }).catch(error => {
                     res.send("Se ha producido un error al intentar eliminar el usuario: " + error)

@@ -132,7 +132,7 @@ module.exports = function (app, usersRepository, offersRepository) {
     if (typeof req.query.page === "undefined" || req.query.page === null || req.query.page === "0") {
       page = 1;
     }
-    offersRepository.getOffersPg(filter, options, page).then(result => {
+    offersRepository.getOffersPg(filter, options, page, 4).then(result => {
       let lastPage = result.total / 4;
       if (result.total % 4 > 0) { // Sobran decimales
         lastPage = lastPage + 1;
