@@ -1,7 +1,8 @@
 module.exports = function (app, usersRepository) {
     app.get("/users", function (req, res) {
-        let filter = {};
-        let options = {};
+        let filter = {email: {$ne: 'admin@email.com'}};
+
+        let options = {sort: {email: 1}};
 
         let page = parseInt(req.query.page); // Es String !!!
         if (typeof req.query.page === "undefined" || req.query.page === null || req.query.page === "0") {
@@ -30,7 +31,7 @@ module.exports = function (app, usersRepository) {
     });
     app.post('/admin/delete', function (req, res){
         if (typeof (req.body.id) == 'string'){
-            if (req.body.id == "admin@email.com"){
+            if (req.body.id == "admin@email.com" || req.session.user == req.body.id){
                 res.send("No se ha podido eliminar el registro");
             } else {
                 let filter = {email: req.body.id}
@@ -45,7 +46,7 @@ module.exports = function (app, usersRepository) {
                 });
             }
         } else {
-            if (req.body.id.includes("admin@email.com")){
+            if (req.body.id.includes("admin@email.com") || req.body.id.includes(req.session.user)){
                 res.send("No se ha podido eliminar el registro");
             } else {
                 let filter = {email: { $in: req.body.id}}

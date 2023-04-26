@@ -5,31 +5,30 @@
   <div class="table-responsive">
     <form action="/admin/delete" method="post">
       <input type="submit" id="deleteButton" class="btn btn-danger" value="Eliminar"/>
-    <table class="table table-hover">
-      <thead>
-      <tr>
-        <th>Email</th>
-        <th>Nombre</th>
-        <th>Apellidos</th>
-        <th class="col-md-1"></th>
-      </tr>
-      </thead>
-      <tbody>
-      {% for user in response.users %}
+      <table class="table table-hover">
+        <thead>
         <tr>
-          <td>{{ user.email }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.surname }}</td><td>
-          {% if user.name != "admin" %}
-            <td>
-              <input type="checkbox" name="id" value="{{ user.email }}">
-            </td>
-          {% endif %}
-          </td>
+          <th>Email</th>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th class="col-md-1"></th>
         </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+        {% for userRes in response.users %}
+          {% if userRes.name != "admin" %}
+          <tr>
+            <td>{{ userRes.email }}</td>
+            <td>{{ userRes.name }}</td>
+            <td>{{ userRes.surname }}</td>
+            <td>
+              <input type="checkbox" name="id" value="{{ userRes.email }}">
+            </td>
+          </tr>
+          {% endif %}
+        {% endfor %}
+        </tbody>
+      </table>
     </form>
   </div>
   <!-- Paginación mostrar la actual y 2 anteriores y dos siguientes -->
@@ -46,3 +45,17 @@
     </ul>
   </div>
 {% endblock %}
+
+
+{#{% for userRes in response.users %}#}
+{#    {% if userRes.name != "admin"  || userRes.email == user %}#}
+{#      <tr>#}
+{#        <td>{{ userRes.email }}</td>#}
+{#        <td>{{ userRes.name }}</td>#}
+{#        <td>{{ userRes.surname }}</td>#}
+{#        <td>#}
+{#          <input type="checkbox" name="id" value="{{ userRes.email }}">#}
+{#        </td>#}
+{#      </tr>#}
+{#    {% endif %}#}
+{#  {% endfor %}#}
