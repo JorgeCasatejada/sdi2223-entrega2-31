@@ -69,5 +69,20 @@ module.exports = {
         } catch (error) {
             throw (error);
         }
+    }, decrementWallet: async function (email, amount) {
+        try {
+            const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
+            const database = client.db("myWallapop");
+            const collectionName = 'users';
+            const usersCollection = database.collection(collectionName);
+            // restarle a la cartera la cantidad especificada
+            const result = await usersCollection.updateOne(
+                { email: email },
+                { $inc: { wallet: -amount } }
+            );
+            return result;
+        } catch (error) {
+            throw error;
+        }
     }
 };

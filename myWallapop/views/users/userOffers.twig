@@ -11,6 +11,7 @@
           <th>Fecha de publicación</th>
           <th>Cantidad (€)</th>
           <th class="col-md-1"></th>
+          <th class="col-md-1"></th>
         </tr>
         </thead>
         <tbody>
@@ -23,6 +24,13 @@
               <td>
                 <a href="/offer/delete/{{ offer._id }}">Eliminar Oferta</a> <br>
               </td>
+              {% if not offer.highlighted  %}
+                <td>
+                  <a href="/offer/highlight/{{ offer._id }}">Destacar Oferta</a> <br>
+                </td>
+              {% else %}
+                <td>Destacada</td>
+              {% endif %}
             </tr>
         {% endfor %}
         </tbody>

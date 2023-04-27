@@ -129,10 +129,16 @@ module.exports = function (app, usersRepository, offersRepository) {
     }
   });
   app.get('/users/logout', function (req, res) {
+    const prevUser = req.session.user != null ? true : false;
     req.session.user = null;
-    res.redirect("/users/login" +
-        "?message=El usuario se ha desconectado correctamente" +
-        "&messageType=alert-info ");
+    // si habia un usuario logueado, imprimir el mensaje, si no no (acceder a traves de url)
+    if (prevUser)
+      res.redirect("/users/login" +
+          "?message=El usuario se ha desconectado correctamente" +
+          "&messageType=alert-info ");
+    else{
+      res.redirect("/users/login")
+    }
   });
   app.get('/user/offers', function (req, res) {
     let filter = {author: req.session.user};
