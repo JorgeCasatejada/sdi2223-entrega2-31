@@ -1,4 +1,7 @@
 module.exports = function (app, usersRepository, offersRepository) {
+  app.get('/myWallapop', function (req, res) {
+    res.render("index.twig");
+  });
   app.get('/users/signup', function (req, res) {
     res.render("signup.twig", {user: req.session.user});
   });
@@ -40,11 +43,14 @@ module.exports = function (app, usersRepository, offersRepository) {
               .update(req.body.password).digest('hex');
 
           //Crear usuario
+          let date = new Date(req.body.date);
+          let formattedDate = date.toLocaleDateString('es-ES');
+
           let user = {
             email: req.body.email,
             name: req.body.name,
             surname: req.body.surname,
-            birthDate: req.body.date,
+            birthDate: formattedDate,
             password: securePassword,
             wallet: 100,
             profile: "Usuario Estándar"
@@ -53,7 +59,11 @@ module.exports = function (app, usersRepository, offersRepository) {
           //Añadir usuario
           usersRepository.insertUser(user).then(userId => {
             req.session.user = user.email;
-            res.render("users/userOffers.twig", {user: req.session.user});
+            getWallet(req.session.user).then(wallet => {
+              res.render("users/userOffers.twig", {user: req.session.user, wallet: wallet});
+            }).catch(error => {
+              res.send("Se ha producido un error al obtener el monedero " + error)
+            })
           }).catch(error => {
             req.session.user = null;
             res.redirect("/users/signup" +
@@ -148,11 +158,25 @@ module.exports = function (app, usersRepository, offersRepository) {
         pages: pages,
         currentPage: page
       }
-      res.render("users/userOffers.twig", {user: req.session.user, response: response});
+      getWallet(req.session.user).then(wallet => {
+        res.render("users/userOffers.twig", {user: req.session.user, response: response, wallet: wallet});
+      }).catch(error => {
+        res.send("Se ha producido un error al obtener el monedero " + error)
+      })
     }).catch(error => {
       res.send("Se ha producido un error al listar las canciones " + error)
     })
   });
+
+  async function getWallet(user) {
+    try {
+      let filter = {email: user};
+      let userObj = await usersRepository.findUser(filter, {});
+      return userObj.wallet;
+    } catch(error) {
+      res.send("Se ha producido un error al obtener el monedero " + error);
+    }
+  }
 }
 function validatePassword(password) {
   if (password === null || typeof (password) == 'undefined' || password.trim().length == 0)
@@ -161,3 +185,5 @@ function validatePassword(password) {
     return "La contraseña debe tener al menos 6 caracteres<br>";
   return "";
 }
+
+

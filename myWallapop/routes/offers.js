@@ -1,7 +1,11 @@
 const {ObjectId} = require("mongodb");
-module.exports = function (app, offersRepository) {
+module.exports = function (app, usersRepository, offersRepository) {
     app.get('/offer/add', function (req, res) {
-        res.render("offers/addOffer.twig", {user: req.session.user});
+        getWallet(req.session.user).then(wallet => {
+            res.render("offers/addOffer.twig", {user: req.session.user, wallet: wallet});
+        }).catch(error => {
+            res.send("Se ha producido un error al obtener el monedero " + error)
+        })
     });
     app.post('/offer/add', function (req, res){
         //Validación en el servidor
@@ -83,11 +87,25 @@ module.exports = function (app, offersRepository) {
                 currentPage: page,
                 search: req.query.search
             }
-            res.render("offers/allOffers.twig", {user: req.session.user, response: response});
+            getWallet(req.session.user).then(wallet => {
+                res.render("offers/allOffers.twig", {user: req.session.user, response: response, wallet: wallet});
+            }).catch(error => {
+                res.send("Se ha producido un error al obtener el monedero " + error)
+            })
         }).catch(error => {
             res.send("Se ha producido un error al listar las canciones " + error)
         })
     });
+
+    async function getWallet(user) {
+        try {
+            let filter = {email: user};
+            let userObj = await usersRepository.findUser(filter, {});
+            return userObj.wallet;
+        } catch(error) {
+            res.send("Se ha producido un error al obtener el monedero " + error);
+        }
+    }
 
     async function userCanDeleteOffer(user, offerId) {
         let filter = {author: user, _id: offerId};

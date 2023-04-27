@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>{% block title %} uoMusic {% endblock %}</title>
+  <title>{% block title %} myWallapop {% endblock %}</title>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -24,15 +24,27 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li id="myshop" class="active"><a href="/shop">Tienda</a></li>
-        <li id="mypublication"><a href="/publications">Publicaciones</a></li>
-        <li id="mybuy"><a href="/purchases">Compras</a></li>
+      {% if user != null  %}
+        {% if user == "admin@email.com" %}
+          <li id="usuarios" ><a href="/admin/users">Usuarios</a></li>
+        {% else %}
+          <li id="misOfertas" class="nav-item"><a href="/user/offers" class="nav-link">Mis ofertas</a></li>
+          <li id="ofertas" class="nav-item"><a href="/offers" class="nav-link">Todas las ofertas</a></li>
+          <li id="add" class="nav-item"><a href="/offer/add" class="nav-link">Añadir oferta</a></li>
+
+        {% endif %}
+      {% endif %}
+
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if user == null  %}
           <li><a href="/users/signup"><span class="glyphicon glyphicon-user"></span> Registrate</a></li>
           <li><a href="/users/login"><span class="glyphicon glyphicon-log-in"></span> Identifícate</a></li>
         {% else %}
+            <li class="list-group-item">Usuario: {{ user }}</li>
+          {% if wallet != null  %}
+              <li class="list-group-item">Monedero: {{ wallet }} €</li>
+          {% endif %}
           <li><a href="/users/logout"><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
         {% endif %}
       </ul>

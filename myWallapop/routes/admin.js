@@ -30,36 +30,44 @@ module.exports = function (app, usersRepository) {
         })
     });
     app.post('/admin/delete', function (req, res){
-        if (typeof (req.body.id) == 'string'){
-            if (req.body.id == "admin@email.com" || req.session.user == req.body.id){
-                res.send("No se ha podido eliminar el registro");
+        if (req.session.user == "admin@email.com") {
+            if (typeof (req.body.id) == 'string'){
+                if (req.body.id == "admin@email.com"){
+                    res.send("No se ha podido eliminar el registro de administrador");
+                } else {
+                    let filter = {email: req.body.id}
+                    usersRepository.deleteUser(filter, {}).then(result => {
+                        if (result === null || result.deletedCount === 0) {
+                            res.send("No se ha podido eliminar el registro");
+                        } else {
+                            res.redirect("/admin/users" +
+                                "?message=Se ha borrado correctamente el usuario"+
+                                "&messageType=alert-info");
+                        }
+                    }).catch(error => {
+                        res.send("Se ha producido un error al intentar eliminar el usuario: " + error)
+                    });
+                }
             } else {
-                let filter = {email: req.body.id}
-                usersRepository.deleteUser(filter, {}).then(result => {
-                    if (result === null || result.deletedCount === 0) {
-                        res.send("No se ha podido eliminar el registro");
-                    } else {
-                        res.redirect("/admin/users");
-                    }
-                }).catch(error => {
-                    res.send("Se ha producido un error al intentar eliminar el usuario: " + error)
-                });
+                if (req.body.id.includes("admin@email.com")){
+                    res.send("No se ha podido eliminar el registro");
+                } else {
+                    let filter = {email: { $in: req.body.id}}
+                    usersRepository.deleteUsers(filter, {}).then(result => {
+                        if (result === null || result.deletedCount === 0) {
+                            res.send("No se ha podido eliminar el registro");
+                        } else {
+                            res.redirect("/admin/users" +
+                                "?message=Se han borrado correctamente los usuarios"+
+                                "&messageType=alert-info");
+                        }
+                    }).catch(error => {
+                        res.send("Se ha producido un error al intentar eliminar los usuarios: " + error)
+                    });
+                }
             }
         } else {
-            if (req.body.id.includes("admin@email.com") || req.body.id.includes(req.session.user)){
-                res.send("No se ha podido eliminar el registro");
-            } else {
-                let filter = {email: { $in: req.body.id}}
-                usersRepository.deleteUsers(filter, {}).then(result => {
-                    if (result === null || result.deletedCount === 0) {
-                        res.send("No se ha podido eliminar el registro");
-                    } else {
-                        res.redirect("/users");
-                    }
-                }).catch(error => {
-                    res.send("Se ha producido un error al intentar eliminar el usuario: " + error)
-                });
-            }
+            res.send("Usted no puede eliminar usuarios");
         }
     });
 }

@@ -45,8 +45,11 @@ module.exports = {
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
             const database = client.db("myWallapop");
-            const collectionName = 'users';
-            const usersCollection = database.collection(collectionName);
+            const collectionNameUsers = 'users';
+            const usersCollection = database.collection(collectionNameUsers);
+            const collectionNameOffers = 'offers';
+            const offersCollection = database.collection(collectionNameOffers);
+            await offersCollection.deleteMany({author: filter.email}, {});
             const result = await usersCollection.deleteOne(filter, options);
             return result;
         } catch (error) {
@@ -56,8 +59,11 @@ module.exports = {
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
             const database = client.db("myWallapop");
-            const collectionName = 'users';
-            const usersCollection = database.collection(collectionName);
+            const collectionNameUsers = 'users';
+            const usersCollection = database.collection(collectionNameUsers);
+            const collectionNameOffers = 'offers';
+            const offersCollection = database.collection(collectionNameOffers);
+            await offersCollection.deleteMany({author: filter.email}, {});
             const result = await usersCollection.deleteMany(filter, options);
             return result;
         } catch (error) {

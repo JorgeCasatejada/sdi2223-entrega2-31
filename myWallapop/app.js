@@ -19,10 +19,12 @@ const { MongoClient } = require("mongodb");
 const url = "mongodb://localhost:27017";
 app.set('connectionStrings', url);
 
+const adminSessionRouter = require('./routes/adminSessionRouter');
+app.use("/admin",adminSessionRouter);
 const userSessionRouter = require('./routes/userSessionRouter');
-app.use("/admin/users",userSessionRouter);
 app.use("/offer/add",userSessionRouter);
 app.use("/user/offers",userSessionRouter);
+app.use("/offers",userSessionRouter);
 
 let crypto = require('crypto');
 app.set('clave','abcdefg');
@@ -41,7 +43,7 @@ offersRepository.init(app, MongoClient);
 
 require("./routes/users.js")(app, usersRepository, offersRepository);
 require("./routes/admin.js")(app, usersRepository);
-require("./routes/offers.js")(app, offersRepository);
+require("./routes/offers.js")(app, usersRepository, offersRepository);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -53,14 +55,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-let datosIns = false;
-app.use('/', (req, res, next) => {
-  if (!datosIns) {
-    datosIns = true;
-    addToDB();
-  }
-  next();
-}, indexRouter);
+addToDB();
+
+app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
