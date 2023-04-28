@@ -32,7 +32,11 @@
         <tbody>
         {% for offer in response.offers %}
             <tr>
-              <td>{{ offer.title }}</td>
+                {% if offer.highlighted %}
+                    <td>{{ offer.title }}</td>
+                {% else %}
+                    <td>{{ offer.title }}</td>
+                {% endif %}
               <td>{{ offer.description }}</td>
               <td>{{ offer.date }}</td>
               <td>{{ offer.price }}</td>
@@ -43,6 +47,7 @@
               {% else %}
                 <td>Vendido</td>
               {% endif %}
+
             </tr>
         {% endfor %}
         </tbody>

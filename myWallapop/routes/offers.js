@@ -173,7 +173,7 @@ module.exports = function (app, usersRepository, offersRepository) {
 
     app.get('/offers', function (req, res) {
         let filter = {};
-        let options = {sort: {title: 1}};
+        let options = {sort: {highlighted: -1}};
         if(req.query.search != null && typeof(req.query.search) != "undefined" && req.query.search != ""){
             filter = {"title": {$regex: new RegExp(".*" + req.query.search + ".*", "i")}};
         }

@@ -1,7 +1,7 @@
 {% extends "layout.twig" %}
 {% block title %} Mis ofertas {% endblock %}
 {% block main_container %}
-  <h2>Listado de ofertas</h2>
+  <h2>Mis ofertas</h2>
   <div class="table-responsive">
       <table class="table table-hover">
         <thead>
@@ -29,7 +29,7 @@
                   <a href="/offer/highlight/{{ offer._id }}">Destacar Oferta</a> <br>
                 </td>
               {% else %}
-                <td>Destacada</td>
+                <td bgcolor="#ffd700">Destacada</td>
               {% endif %}
             </tr>
         {% endfor %}
