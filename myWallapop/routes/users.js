@@ -129,14 +129,22 @@ module.exports = function (app, usersRepository, offersRepository) {
     }
   });
   app.get('/users/logout', function (req, res) {
+    const prevUser = req.session.user != null ? true : false;
     req.session.user = null;
-    res.redirect("/users/login" +
-        "?message=El usuario se ha desconectado correctamente" +
-        "&messageType=alert-info ");
+    // si habia un usuario logueado, imprimir el mensaje, si no no (acceder a traves de url)
+    if (prevUser)
+      res.redirect("/users/login" +
+          "?message=El usuario se ha desconectado correctamente" +
+          "&messageType=alert-info ");
+    else{
+      res.redirect("/users/login")
+    }
   });
   app.get('/user/offers', function (req, res) {
+    let highlighted = [];
+    let notHighlighted = [];
     let filter = {author: req.session.user};
-    let options = {sort: {title: 1}};
+    let options = {sort: {highlighted: -1}};
 
     let page = parseInt(req.query.page); // Es String !!!
     if (typeof req.query.page === "undefined" || req.query.page === null || req.query.page === "0") {
@@ -153,6 +161,12 @@ module.exports = function (app, usersRepository, offersRepository) {
           pages.push(i);
         }
       }
+      // for (let offer of result.offers){
+      //   if (offer.highlighted)
+      //     highlighted.push(offer);
+      //   else
+      //     notHighlighted.push(offer);
+      // }
       let response = {
         offers: result.offers,
         pages: pages,

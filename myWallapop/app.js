@@ -23,8 +23,13 @@ const adminSessionRouter = require('./routes/adminSessionRouter');
 app.use("/admin",adminSessionRouter);
 const userSessionRouter = require('./routes/userSessionRouter');
 app.use("/offer/add",userSessionRouter);
+app.use("/offer/delete",userSessionRouter);
+app.use("/offer/highlight",userSessionRouter);
 app.use("/user/offers",userSessionRouter);
+app.use("/user/logout",userSessionRouter);
 app.use("/offers",userSessionRouter);
+app.use("/offers/buy", userSessionRouter);
+app.use("/offers/purchases", userSessionRouter);
 
 let crypto = require('crypto');
 app.set('clave','abcdefg');
@@ -134,7 +139,8 @@ function createOffers() {
         date: new Date().toLocaleDateString('es-ES'),
         price: j*3,
         author: "user" + i + "@email.com",
-        state: "Disponible"
+        sold: false,
+        highlighted: false
       }
       offersRepository.insertOffer(offer);
     }
