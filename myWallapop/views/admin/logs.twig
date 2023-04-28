@@ -1,0 +1,40 @@
+{% extends "layout.twig" %}
+{% block title %} Buscar ofertas {% endblock %}
+{% block main_container %}
+  <h2>Listado de logs</h2>
+    <form method="GET" action="/admin/logs" class="form-inline mb-3">
+        <label for="tipo" class="mr-2">Filtrar por tipo:</label>
+        <select name="tipo" id="tipo" class="form-control mr-2">
+            <option value="">Todos</option>
+            <option value="PET">PET</option>
+            <option value="LOGIN-ERR">LOGIN-ERR</option>
+            <option value="LOGIN-EX">LOGIN-EX</option>
+            <option value="LOGOUT">LOGOUT</option>
+            <option value="ALTA">ALTA</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </form>
+    <form method="POST" action="/admin/logs/delete" class="mb-3">
+        <button type="submit" class="btn btn-danger">Borrar todos</button>
+    </form>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Fecha</th>
+          <th>Texto</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for log in logs %}
+            <tr>
+              <td>{{ log.type }}</td>
+              <td>{{ log.readableDate }}</td>
+              <td>{{ log.text }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+  </div>
+{% endblock %}

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "express-session": "^1.17.3",
+    "log4js": "^6.9.1",
     "mongodb": "^4.1.4"
   }
 }

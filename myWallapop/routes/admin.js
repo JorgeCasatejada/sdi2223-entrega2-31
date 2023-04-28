@@ -1,5 +1,12 @@
-module.exports = function (app, usersRepository) {
-    app.get("/admin/users", function (req, res) {
+module.exports = function (app, usersRepository, logRepository, logger) {
+    app.get("/admin/users", async function (req, res) {
+        // ----- LOG -------
+        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+        logger.info(logText);
+        await logRepository.insertLog('PET', logText);
+        // -----------------
+
         let filter = {email: {$ne: 'admin@email.com'}};
 
         let options = {sort: {email: 1}};
@@ -29,7 +36,15 @@ module.exports = function (app, usersRepository) {
             res.send("Se ha producido un error al listar las canciones " + error)
         })
     });
-    app.post('/admin/delete', function (req, res){
+
+    app.post('/admin/delete', async function (req, res){
+        // ----- LOG -------
+        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+        logger.info(logText);
+        await logRepository.insertLog('PET', logText);
+        // -----------------
+
         if (req.session.user == "admin@email.com") {
             if (typeof (req.body.id) == 'string'){
                 if (req.body.id == "admin@email.com"){
@@ -70,4 +85,45 @@ module.exports = function (app, usersRepository) {
             res.send("Usted no puede eliminar usuarios");
         }
     });
+
+    app.get('/admin/logs', async function (req, res) {
+        // ----- LOG -------
+        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+        logger.info(logText);
+        await logRepository.insertLog('PET', logText);
+        // -----------------
+        let filter = {};
+        let options = {sort: { timestamp: -1}};
+        const typeToFilter = req.query.tipo;
+        if (typeToFilter && typeToFilter !== '') {
+            filter.type = typeToFilter;
+        }
+        logRepository.getLogs(filter, options).then(logs => {
+            res.render("admin/logs.twig", {user: req.session.user, logs: logs});
+        }).catch(error => {
+            res.send("Se ha producido un error al listar los logs " + error)
+        });
+    })
+
+    app.post('/admin/logs/delete', async function(req, res) {
+        // ----- LOG -------
+        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+        logger.info(logText);
+        await logRepository.insertLog('PET', logText);
+        // -----------------
+        const result = await logRepository.deleteLogs({},{});
+        if (result.deletedCount > 0){
+            res.redirect("/admin/logs" +
+                "?message=Se han borrado correctamente los logs"+
+                "&messageType=alert-info");
+        }
+        else{
+            res.redirect("/admin/logs" +
+                "?message=No se han podido borrar los logs"+
+                "&messageType=alert-info");
+        }
+    })
+
 }

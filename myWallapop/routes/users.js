@@ -1,10 +1,24 @@
-module.exports = function (app, usersRepository, offersRepository) {
-  app.get('/myWallapop', function (req, res) {
+module.exports = function (app, usersRepository, offersRepository, logRepository, logger) {
+  app.get('/myWallapop', async function (req, res) {
+    // ----- LOG -------
+    const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+    logger.info(logText);
+    await logRepository.insertLog('PET', logText);
+    // -----------------
     res.render("index.twig");
   });
-  app.get('/users/signup', function (req, res) {
+
+  app.get('/users/signup', async function (req, res) {
+    // ----- LOG -------
+    const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+    logger.info(logText);
+    await logRepository.insertLog('PET', logText);
+    // -----------------
     res.render("signup.twig", {user: req.session.user});
   });
+
   app.post('/users/signup', function (req, res) {
     //Validación en el servidor
     let responseFail = "/users/signup?message=";
@@ -59,7 +73,13 @@ module.exports = function (app, usersRepository, offersRepository) {
           //Añadir usuario
           usersRepository.insertUser(user).then(userId => {
             req.session.user = user.email;
-            getWallet(req.session.user).then(wallet => {
+            getWallet(req.session.user).then(async wallet => {
+              // -------- LOG ------------
+              const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+              logger.info(logText);
+              await logRepository.insertLog('ALTA', req.session.user);
+              // -----------------
               res.render("users/userOffers.twig", {user: req.session.user, wallet: wallet});
             }).catch(error => {
               res.send("Se ha producido un error al obtener el monedero " + error)
@@ -79,9 +99,19 @@ module.exports = function (app, usersRepository, offersRepository) {
       });
     }
   });
-  app.get('/users/login', function (req, res) {
+
+
+  app.get('/users/login', async function (req, res) {
+    // ----- LOG -------
+    const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+    logger.info(logText);
+    await logRepository.insertLog('PET', logText);
+    // -----------------
     res.render("login.twig", {user: req.session.user});
   });
+
+
   app.post('/users/login', function (req, res) {
     //Validar datos
     let responseFail = "/users/signup?message=";
@@ -101,8 +131,14 @@ module.exports = function (app, usersRepository, offersRepository) {
       }
       let options = {};
       //Buscar usuario
-      usersRepository.findUser(filter, options).then(user => {
+      usersRepository.findUser(filter, options).then(async user => {
         if (user == null) {
+          // -------- LOG ------------
+          const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+          logger.info(logText);
+          await logRepository.insertLog('LOGIN-ERR', req.body.email);
+          // -----------------
           req.session.user = null;
           res.redirect("/users/login" +
               "?message=Email o password incorrecto" +
@@ -113,14 +149,32 @@ module.exports = function (app, usersRepository, offersRepository) {
             res.redirect("/user/offers" +
                 "?message=Inicio de sesión correcto" +
                 "&messageType=alert-info ");
+            // -------- LOG ------------
+            const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+            logger.info(logText);
+            await logRepository.insertLog('LOGIN-EX', req.session.user);
+            // -----------------
           }
           else{
             res.redirect("/admin/users" +
                 "?message=Inicio de sesión correcto (Administrador)" +
                 "&messageType=alert-info ");
+            // -------- LOG ------------
+            const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+            logger.info(logText);
+            await logRepository.insertLog('LOGIN-EX', req.session.user);
+            // -----------------
           }
         }
-      }).catch(error => {
+      }).catch(async error => {
+        // -------- LOG ------------
+        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+        logger.info(logText);
+        await logRepository.insertLog('LOGIN-ERR', req.body.email);
+        // -----------------
         req.session.user = null;
         res.redirect("/users/login" +
             "?message=Se ha producido un error al buscar el usuario" +
@@ -128,21 +182,37 @@ module.exports = function (app, usersRepository, offersRepository) {
       });
     }
   });
-  app.get('/users/logout', function (req, res) {
+
+
+  app.get('/users/logout', async function (req, res) {
     const prevUser = req.session.user != null ? true : false;
+    // -------- LOG ------------
+    const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+    logger.info(logText);
+    await logRepository.insertLog('LOGOUT', req.session.user);
+    // -----------------
+
     req.session.user = null;
     // si habia un usuario logueado, imprimir el mensaje, si no no (acceder a traves de url)
-    if (prevUser)
+    if (prevUser){
       res.redirect("/users/login" +
           "?message=El usuario se ha desconectado correctamente" +
           "&messageType=alert-info ");
+    }
     else{
       res.redirect("/users/login")
     }
   });
-  app.get('/user/offers', function (req, res) {
-    let highlighted = [];
-    let notHighlighted = [];
+
+
+  app.get('/user/offers', async function (req, res) {
+    // ----- LOG -------
+    const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+    logger.info(logText);
+    await logRepository.insertLog('PET', logText);
+    // -----------------
     let filter = {author: req.session.user};
     let options = {sort: {highlighted: -1}};
 
@@ -161,12 +231,6 @@ module.exports = function (app, usersRepository, offersRepository) {
           pages.push(i);
         }
       }
-      // for (let offer of result.offers){
-      //   if (offer.highlighted)
-      //     highlighted.push(offer);
-      //   else
-      //     notHighlighted.push(offer);
-      // }
       let response = {
         offers: result.offers,
         pages: pages,
