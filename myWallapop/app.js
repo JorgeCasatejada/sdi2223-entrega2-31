@@ -19,6 +19,7 @@ const { MongoClient } = require("mongodb");
 const url = "mongodb://localhost:27017";
 app.set('connectionStrings', url);
 
+
 const adminSessionRouter = require('./routes/adminSessionRouter');
 app.use("/admin",adminSessionRouter);
 const userSessionRouter = require('./routes/userSessionRouter');
@@ -35,6 +36,19 @@ let crypto = require('crypto');
 app.set('clave','abcdefg');
 app.set('crypto',crypto);
 
+const log4js = require('log4js');
+log4js.configure(
+    {
+      appenders: {
+        console: { type: 'console' },
+        file: { type: 'file', filename: 'logs/log.log' }
+      },
+      categories: {
+        default: { appenders: ['console', 'file'], level: 'info' }
+      }
+    }
+);
+
 let bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -46,9 +60,13 @@ usersRepository.init(app, MongoClient);
 const offersRepository = require("./repositories/offersRepository.js");
 offersRepository.init(app, MongoClient);
 
-require("./routes/users.js")(app, usersRepository, offersRepository);
-require("./routes/admin.js")(app, usersRepository);
-require("./routes/offers.js")(app, usersRepository, offersRepository);
+const logRepository = require("./repositories/logRepository.js");
+logRepository.init(app, MongoClient, log4js.getLogger("logRepository"));
+
+require("./routes/users.js")(app, usersRepository, offersRepository, logRepository, log4js.getLogger("users"));
+require("./routes/admin.js")(app, usersRepository, logRepository, log4js.getLogger("admin"));
+require("./routes/offers.js")(app, usersRepository, offersRepository, logRepository, log4js.getLogger("offers"));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

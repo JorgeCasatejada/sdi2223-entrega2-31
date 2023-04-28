@@ -1,13 +1,28 @@
 const {ObjectId} = require("mongodb");
-module.exports = function (app, usersRepository, offersRepository) {
-    app.get('/offer/add', function (req, res) {
+
+module.exports = function (app, usersRepository, offersRepository, logRepository, logger) {
+    app.get('/offer/add', async function (req, res) {
+        // -------- LOG ------------
+        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+        logger.info(logText);
+        await logRepository.insertLog('PET', logText);
+        // -----------------
         getWallet(req.session.user).then(wallet => {
             res.render("offers/addOffer.twig", {user: req.session.user, wallet: wallet});
         }).catch(error => {
             res.send("Se ha producido un error al obtener el monedero " + error)
         })
     });
-    app.post('/offer/add', function (req, res){
+
+
+    app.post('/offer/add', async function (req, res){
+        // -------- LOG ------------
+        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+        logger.info(logText);
+        await logRepository.insertLog('PET', logText);
+        // -----------------
         //Validación en el servidor
         let responseFail = "/offer/add?message=";
         let hasMoney = false;
@@ -53,7 +68,16 @@ module.exports = function (app, usersRepository, offersRepository) {
                 "&messageType=alert-danger");
         });
     });
-    app.get('/offer/delete/:id', function (req, res){
+
+
+    app.get('/offer/delete/:id', async function (req, res){
+        // -------- LOG ------------
+        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+        logger.info(logText);
+        await logRepository.insertLog('PET', logText);
+        // -----------------
+
         let filter = {_id: ObjectId(req.params.id)};
         userCanDeleteOffer(req.session.user, ObjectId(req.params.id)).then(canDelete => {
             if (canDelete) {
@@ -77,6 +101,13 @@ module.exports = function (app, usersRepository, offersRepository) {
     });
 
     app.get('/offer/highlight/:id', async function (req, res) {
+        // -------- LOG ------------
+        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+        logger.info(logText);
+        await logRepository.insertLog('PET', logText);
+        // -----------------
+
         let user = req.session.user;
         const wallet = await getWallet(user);
         let filter = {_id: ObjectId(req.params.id)};
@@ -98,6 +129,13 @@ module.exports = function (app, usersRepository, offersRepository) {
     });
     // COMPRA DE OFERTAS
     app.get('/offer/buy/:id', async function (req, res) {
+        // -------- LOG ------------
+        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+        logger.info(logText);
+        await logRepository.insertLog('PET', logText);
+        // -----------------
+
         try {
             let filter = {_id: ObjectId(req.params.id)};
             const offer = await offersRepository.findOffer(filter, {});
@@ -138,9 +176,15 @@ module.exports = function (app, usersRepository, offersRepository) {
         }
     });
 
-    app.get('/offers/purchases', function (req, res) {
-        let filter = {user: req.session.user};
+    app.get('/offers/purchases', async function (req, res) {
+        // -------- LOG ------------
+        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+        logger.info(logText);
+        await logRepository.insertLog('PET', logText);
+        // -----------------
 
+        let filter = {user: req.session.user};
         let page = parseInt(req.query.page); // Es String !!!
         if (typeof req.query.page === "undefined" || req.query.page === null || req.query.page === "0") {
             page = 1;
@@ -171,7 +215,15 @@ module.exports = function (app, usersRepository, offersRepository) {
         });
     })
 
-    app.get('/offers', function (req, res) {
+    app.get('/offers', async function (req, res) {
+        // -------- LOG ------------
+        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+        logger.info(logText);
+        await logRepository.insertLog('PET', logText);
+        // -----------------
+
+
         let filter = {};
         let options = {sort: {highlighted: -1}};
         if(req.query.search != null && typeof(req.query.search) != "undefined" && req.query.search != ""){
