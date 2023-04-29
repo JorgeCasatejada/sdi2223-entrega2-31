@@ -21,7 +21,8 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
         const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
                   Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
         logger.info(logText);
-        await logRepository.insertLog('PET', logText);
+        await logRepository.insertLog('PET', logText);// peticion
+        await logRepository.insertLog('ALTA', logText);// alta de oferta
         // -----------------
         //Validación en el servidor
         let responseFail = "/offer/add?message=";
