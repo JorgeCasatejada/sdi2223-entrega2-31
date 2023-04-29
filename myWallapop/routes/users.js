@@ -19,7 +19,13 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
     res.render("signup.twig", {user: req.session.user});
   });
 
-  app.post('/users/signup', function (req, res) {
+  app.post('/users/signup', async function (req, res) {
+    // -------- LOG ------------
+    const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+    logger.info(logText);
+    await logRepository.insertLog('PET', logText);
+    // ---------------------
     //Validación en el servidor
     let responseFail = "/users/signup?message=";
     if (req.body.email === null || typeof (req.body.email) == 'undefined' || req.body.email.trim().length == 0)
@@ -78,7 +84,7 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
               const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
                   Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
               logger.info(logText);
-              await logRepository.insertLog('ALTA', req.session.user);
+              await logRepository.insertLog('ALTA', logText);
               // -----------------
               res.render("users/userOffers.twig", {user: req.session.user, wallet: wallet});
             }).catch(error => {
