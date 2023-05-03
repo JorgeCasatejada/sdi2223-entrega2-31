@@ -1,3 +1,6 @@
+const {userSignUpValidator, userLoginValidator} = require("./validators/userValidator");
+const {validationResult} = require("express-validator");
+
 module.exports = function (app, usersRepository, offersRepository, logRepository, logger) {
   app.get('/myWallapop', async function (req, res) {
     // ----- LOG -------
@@ -19,90 +22,66 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
     res.render("signup.twig", {user: req.session.user});
   });
 
-  app.post('/users/signup', async function (req, res) {
+  app.post('/users/signup', userSignUpValidator, async function (req, res) {
     // -------- LOG ------------
     const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
                   Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
     logger.info(logText);
     await logRepository.insertLog('PET', logText);
     // ---------------------
-    //Validación en el servidor
-    let responseFail = "/users/signup?message=";
-    if (req.body.email === null || typeof (req.body.email) == 'undefined' || req.body.email.trim().length == 0)
-      responseFail += "El email proporcionado no es válido<br>";
-    if (req.body.name === null || typeof (req.body.name) == 'undefined' || req.body.name.trim().length == 0)
-      responseFail += "El nombre proporcionado no es válido<br>";
-    if (req.body.date === null || typeof (req.body.surname) == 'undefined' || req.body.surname.trim().length == 0)
-      responseFail += "Los apellidos proporcionados no son válidos<br>";
-    const fechaValida = new Date();
-    fechaValida.setFullYear(fechaValida.getFullYear() - 13);
-    const fecha = new Date(req.body.date);
-    if (req.body.date === null || typeof (req.body.date) == 'undefined' || fecha > fechaValida)
-      responseFail += "La fecha no es válida, debe tener más de 13 años<br>";
-    const passwordValidationMessage = validatePassword(req.body.password);
-    if (passwordValidationMessage !== "")
-      responseFail += passwordValidationMessage;
-    if (req.body.passwordConfirm !== req.body.password)
-      responseFail += "La confirmación de contraseña es distinta a la contraseña<br>";
-    if (responseFail.length > 25){
-      res.redirect(responseFail + "&messageType=alert-danger");
-    } else {
-      //Comprobar que no existe el usuario ya
-      let filter = {
-        email: req.body.email
-      }
-      let options = {};
-      usersRepository.findUser(filter, options).then(user => {
-        if (user != null){
-          res.redirect("/users/signup" +
-              "?message=Este correo ya está en uso"+
-              "&messageType=alert-danger ");
-        } else {
-          //Cifrar contraseña
-          let securePassword = app.get("crypto").createHmac('sha256', app.get('clave'))
-              .update(req.body.password).digest('hex');
+    try {
+      //Validación en el servidor
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        let responseFail = "/users/signup?message=";
+        errors.array().forEach(error => responseFail += error.msg + "<br>")
+        res.redirect(responseFail + "&messageType=alert-danger");
+      } else {
+        //Cifrar contraseña
+        let securePassword = app.get("crypto").createHmac('sha256', app.get('clave'))
+            .update(req.body.password).digest('hex');
 
-          //Crear usuario
-          let date = new Date(req.body.date);
-          let formattedDate = date.toLocaleDateString('es-ES');
+        //Crear usuario
+        let date = new Date(req.body.date);
+        let formattedDate = date.toLocaleDateString('es-ES');
 
-          let user = {
-            email: req.body.email,
-            name: req.body.name,
-            surname: req.body.surname,
-            birthDate: formattedDate,
-            password: securePassword,
-            wallet: 100,
-            profile: "Usuario Estándar"
-          }
-
-          //Añadir usuario
-          usersRepository.insertUser(user).then(userId => {
-            req.session.user = user.email;
-            getWallet(req.session.user).then(async wallet => {
-              // -------- LOG ------------
-              const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
-                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
-              logger.info(logText);
-              await logRepository.insertLog('ALTA', logText);
-              // -----------------
-              res.render("users/userOffers.twig", {user: req.session.user, wallet: wallet});
-            }).catch(error => {
-              res.send("Se ha producido un error al obtener el monedero " + error)
-            })
-          }).catch(error => {
-            req.session.user = null;
-            res.redirect("/users/signup" +
-                "?message=Se ha producido un error al registrar el usuario"+
-                "&messageType=alert-danger");
-          });
+        let user = {
+          email: req.body.email,
+          name: req.body.name,
+          surname: req.body.surname,
+          birthDate: formattedDate,
+          password: securePassword,
+          wallet: 100,
+          profile: "Usuario Estándar"
         }
-      }).catch(error => {
-        req.session.user = null;
-        res.redirect("/users/login" +
-            "?message=Se ha producido un error al buscar si había un usuario con ese email"+
-            "&messageType=alert-danger ");
-      });
+
+        //Añadir usuario
+        usersRepository.insertUser(user).then(userId => {
+          req.session.user = user.email;
+          getWallet(req.session.user).then(async wallet => {
+            // -------- LOG ------------
+            const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+            logger.info(logText);
+            await logRepository.insertLog('ALTA', logText);
+            // -----------------
+            res.render("users/userOffers.twig", { user: req.session.user, wallet: wallet });
+          }).catch(error => {
+            res.send("Se ha producido un error al obtener el monedero " + error)
+          })
+        }).catch(error => {
+          req.session.user = null;
+          res.redirect("/users/signup" +
+              "?message=Se ha producido un error al registrar el usuario" +
+              "&messageType=alert-danger");
+        });
+
+      }
+    } catch (e) {
+      req.session.user = null;
+      res.redirect("/users/signup" +
+          "?message=Se ha producido un error al comprobar las credenciales" +
+          "&messageType=alert-danger ");
     }
   });
 
@@ -118,27 +97,62 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
   });
 
 
-  app.post('/users/login', function (req, res) {
-    //Validar datos
-    let responseFail = "/users/signup?message=";
-    if (req.body.email === null || typeof (req.body.email) == 'undefined' || req.body.email.trim().length == 0)
-      responseFail += "El email proporcionado no es válido<br>";
-    if (req.body.password === null || typeof (req.body.password) == 'undefined' || req.body.password.trim().length == 0)
-      responseFail += "La contraseña proporcionada no es válida<br>";
-    if (responseFail.length > 25){
-      res.redirect(responseFail + "&messageType=alert-danger");
-    } else {
-      //Recuperar contraseña
-      let securePassword = app.get("crypto").createHmac('sha256', app.get('clave'))
-          .update(req.body.password).digest('hex');
-      let filter = {
-        email: req.body.email,
-        password: securePassword
-      }
-      let options = {};
-      //Buscar usuario
-      usersRepository.findUser(filter, options).then(async user => {
-        if (user == null) {
+  app.post('/users/login', userLoginValidator, function (req, res) {
+    try {
+      //Validación en el servidor
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        let responseFail = "/users/login?message=";
+        errors.array().forEach(error => responseFail += error.msg + "<br>")
+        res.redirect(responseFail + "&messageType=alert-danger");
+      } else {
+        //Recuperar contraseña
+        let securePassword = app.get("crypto").createHmac('sha256', app.get('clave'))
+            .update(req.body.password).digest('hex');
+        let filter = {
+          email: req.body.email,
+          password: securePassword
+        }
+        let options = {};
+        //Buscar usuario
+        usersRepository.findUser(filter, options).then(async user => {
+          if (user == null) {
+            // -------- LOG ------------
+            const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+            logger.info(logText);
+            await logRepository.insertLog('LOGIN-ERR', req.body.email);
+            // -----------------
+            req.session.user = null;
+            res.redirect("/users/login" +
+                "?message=Email o password incorrecto" +
+                "&messageType=alert-danger ");
+          } else {
+            req.session.user = user.email;
+            if (user.profile === "Usuario Estándar"){
+              res.redirect("/user/offers" +
+                  "?message=Inicio de sesión correcto" +
+                  "&messageType=alert-info ");
+              // -------- LOG ------------
+              const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+              logger.info(logText);
+              await logRepository.insertLog('LOGIN-EX', req.session.user);
+              // -----------------
+            }
+            else{
+              res.redirect("/admin/users" +
+                  "?message=Inicio de sesión correcto (Administrador)" +
+                  "&messageType=alert-info ");
+              // -------- LOG ------------
+              const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+              logger.info(logText);
+              await logRepository.insertLog('LOGIN-EX', req.session.user);
+              // -----------------
+            }
+          }
+        }).catch(async error => {
           // -------- LOG ------------
           const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
                   Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
@@ -147,45 +161,15 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
           // -----------------
           req.session.user = null;
           res.redirect("/users/login" +
-              "?message=Email o password incorrecto" +
+              "?message=Se ha producido un error al buscar el usuario" +
               "&messageType=alert-danger ");
-        } else {
-          req.session.user = user.email;
-          if (user.profile === "Usuario Estándar"){
-            res.redirect("/user/offers" +
-                "?message=Inicio de sesión correcto" +
-                "&messageType=alert-info ");
-            // -------- LOG ------------
-            const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
-                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
-            logger.info(logText);
-            await logRepository.insertLog('LOGIN-EX', req.session.user);
-            // -----------------
-          }
-          else{
-            res.redirect("/admin/users" +
-                "?message=Inicio de sesión correcto (Administrador)" +
-                "&messageType=alert-info ");
-            // -------- LOG ------------
-            const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
-                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
-            logger.info(logText);
-            await logRepository.insertLog('LOGIN-EX', req.session.user);
-            // -----------------
-          }
-        }
-      }).catch(async error => {
-        // -------- LOG ------------
-        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
-                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
-        logger.info(logText);
-        await logRepository.insertLog('LOGIN-ERR', req.body.email);
-        // -----------------
-        req.session.user = null;
-        res.redirect("/users/login" +
-            "?message=Se ha producido un error al buscar el usuario" +
-            "&messageType=alert-danger ");
-      });
+        });
+      }
+    } catch (e) {
+      req.session.user = null;
+      res.redirect("/users/login" +
+          "?message=Se ha producido un error al comprobar las credenciales" +
+          "&messageType=alert-danger ");
     }
   });
 
@@ -261,13 +245,6 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
       res.send("Se ha producido un error al obtener el monedero " + error);
     }
   }
-}
-function validatePassword(password) {
-  if (password === null || typeof (password) == 'undefined' || password.trim().length == 0)
-    return "La contraseña proporcionada no es válida, está vacía<br>";
-  if (password.trim().length < 6)
-    return "La contraseña debe tener al menos 6 caracteres<br>";
-  return "";
 }
 
 

@@ -1,4 +1,6 @@
 const {ObjectId} = require("mongodb");
+const {offerAddValidator} = require("./validators/offerValidator");
+const {validationResult} = require("express-validator");
 
 module.exports = function (app, usersRepository, offersRepository, logRepository, logger) {
     app.get('/offer/add', async function (req, res) {
@@ -16,7 +18,7 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
     });
 
 
-    app.post('/offer/add', async function (req, res){
+    app.post('/offer/add', offerAddValidator, async function (req, res){
         // -------- LOG ------------
         const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
                   Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
@@ -24,50 +26,53 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
         await logRepository.insertLog('PET', logText);// peticion
         await logRepository.insertLog('ALTA', logText);// alta de oferta
         // -----------------
-        //Validación en el servidor
-        let responseFail = "/offer/add?message=";
-        let hasMoney = false;
-        getWallet(req.session.user).then(wallet => {
-            hasMoney = wallet >= 20 ? true : false;
-            if (req.body.title === null || typeof (req.body.title) == 'undefined' || req.body.title.trim().length == 0)
-                responseFail += "El título proporcionado no es válido<br>";
-            if (req.body.description === null || typeof (req.body.description) == 'undefined' || req.body.description.trim().length == 0)
-                responseFail += "La descripción proporcionada no es válida<br>";
-            if (req.body.price === null || typeof (req.body.price) == 'undefined' || req.body.price <= 0)
-                responseFail += "El precio proporcionado no es válido, debe ser positivo<br>";
-            if (req.body.highlight=='on' && !hasMoney)
-                responseFail += "Saldo insuficiente para destacar la oferta<br>";
-            if (responseFail.length > 20){
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                let responseFail = "/offer/add?message=";
+                errors.array().forEach(error => responseFail += error.msg + "<br>")
                 res.redirect(responseFail + "&messageType=alert-danger");
             } else {
-                let isHighlighted = req.body.highlight == 'on'? true : false;
-                let offer = {
-                    title: req.body.title,
-                    description: req.body.description,
-                    date: new Date().toLocaleDateString('es-ES'),
-                    price: req.body.price,
-                    author: req.session.user,
-                    sold: false,
-                    highlighted:isHighlighted
-                }
-                offersRepository.insertOffer(offer).then(offerId => {
-                    usersRepository.decrementWallet(req.session.user, 20).then(result => {
-                        if (result.modifiedCount > 0)
-                            res.redirect("/user/offers" +
-                                "?message=Se ha añadido correctamente la oferta"+
-                                "&messageType=alert-info");
-                    })
+                let hasMoney = false;
+                getWallet(req.session.user).then(wallet => {
+                    hasMoney = wallet >= 20 ? true : false;
+                    if (req.body.highlight=='on' && !hasMoney)
+                        res.redirect("/offer/add?message=Saldo insuficiente para destacar la oferta&messageType=alert-danger");
+                    else {
+                        let isHighlighted = req.body.highlight == 'on'? true : false;
+                        let offer = {
+                            title: req.body.title,
+                            description: req.body.description,
+                            date: new Date().toLocaleDateString('es-ES'),
+                            price: req.body.price,
+                            author: req.session.user,
+                            sold: false,
+                            highlighted:isHighlighted
+                        }
+                        offersRepository.insertOffer(offer).then(offerId => {
+                            usersRepository.decrementWallet(req.session.user, 20).then(result => {
+                                if (result.modifiedCount > 0)
+                                    res.redirect("/user/offers" +
+                                        "?message=Se ha añadido correctamente la oferta"+
+                                        "&messageType=alert-info");
+                            })
+                        }).catch(error => {
+                            res.redirect("/offer/add" +
+                                "?message=Se ha producido un error al añadir la oferta"+
+                                "&messageType=alert-danger");
+                        });
+                    }
                 }).catch(error => {
                     res.redirect("/offer/add" +
                         "?message=Se ha producido un error al añadir la oferta"+
                         "&messageType=alert-danger");
                 });
             }
-        }).catch(error => {
+        } catch (e) {
             res.redirect("/offer/add" +
-                "?message=Se ha producido un error al añadir la oferta"+
+                "?message=Se ha producido un error al validar la oferta a añadir"+
                 "&messageType=alert-danger");
-        });
+        }
     });
 
 
