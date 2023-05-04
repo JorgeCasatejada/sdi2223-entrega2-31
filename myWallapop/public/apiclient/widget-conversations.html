@@ -1,0 +1,78 @@
+<div id="widget-songs" >
+
+  <button class="btn" onclick="loadConversations()" >Actualizar</button>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th><a onclick="sortByTitle()">Título</a></th>
+      <th>Email del vendedor</th>
+      <th class="col-md-1"></th>
+    </tr>
+    </thead>
+    <tbody id="conversationsTableBody"></tbody>
+  </table>
+</div>
+
+<script>
+  window.history.pushState("", "", "/apiclient/client.html?w=conversations");
+
+  var conversations;
+  var selectedConversationId;
+
+  function loadConversations() {
+    $.ajax({
+      url: URLbase + "/conversations",
+      type: "GET",
+      data: {
+        email: Cookies.get('token')
+      },
+      dataType: 'json',
+      headers: {"token": token},
+      success: function (response) {
+        conversations = response.conversations;
+        updateConversationsTable(conversations);
+      },
+      error: function (error) {
+        $("#main-container").load("widget-login.html");
+      }
+    });
+  }
+  function updateConversationsTable(conversations) {
+    $("#conversationsTableBody").empty(); // Vaciar la tabla
+    for (i = 0; i < conversations.length; i++) {
+      $("#conversationsTableBody").append(
+              "<tr id=" + conversations[i]._id + ">" +
+              "<td>" + conversations[i].title + "</td>" +
+              "<td>" + conversations[i].sellerEmail + "</td>" +
+              "<td>" +
+              "<a onclick=conversationView('" + conversations[i]._id + "')>Reanudar</a><br>" +
+              "<a onclick=conversationDelete('" + conversations[i]._id + "')>Eliminar</a>" +
+              "</td>" +
+              "</tr>");
+    }
+  }
+
+  function conversationDelete(_id) {
+    $.ajax({
+      url: URLbase + "/conversation/" + _id,
+      type: "DELETE",
+      data: {},
+      dataType: 'json',
+      headers: {"token": token},
+      success: function (response) {
+        $("#" + _id).remove(); // eliminar el <tr> de la canción
+      },
+      error: function (error) {
+        $("#main-container").load("widget-login.html");
+      }
+    });
+  }
+
+  function conversationView(_id) {
+    selectedConversationId = _id;
+    $("#main-container").load("widget-chat.html");
+  }
+
+  loadConversations();
+
+</script>

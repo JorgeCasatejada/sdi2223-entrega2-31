@@ -1,0 +1,85 @@
+<div class="container title">
+    <h1 id="offer" style="border-bottom: solid 2px black;"></h1>
+    <h2 id="seller" style="text-align: center;"></h2>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="chat">
+                <div class="messageblock">
+                    <ul id="messageList">
+                        <!-- Agrega más mensajes aquí (class="message sent) (class="message received") -->
+                    </ul>
+                </div>
+                <div class="newMessageForm">
+                    <div class="messageForm">
+                        <input id="newMessage" type="text" name="message" placeholder="Mensaje..." />
+                        <button type="button" id="botonEnviar" class="btn btn-primary" onclick="sendMessage()" >Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function loadMessages() {
+        $.ajax({
+            url: URLbase + "/conversation/",
+            type: "GET",
+            data: {},
+            dataType: 'json',
+            headers: {
+                "token": token
+            },
+            success: function (response) {
+                showMessages(response.messages);
+            },
+            error: function (error) {
+                $("#main-container").load("widget-login.html");
+            }
+        });
+    }
+
+    function showMessages(messages) {
+        $("#conversationsTableBody").empty(); // Vaciar la tabla
+        for (i = 0; i < messages.length; i++) {
+            if(true) {
+                $("#messageList").append(
+                    '<li class="message sent" >'+ messages[i].text + '</li>'
+                );
+            } else {
+                $("#messageList").append(
+                    '<li class="message received" >'+ messages[i].text + '</li>'
+                );
+            }
+        }
+    }
+
+    function sendMessage() {
+        $.ajax({
+            url: URLbase + "/message",
+            type: "GET",
+            data: {
+                text: $("#newMessage").val(),
+                user: "user"
+            },
+            dataType: 'json',
+            headers: {"token": token},
+            success: function (response) {
+                conversations = response.conversations;
+                updateConversationsTable(conversations);
+            },
+            error: function (error) {
+                $("#main-container").load("widget-login.html");
+            }
+        });
+    }
+
+    $(document).ready(loadMessages());
+
+    loadMessages();
+
+</script>
