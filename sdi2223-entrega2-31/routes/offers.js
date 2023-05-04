@@ -231,7 +231,7 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
 
 
         let filter = {};
-        let options = {sort: {highlighted: -1}};
+        let options = {sort: {highlighted: -1, title: 1}};
         if(req.query.search != null && typeof(req.query.search) != "undefined" && req.query.search != ""){
             filter = {"title": {$regex: new RegExp(".*" + req.query.search + ".*", "i")}};
         }

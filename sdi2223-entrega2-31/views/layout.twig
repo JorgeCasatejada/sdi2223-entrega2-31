@@ -40,8 +40,8 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if user == null  %}
-          <li><a href="/users/signup"><span class="glyphicon glyphicon-user"></span> Registrate</a></li>
-          <li><a href="/users/login"><span class="glyphicon glyphicon-log-in"></span> Identifícate</a></li>
+          <li><a href="/users/signup"><span class="glyphicon glyphicon-user"></span>Registrate</a></li>
+          <li><a href="/users/login"><span class="glyphicon glyphicon-log-in"></span>Identifícate</a></li>
         {% else %}
             <li class="list-group-item">Usuario: {{ user }}</li>
           {% if wallet != null  %}

@@ -204,7 +204,7 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
     await logRepository.insertLog('PET', logText);
     // -----------------
     let filter = {author: req.session.user};
-    let options = {sort: {highlighted: -1}};
+    let options = {sort: {highlighted: -1, title: 1}};
 
     let page = parseInt(req.query.page); // Es String !!!
     if (typeof req.query.page === "undefined" || req.query.page === null || req.query.page === "0") {
