@@ -21,6 +21,7 @@
   window.history.pushState("", "", "/apiclient/client.html?w=offers");
   var selectedConversationId;
   var offers;
+  var createConver;
 
   function loadOffers() {
     $.ajax({
@@ -57,8 +58,30 @@
     }
   }
   function conversation(_id) {
-    selectedConversationId = _id;
-    $("#main-container").load("widget-chat.html");
+    $.ajax({
+      url: URLbase + "/conversation/" + _id,
+      type: "GET",
+      data: {
+        email: Cookies.get('token')
+      },
+      dataType: 'json',
+      headers: {"token": token},
+      success: function (response) {
+        selectedConversationId = response._id;
+
+        if(selectedConversationId == "undefined" || selectedConversationId === null) {
+          createConver = true;
+        } else {
+          createConver = false;
+        }
+
+        $("#main-container").load("widget-chat.html");
+
+      },
+      error: function (error) {
+        $("#main-container").load("widget-login.html");
+      }
+    });
   }
 
   $('#filter-by-name').on('input',function(e){

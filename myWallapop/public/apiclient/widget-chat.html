@@ -27,7 +27,7 @@
 
     function loadMessages() {
         $.ajax({
-            url: URLbase + "/conversation/",
+            url: URLbase + "/conversation/" + selectedConversationId,
             type: "GET",
             data: {},
             dataType: 'json',
@@ -59,10 +59,34 @@
     }
 
     function sendMessage() {
+        if(createConver == true) {
+            createConver = false;
+            $.ajax({
+                url: URLbase + "/conversation",
+                type: "POST",
+                data: {
+                    product: "product",
+                    user: "user"
+                },
+                dataType: 'json',
+                headers: {"token": token},
+                success: function (response) {
+                    addMessage();
+                },
+                error: function (error) {
+                    $("#main-container").load("widget-login.html");
+                }
+            });
+        } else {
+            addMessage();
+        }
+    }
+    function addMessage() {
         $.ajax({
             url: URLbase + "/message",
-            type: "GET",
+            type: "POST",
             data: {
+                conversationId: selectedConversationId,
                 text: $("#newMessage").val(),
                 user: "user"
             },
