@@ -396,3 +396,19 @@
                   Parámetros ruta: {} Parámetros consulta: {"message":"Saldo insuficiente para destacar la oferta","messageType":"alert-danger"}
 [2023-05-03T17:31:09.956] [INFO] offers - [Wed May 03 2023 17:31:09 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add?message=Saldo%20insuficiente%20para%20destacar%20la%20oferta&messageType=alert-danger - Método HTTP: GET -  
                   Parámetros ruta: {} Parámetros consulta: {"message":"Saldo insuficiente para destacar la oferta","messageType":"alert-danger"}
+[2023-05-03T18:38:12.207] [INFO] users - [Wed May 03 2023 18:38:12 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-03T18:38:14.341] [INFO] users - [Wed May 03 2023 18:38:14 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-03T18:38:17.712] [INFO] users - [Wed May 03 2023 18:38:17 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-03T18:38:17.726] [INFO] users - [Wed May 03 2023 18:38:17 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-03T18:38:19.570] [INFO] offers - [Wed May 03 2023 18:38:19 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-03T18:38:20.199] [INFO] offers - [Wed May 03 2023 18:38:20 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers/purchases - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-03T18:38:20.682] [INFO] offers - [Wed May 03 2023 18:38:20 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-03T18:38:21.928] [INFO] users - [Wed May 03 2023 18:38:21 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
