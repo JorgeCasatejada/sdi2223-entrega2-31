@@ -15,6 +15,17 @@ module.exports = {
         } catch (error) {
             throw (error);
         }
+    }, getOffers: async function (filter, options) {
+        try {
+            const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
+            const database = client.db("myWallapop");
+            const collectionName = 'offers';
+            const offersCollection = database.collection(collectionName);
+            const offers = await offersCollection.find(filter, options).toArray();
+            return offers;
+        } catch (error) {
+            throw (error);
+        }
     }, getOffersPg: async function (filter, options, page, limit) {
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));

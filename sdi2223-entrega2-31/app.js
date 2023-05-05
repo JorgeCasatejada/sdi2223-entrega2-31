@@ -6,6 +6,9 @@ let logger = require('morgan');
 
 let app = express();
 
+let jwt = require('jsonwebtoken');
+app.set('jwt',jwt);
+
 let indexRouter = require('./routes/index');
 
 let expressSession = require('express-session');
@@ -18,7 +21,6 @@ app.use(expressSession({
 const { MongoClient } = require("mongodb");
 const url = "mongodb://localhost:27017";
 app.set('connectionStrings', url);
-
 
 const adminSessionRouter = require('./routes/adminSessionRouter');
 app.use("/admin",adminSessionRouter);
@@ -53,6 +55,8 @@ let bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const userTokenRouter = require('./routes/userTokenRouter');
+app.use("/api/v1.0/offers/", userTokenRouter);
 
 const usersRepository = require("./repositories/usersRepository.js");
 usersRepository.init(app, MongoClient);
@@ -66,7 +70,7 @@ logRepository.init(app, MongoClient, log4js.getLogger("logRepository"));
 require("./routes/users.js")(app, usersRepository, offersRepository, logRepository, log4js.getLogger("users"));
 require("./routes/admin.js")(app, usersRepository, logRepository, log4js.getLogger("admin"));
 require("./routes/offers.js")(app, usersRepository, offersRepository, logRepository, log4js.getLogger("offers"));
-
+require("./routes/api/APIv1.0.js")(app, usersRepository, offersRepository);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
