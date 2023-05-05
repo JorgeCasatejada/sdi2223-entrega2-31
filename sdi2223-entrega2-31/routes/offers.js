@@ -83,27 +83,31 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
         logger.info(logText);
         await logRepository.insertLog('PET', logText);
         // -----------------
+        try {
+            let filter = {_id: ObjectId(req.params.id)};
 
-        let filter = {_id: ObjectId(req.params.id)};
-        userCanDeleteOffer(req.session.user, ObjectId(req.params.id)).then(canDelete => {
-            if (canDelete) {
-                offersRepository.deleteOffer(filter, {}).then(result => {
-                    if (result === null || result.deletedCount === 0) {
-                        res.send("No se ha podido eliminar la oferta");
-                    } else {
-                        res.redirect("/user/offers" +
-                            "?message=Se ha borrado correctamente la oferta"+
-                            "&messageType=alert-info");
-                    }
-                })
-            } else {
-                res.redirect("/user/offers" +
-                    "?message=No puedes eliminar esta oferta"+
-                    "&messageType=alert-danger");
-            }
-        }).catch(error => {
+            userCanDeleteOffer(req.session.user, ObjectId(req.params.id)).then(canDelete => {
+                if (canDelete) {
+                    offersRepository.deleteOffer(filter, {}).then(result => {
+                        if (result === null || result.deletedCount === 0) {
+                            res.send("No se ha podido eliminar la oferta");
+                        } else {
+                            res.redirect("/user/offers" +
+                                "?message=Se ha borrado correctamente la oferta"+
+                                "&messageType=alert-info");
+                        }
+                    })
+                } else {
+                    res.redirect("/user/offers" +
+                        "?message=No puedes eliminar esta oferta"+
+                        "&messageType=alert-danger");
+                }
+            }).catch(error => {
+                res.send("Se ha producido un error al comprobar si puede borrar la oferta " + error)
+            });
+        } catch (error) {
             res.send("Se ha producido un error al comprobar si puede borrar la oferta " + error)
-        });
+        }
     });
 
     app.get('/offer/highlight/:id', async function (req, res) {
@@ -113,26 +117,32 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
         logger.info(logText);
         await logRepository.insertLog('PET', logText);
         // -----------------
+        try {
+            let user = req.session.user;
+            const wallet = await getWallet(user);
+            let filter = {_id: ObjectId(req.params.id)};
+            const offer = await offersRepository.findOffer(filter, {});
+            if (wallet < 20){
+                res.redirect("/user/offers?message=Saldo insuficiente para destacar la oferta"+
+                    "&messageType=alert-info");
+            }
+            else if (offer.highlighted){
+                res.redirect("/user/offers?message=La oferta ya está destacada"+
+                    "&messageType=alert-info");
+            }
+            else{
+                await offersRepository.markOfferAsHighlighted(ObjectId(req.params.id))
+                await usersRepository.decrementWallet(user, 20);
+                res.redirect("/user/offers?message=Oferta destacada correctamente"+
+                    "&messageType=alert-info");
+            }
+        } catch (e) {
+            res.send("Ha habido un error al destacar " + e);
+        }
 
-        let user = req.session.user;
-        const wallet = await getWallet(user);
-        let filter = {_id: ObjectId(req.params.id)};
-        const offer = await offersRepository.findOffer(filter, {});
-        if (wallet < 20){
-            res.redirect("/user/offers?message=Saldo insuficiente para destacar la oferta"+
-                "&messageType=alert-info");
-        }
-        else if (offer.highlighted){
-            res.redirect("/user/offers?message=La oferta ya está destacada"+
-                "&messageType=alert-info");
-        }
-        else{
-            await offersRepository.markOfferAsHighlighted(ObjectId(req.params.id))
-            await usersRepository.decrementWallet(user, 20);
-            res.redirect("/user/offers?message=Oferta destacada correctamente"+
-                "&messageType=alert-info");
-        }
     });
+
+
     // COMPRA DE OFERTAS
     app.get('/offer/buy/:id', async function (req, res) {
         // -------- LOG ------------
@@ -141,7 +151,6 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
         logger.info(logText);
         await logRepository.insertLog('PET', logText);
         // -----------------
-
         try {
             let filter = {_id: ObjectId(req.params.id)};
             const offer = await offersRepository.findOffer(filter, {});

@@ -31,7 +31,7 @@ app.use("/offer/highlight",userSessionRouter);
 app.use("/user/offers",userSessionRouter);
 app.use("/user/logout",userSessionRouter);
 app.use("/offers",userSessionRouter);
-app.use("/offers/buy", userSessionRouter);
+app.use("/offer/buy", userSessionRouter);
 app.use("/offers/purchases", userSessionRouter);
 
 let crypto = require('crypto');

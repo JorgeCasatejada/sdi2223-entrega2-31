@@ -13,3 +13,7 @@ exports.offerAddValidator = [
         return true;
     })
 ]
+
+exports.offerBuyValidator = [
+
+]
