@@ -2,10 +2,6 @@ package com.uniovi.sdi2223entrega2test31;
 
 import com.uniovi.sdi2223entrega2test31.pageobjects.*;
 import com.uniovi.sdi2223entrega2test31.util.SeleniumUtils;
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,15 +13,16 @@ import java.util.List;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class Sdi2223Entrega2TestApplicationTests {
+    static MongoDB m;
     //ALEX
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 //    static String Geckodriver = "C:\\Users\\alexr\\OneDrive\\Escritorio\\geckodriver-v0.30.0-win64.exe";
     //JORGE
-//    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-//    static String Geckodriver = "C:\\Users\\jorge\\OneDrive\\Escritorio\\SDI\\Practica\\Sesión6\\PL-SDI-Sesión5-material\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
-    //PATRI
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
+    static String Geckodriver = "C:\\Users\\jorge\\OneDrive\\Escritorio\\SDI\\Practica\\Sesión6\\PL-SDI-Sesión5-material\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
+    //PATRI
+//    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+//    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
     //ENRIQUE
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 //    static String Geckodriver = "C:\\Program Files\\Gekodriver\\geckodriver-v0.30.0-win64.exe";
@@ -56,6 +53,8 @@ class Sdi2223Entrega2TestApplicationTests {
     //Antes de la primera prueba
     @BeforeAll
     static public void begin() {
+        m = new MongoDB();
+        m.resetMongo();
     }
 
     //Al finalizar la última prueba
@@ -69,22 +68,29 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(1)
     void PR01() {
+        //Miramos cuantos usuarios había en la BBDD
+        long before = m.usersSize();
         //Vamos al formulario de registro
         PO_NavView.clickOption(driver, "signup", "@href", "/users/signup");
         //Rellenamos el formulario.
-        PO_SignUpView.fillForm(driver, "email@email.com", "Pepe", "Perez Gonzalez",
+        PO_SignUpView.fillForm(driver, "user33@email.com", "Pepe", "Perez Gonzalez",
                 "2002-05-05", "123456", "123456");
         //Comprobamos que entramos en la sección privada y nos nuestra el texto a buscar
         String checkText = "Mis ofertas";
         String checkPath = "//h2[contains(text(),'" + checkText + "')]";
         List<WebElement> result = PO_View.checkElementBy(driver, "free", checkPath);
         Assertions.assertEquals(checkText, result.get(0).getText());
+        //Miramos cuantos usuarios hay ahora en la BBDD
+        long after = m.usersSize();
+        Assertions.assertEquals(after, before + 1);
     }
 
     //  [Prueba2] Registro de Usuario con datos inválidos (email, nombre, apellidos y fecha de nacimiento vacíos).
     @Test
     @Order(2)
     public void PR02() {
+        //Miramos cuantos usuarios había en la BBDD
+        long before = m.usersSize();
         //Vamos al formulario de registro
         PO_NavView.clickOption(driver, "signup", "@href", "/users/signup");
         //Rellenamos el formulario.
@@ -94,12 +100,17 @@ class Sdi2223Entrega2TestApplicationTests {
         String checkPath = "//h2[contains(text(),'" + checkText + "')]";
         List<WebElement> result = PO_View.checkElementBy(driver, "free", checkPath);
         Assertions.assertEquals(checkText, result.get(0).getText());
+        //Miramos cuantos usuarios hay ahora en la BBDD
+        long after = m.usersSize();
+        Assertions.assertEquals(after, before);
     }
 
     //  [Prueba3] Registro de Usuario con datos inválidos (repetición de contraseña inválida).
     @Test
     @Order(3)
     public void PR03() {
+        //Miramos cuantos usuarios había en la BBDD
+        long before = m.usersSize();
         //Vamos al formulario de registro
         PO_NavView.clickOption(driver, "signup", "@href", "/users/signup");
         //Rellenamos el formulario.
@@ -113,12 +124,17 @@ class Sdi2223Entrega2TestApplicationTests {
         String checkText2 = "Las contraseñas no coinciden";
         List<WebElement> result2 = PO_View.checkElementBy(driver, "text", checkText2);
         Assertions.assertEquals(checkText2, result2.get(0).getText());
+        //Miramos cuantos usuarios hay ahora en la BBDD
+        long after = m.usersSize();
+        Assertions.assertEquals(after, before);
     }
 
     //  [Prueba4] Registro de Usuario con datos inválidos (email existente).
     @Test
     @Order(4)
     public void PR04() {
+        //Miramos cuantos usuarios había en la BBDD
+        long before = m.usersSize();
         //Vamos al formulario de registro
         PO_NavView.clickOption(driver, "signup", "@href", "/users/signup");
         //Rellenamos el formulario con user01 -> usuario existente del sistema
@@ -132,6 +148,9 @@ class Sdi2223Entrega2TestApplicationTests {
         String checkText2 = "Este correo ya está en uso";
         List<WebElement> result2 = PO_View.checkElementBy(driver, "text", checkText2);
         Assertions.assertEquals(checkText2, result2.get(0).getText());
+        //Miramos cuantos usuarios hay ahora en la BBDD
+        long after = m.usersSize();
+        Assertions.assertEquals(after, before);
     }
 
     //  [Prueba5] Inicio de sesión con datos válidos (administrador).
@@ -155,7 +174,7 @@ class Sdi2223Entrega2TestApplicationTests {
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
         //Rellenamos el formulario con user01.
-        PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "admin");
         //Comprobamos que entramos en la sección privada y nos nuestra el texto a buscar
         String checkText = "Mis ofertas";
         String checkPath = "//h2[contains(text(),'" + checkText + "')]";
@@ -204,7 +223,7 @@ class Sdi2223Entrega2TestApplicationTests {
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
         //Rellenamos el formulario con user01.
-        PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "admin");
         //Hacemos click en la opción de logout
         PO_NavView.clickOption(driver, "logout", "@href", "/users/login");
         //Comprobamos que volvemos a la identificación de usuario
@@ -231,26 +250,33 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(11)
     public void PR11() {
+        //Miramos cuantos usuarios había en la BBDD
+        long before = m.usersSize();
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
         //Rellenamos el formulario con admin.
         PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
         // total de usuarios del sistema: datos de prueba(20) + Prueba1(1)
-        List<String> users = getUsers();
+        List<String> users = m.usersEmail();
         // checkear que existen todos los usuarios
         List<WebElement> elements = new ArrayList<>();
         int i = 0;
         int page = 1;
         for (String user: users) {
-            elements.addAll(PO_View.checkElementBy(driver, "text", user));
-            i++;
-            if (i == 4) {
-                i = 0;
-                page++;
-                PO_NavView.clickOption(driver, "/admin/users/?page=" + page, "@href", "/admin/users/?page=" + page);
+            if (!user.equals("admin@email.com")) {
+                elements.addAll(PO_View.checkElementBy(driver, "text", user));
+                i++;
+                if (i == 4) {
+                    i = 0;
+                    page++;
+                    PO_NavView.clickOption(driver, "/admin/users/?page=" + page, "@href", "/admin/users/?page=" + page);
+                }
             }
         }
-        Assertions.assertEquals(users.size(), elements.size());
+        Assertions.assertEquals(users.size()-1, elements.size());
+        //Compara cuantos usuarios hay ahora en la BBDD
+        Assertions.assertEquals(before, users.size());
+        Assertions.assertEquals(before-1, elements.size());
     }
 
     //  [Prueba12] Ir a la lista de usuarios, borrar el primer usuario de la lista, comprobar que la lista se actualiza
@@ -258,6 +284,8 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(12)
     public void PR12() {
+        //Miramos cuantos usuarios había en la BBDD
+        long before = m.usersSize();
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
         //Rellenamos el formulario con admin.
@@ -276,6 +304,9 @@ class Sdi2223Entrega2TestApplicationTests {
         btEliminar.get(0).click();
         // comprobar que el email del usuario borrado no aparece en la vista
         SeleniumUtils.waitTextIsNotPresentOnPage(driver, email, PO_View.getTimeout());
+        //Mirar cuantos usuarios hay ahora en la BBDD
+        long after = m.usersSize();
+        Assertions.assertEquals(after, before - 1);
     }
 
     //  [Prueba13] Ir a la lista de usuarios, borrar el último usuario de la lista, comprobar que la lista se actualiza
@@ -283,6 +314,8 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(13)
     public void PR13() {
+        //Miramos cuantos usuarios había en la BBDD
+        long before = m.usersSize();
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
         //Rellenamos el formulario con admin.
@@ -307,6 +340,9 @@ class Sdi2223Entrega2TestApplicationTests {
         PO_NavView.clickOption(driver, "/admin/users/?page=5", "@href", "/admin/users/?page=5");
         // comprobar que el email del usuario borrado no aparece en la vista
         SeleniumUtils.waitTextIsNotPresentOnPage(driver, email, PO_View.getTimeout());
+        //Mirar cuantos usuarios hay ahora en la BBDD
+        long after = m.usersSize();
+        Assertions.assertEquals(after, before - 1);
     }
 
     //  [Prueba14] Ir a la lista de usuarios, borrar 3 usuarios, comprobar que la lista se actualiza y dichos
@@ -314,6 +350,8 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(14)
     public void PR14() {
+        //Miramos cuantos usuarios había en la BBDD
+        long before = m.usersSize();
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
         //Rellenamos el formulario con admin.
@@ -339,6 +377,9 @@ class Sdi2223Entrega2TestApplicationTests {
         for (String user: users){
             SeleniumUtils.waitTextIsNotPresentOnPage(driver, user, PO_View.getTimeout());
         }
+        //Mirar cuantos usuarios hay ahora en la BBDD
+        long after = m.usersSize();
+        Assertions.assertEquals(after, before - 3);
     }
 
     //  [Prueba15] Intentar borrar el usuario que se encuentra en sesión y comprobar que no ha sido borrado
@@ -346,7 +387,16 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(15)
     public void PR15() {
-
+        //Miramos cuantos usuarios había en la BBDD
+        long before = m.usersSize();
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con admin.
+        String email = "admin@email.com";
+        PO_LoginView.fillLoginForm(driver, email, "admin");
+        //Mirar cuantos usuarios hay ahora en la BBDD
+        long after = m.usersSize();
+        Assertions.assertEquals(after, before);
     }
 
     //  [Prueba16] Ir al formulario de alta de oferta, rellenarla con datos válidos y pulsar el botón Submit.
@@ -354,10 +404,12 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(16)
     public void PR16() {
+        //Miramos cuantas ofertas había en la BBDD
+        long before = m.offersSize();
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
-        //Rellenamos el formulario con user04.
-        PO_LoginView.fillLoginForm(driver, "user04@email.com", "user04");
+        //Rellenamos el formulario con user05.
+        PO_LoginView.fillLoginForm(driver, "user05@email.com", "admin");
         //Vamos al apartado de añadir oferta
         PO_NavView.clickOption(driver, "/offer/add", "@href", "/offer/add");
         //Rellenamos la oferta
@@ -366,6 +418,9 @@ class Sdi2223Entrega2TestApplicationTests {
         String checkText = "Articulo ejemplo";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
+        //Mirar cuantas ofertas hay ahora en la BBDD
+        long after = m.offersSize();
+        Assertions.assertEquals(after, before + 1);
     }
 
     //  [Prueba17] Ir al formulario de alta de oferta, rellenarla con datos inválidos (campo título vacío y precio
@@ -373,10 +428,12 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(17)
     public void PR17() {
+        //Miramos cuantas ofertas había en la BBDD
+        long before = m.offersSize();
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
-        //Rellenamos el formulario con user04.
-        PO_LoginView.fillLoginForm(driver, "user04@email.com", "user04");
+        //Rellenamos el formulario con user05.
+        PO_LoginView.fillLoginForm(driver, "user05@email.com", "admin");
         //Vamos al apartado de añadir oferta
         PO_NavView.clickOption(driver, "/offer/add", "@href", "/offer/add");
         //Rellenamos la oferta
@@ -392,6 +449,10 @@ class Sdi2223Entrega2TestApplicationTests {
 
         String checkText3 = "El precio proporcionado no es válido, debe ser positivo";
         Assertions.assertEquals(checkText3, check[2]);
+
+        //Mirar cuantas ofertas hay ahora en la BBDD
+        long after = m.offersSize();
+        Assertions.assertEquals(after, before);
     }
 
     //  [Prueba18] Mostrar el listado de ofertas para dicho usuario y comprobar que se muestran todas las que
@@ -401,10 +462,10 @@ class Sdi2223Entrega2TestApplicationTests {
     public void PR18() {
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
-        //Rellenamos el formulario con user05.
-        PO_LoginView.fillLoginForm(driver, "user05@email.com", "user05");
+        //Rellenamos el formulario con user06.
+        PO_LoginView.fillLoginForm(driver, "user06@email.com", "admin");
         //Miramos que estén todas sus ofertas total = 10
-        int total = 10;
+        int total = m.getOffersByUser("user06@email.com").size();
         int count = 0;
         String checkText = "Descripción ejemplo";
         //Página 1
@@ -427,10 +488,12 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(19)
     public void PR19() {
+        //Miramos cuantas ofertas había en la BBDD
+        long before = m.offersSize();
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
-        //Rellenamos el formulario con user04.
-        PO_LoginView.fillLoginForm(driver, "user04@email.com", "user04");
+        //Rellenamos el formulario con user05.
+        PO_LoginView.fillLoginForm(driver, "user05@email.com", "admin");
         //Obtener el título de la oferta a borrar
         String checkPath = "/html/body/div/div[2]/table/tbody/tr[1]/td[1]";
         List<WebElement> offerTitle = PO_View.checkElementBy(driver, "free", checkPath);
@@ -440,6 +503,9 @@ class Sdi2223Entrega2TestApplicationTests {
         elements.get(0).click();
         //Comprobamos que el título de la oferta a borrar no aparece en la vista
         SeleniumUtils.waitTextIsNotPresentOnPage(driver, offer, PO_View.getTimeout());
+        //Mirar cuantas ofertas hay ahora en la BBDD
+        long after = m.offersSize();
+        Assertions.assertEquals(after, before - 1);
     }
 
     //  [Prueba20] Ir a la lista de ofertas, borrar la última oferta de la lista, comprobar que la lista se actualiza
@@ -447,10 +513,12 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(20)
     public void PR20() {
+        //Miramos cuantas ofertas había en la BBDD
+        long before = m.offersSize();
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
-        //Rellenamos el formulario con user04.
-        PO_LoginView.fillLoginForm(driver, "user04@email.com", "user04");
+        //Rellenamos el formulario con user05.
+        PO_LoginView.fillLoginForm(driver, "user05@email.com", "admin");
         //Ir a la ultima pagina
         PO_NavView.clickOption(driver, "/user/offers/?page=3", "@href", "/user/offers/?page=3");
         //Obtener el título de la oferta a borrar
@@ -464,12 +532,30 @@ class Sdi2223Entrega2TestApplicationTests {
         PO_NavView.clickOption(driver, "/user/offers/?page=3", "@href", "/user/offers/?page=3");
         // comprobar que el email del usuario borrado no aparece en la vista
         SeleniumUtils.waitTextIsNotPresentOnPage(driver, offer, PO_View.getTimeout());
+        //Mirar cuantas ofertas hay ahora en la BBDD
+        long after = m.offersSize();
+        Assertions.assertEquals(after, before - 1);
     }
 
     //  [Prueba21] Ir a la lista de ofertas, borrar una oferta de otro usuario, comprobar que la oferta no se borra.
     @Test
     @Order(21)
     public void PR21() {
+        //Miramos cuantas ofertas había en la BBDD
+        long before = m.offersSize();
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user05.
+        PO_LoginView.fillLoginForm(driver, "user05@email.com", "admin");
+        //Vamos a todas las ofertas
+        String checkPath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        List<WebElement> allOffers = PO_View.checkElementBy(driver, "free", checkPath);
+        allOffers.get(0).click();
+        // comprobar que el no hay ningún delete en la vista
+        SeleniumUtils.waitTextIsNotPresentOnPage(driver, "delete", PO_View.getTimeout());
+        //Mirar cuantas ofertas hay ahora en la BBDD
+        long after = m.offersSize();
+        Assertions.assertEquals(after, before);
     }
 
     //  [Prueba22] Ir a la lista de ofertas, borrar una oferta propia que ha sido vendida, comprobar que la
@@ -477,21 +563,23 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(22)
     public void PR22() {
+        //Miramos cuantas ofertas había en la BBDD
+        long before = m.offersSize();
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
-        //Rellenamos el formulario con user01.
-        PO_LoginView.fillLoginForm(driver, "user04@email.com", "user04");
+        //Rellenamos el formulario con user06.
+        PO_LoginView.fillLoginForm(driver, "user06@email.com", "admin");
         //Vamos a todas las ofertas
         String checkPath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
         List<WebElement> allOffers = PO_View.checkElementBy(driver, "free", checkPath);
         allOffers.get(0).click();
         //Compramos una oferta
-        List<WebElement> elements = driver.findElements(By.xpath("/html/body/div/div[2]/table/tbody/tr[2]/td[5]/a"));
+        List<WebElement> elements = driver.findElements(By.xpath("/html/body/div/div[2]/table/tbody/tr[1]/td[5]/a"));
         elements.get(0).click();
         //Hacemos click en la opción de logout
         PO_NavView.clickOption(driver, "logout", "@href", "/users/login");
-        //Rellenamos el formulario con user01.
-        PO_LoginView.fillLoginForm(driver, "user05@email.com", "user05");
+        //Rellenamos el formulario con user05.
+        PO_LoginView.fillLoginForm(driver, "user05@email.com", "admin");
         //Pulsamos en borrar esa oferta
         elements = driver.findElements(By.xpath("/html/body/div/div[2]/table/tbody/tr[1]/td[5]/a"));
         elements.get(0).click();
@@ -499,6 +587,9 @@ class Sdi2223Entrega2TestApplicationTests {
         String checkText = "No puedes eliminar esta oferta";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
+        //Mirar cuantas ofertas hay ahora en la BBDD
+        long after = m.offersSize();
+        Assertions.assertEquals(after, before);
     }
 
     //  [Prueba23] Hacer una búsqueda con el campo vacío y comprobar que se muestra la página que
@@ -509,7 +600,7 @@ class Sdi2223Entrega2TestApplicationTests {
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
         //Rellenamos el formulario con user01.
-        PO_LoginView.fillLoginForm(driver, "user04@email.com", "user04");
+        PO_LoginView.fillLoginForm(driver, "user05@email.com", "admin");
         //Vamos a todas las ofertas
         String checkPath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
         List<WebElement> allOffers = PO_View.checkElementBy(driver, "free", checkPath);
@@ -537,7 +628,7 @@ class Sdi2223Entrega2TestApplicationTests {
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
         //Rellenamos el formulario con user01.
-        PO_LoginView.fillLoginForm(driver, "user04@email.com", "user04");
+        PO_LoginView.fillLoginForm(driver, "user05@email.com", "admin");
         //Vamos a todas las ofertas
         String checkPath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
         List<WebElement> allOffers = PO_View.checkElementBy(driver, "free", checkPath);
@@ -565,7 +656,7 @@ class Sdi2223Entrega2TestApplicationTests {
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
         //Rellenamos el formulario con user01.
-        PO_LoginView.fillLoginForm(driver, "user04@email.com", "user04");
+        PO_LoginView.fillLoginForm(driver, "user05@email.com", "admin");
         //Vamos a todas las ofertas
         String checkPath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
         List<WebElement> allOffers = PO_View.checkElementBy(driver, "free", checkPath);
@@ -747,7 +838,7 @@ class Sdi2223Entrega2TestApplicationTests {
     }
 
     // [Prueba29] Ir a la opción de ofertas compradas del usuario y mostrar la lista. Comprobar que aparecen
-    //las ofertas que deben aparecer.
+    // las ofertas que deben aparecer.
     @Test
     @Order(29)
     public void PR29() {
@@ -767,7 +858,7 @@ class Sdi2223Entrega2TestApplicationTests {
         List<WebElement> allOffers = PO_View.checkElementBy(driver, "free", checkPath);
         allOffers.get(0).click();
         // Compramos la primera oferta
-        checkPath = "/html/body/div/div[2]/table/tbody/tr[1]/td[5]/a";
+        checkPath = "/html/body/div/div[2]/table/tbody/tr[2]/td[5]/a";
         List<WebElement> buyLink = PO_View.checkElementBy(driver, "free", checkPath);
         buyLink.get(0).click();
         // Vamos a la vista de ofertas compradas
@@ -1028,20 +1119,4 @@ class Sdi2223Entrega2TestApplicationTests {
 //        //4. Comprobamos que el servicio ha tenido exito
 //        Assertions.assertEquals(200, response.getStatusCode());
 //    }
-
-    // Métodos auxiliares
-    private List<String> getUsers() {
-        List<String> users = new ArrayList<>();
-        users.add("email@email.com");
-        String number = "";
-        for (int i = 1; i <= 20; i++) {
-            if (i < 10) {
-                number = "0" + i;
-            } else {
-                number = i + "";
-            }
-            users.add("user" + number + "@email.com");
-        }
-        return users;
-    }
 }

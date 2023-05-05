@@ -270,13 +270,43 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         }
     });
 
-    app.put("/api/v1.0/messages/markasread", async function (req, res) {
+    app.put("/api/v1.0/messages/markasread/:message", async function (req, res) {
         // -------- LOG ------------
         const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
                   Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
         logger.info(logText);
         await logRepository.insertLog('PET', logText);
         // -----------------
+        // validación pendiente
+
+        try {
+            if (req.params.message !== null && typeof req.params.message !== "undefined" && req.params.message.trim() !== "") {
+                let filter = {_id: ObjectId(req.params.message)};
+                let options = {upsert: false};
+                let newInfo = {
+                    read: true
+                }
+                messagesRepository.updateMessage(newInfo, filter, options).then((result) => {
+                    console.log(result);
+                    if (result === null || result.matchedCount == 0) {
+                        res.status(404);
+                        res.json({error: "El mensaje que se quiere marcar como leído, no existe."});
+                    } else if (result.modifiedCount === 0) {
+                        res.status(409);
+                        res.json({error: "El mensaje ya se había leído"});
+                    } else {
+                        res.status(200);
+                        res.json({message: "Mensaje marcado a leído", result: result});
+                    }
+                });
+            } else {
+                res.status(400);
+                res.json({ error: "Se necesita un mensaje para poder leerlo." });
+            }
+        } catch(e) {
+            res.status(500);
+            res.json({error: "Se ha producido un error al intentar leer el mensaje."});
+        }
     });
 
 }

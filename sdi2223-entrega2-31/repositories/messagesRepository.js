@@ -40,5 +40,17 @@ module.exports = {
         } catch (error) {
             throw (error);
         }
+    },
+    updateMessage: async function (newMessage, filter, options) {
+        try {
+            const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
+            const database = client.db("myWallapop");
+            const collectionName = 'messages';
+            const messagesCollection = database.collection(collectionName);
+            const result = await messagesCollection.updateOne(filter, {$set: newMessage}, options);
+            return result;
+        } catch (error) {
+            throw (error);
+        }
     }
 };
