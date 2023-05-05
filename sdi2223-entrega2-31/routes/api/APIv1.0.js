@@ -45,7 +45,7 @@ module.exports = function (app, usersRepository, offersRepository) {
         }
     });
 
-    app.get("/api/v1.0/offers/available-from-others", function (req, res) {
+    app.get("/api/v1.0/offers/availablefromothers", function (req, res) {
         let filter = { author: { $ne: res.user }, sold: false };
         let options = {};
         offersRepository.getOffers(filter, options).then(offers => {
@@ -57,7 +57,7 @@ module.exports = function (app, usersRepository, offersRepository) {
         });
     });
 
-    app.post('/api/v1.0/messages/from-conver', function (req, res) {
+    app.post('/api/v1.0/messages/fromconver', function (req, res) {
 
     });
 
@@ -66,14 +66,14 @@ module.exports = function (app, usersRepository, offersRepository) {
     });
 
     app.get("/api/v1.0/convers/all", function (req, res) {
-
+        
     });
 
     app.delete("/api/v1.0/convers/delete", function (req, res) {
 
     });
 
-    app.put("/api/v1.0/messages/markAsRead", function (req, res) {
+    app.put("/api/v1.0/messages/markasread", function (req, res) {
 
     });
 
