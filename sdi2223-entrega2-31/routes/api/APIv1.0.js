@@ -148,11 +148,17 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
                                             read: false,
                                             idConver: converId
                                         }
-                                        messagesRepository.insertMessage(newMess).then((messageId) => {
+                                        messagesRepository.insertMessage(newMess).then(async (messageId) => {
                                             if(messageId === null) {
                                                 res.status(409);
                                                 res.json({ error: "No se ha podido crear el mensaje. Ya existe." });
                                             } else {
+                                                // -------- LOG ------------
+                                                const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -
+                                                Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+                                                logger.info(logText);
+                                                await logRepository.insertLog('ALTA', logText);
+                                                // -----------------
                                                 res.status(200);
                                                 res.json({ message: "Mensaje enviado correctamente.",
                                                     _idConv: converId,

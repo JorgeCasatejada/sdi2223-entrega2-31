@@ -24,7 +24,6 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
                   Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
         logger.info(logText);
         await logRepository.insertLog('PET', logText);// peticion
-        await logRepository.insertLog('ALTA', logText);// alta de oferta
         // -----------------
         try {
             const errors = validationResult(req);
@@ -56,7 +55,8 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
                                         "?message=Se ha añadido correctamente la oferta"+
                                         "&messageType=alert-info");
                             })
-                        }).catch(error => {
+                        }).catch(async error => {
+                            await logRepository.insertLog('ALTA', logText);// alta de oferta
                             res.redirect("/offer/add" +
                                 "?message=Se ha producido un error al añadir la oferta"+
                                 "&messageType=alert-danger");
