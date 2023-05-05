@@ -111,7 +111,7 @@ app.use(function(err, req, res, next) {
 });
 
 function addToDB() {
-
+  // usersRepository.dropDatabase();
   let securePassword = app.get("crypto").createHmac('sha256', app.get('clave'))
       .update("admin").digest('hex');
   let admin = {
