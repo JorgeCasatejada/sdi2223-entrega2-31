@@ -46,9 +46,8 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
     });
 
     app.get("/api/v1.0/offers/availablefromothers", function (req, res) {
-        let filter = { author: { $ne: res.user }, sold: false };
-        let options = {};
-        offersRepository.getOffers(filter, options).then(offers => {
+        let filter = { author: { $ne: res.user } };
+        offersRepository.getOffers(filter, {}).then(offers => {
             res.status(200);
             res.send({ offers: offers })
         }).catch(error => {
@@ -58,6 +57,8 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
     });
 
     app.post('/api/v1.0/messages/send', function (req, res) {
+        // validación pendiente
+
         try {
             if (req.body.conver !== null && typeof req.body.conver !== "undefined" && req.body.conver.trim() !== "") {
                 let filter = {_id: ObjectId(req.body.conver)};
@@ -127,7 +128,6 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
                                 res.json({ error: "No se ha podido crear la conversación. Ya existe." });
                             }
                         })
-
                     } else {
                         res.status(404);
                         res.json({ error: "La oferta para la que se quiere abrir conversación no existe." });
@@ -143,12 +143,41 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         }
     });
 
-    app.get("/api/v1.0/messages/fromconver", function (req, res) {
+    app.get("/api/v1.0/messages/fromconver/:conver", function (req, res) {
+        // validación pendiente
 
+        try {
+            if (req.params.conver !== null && typeof req.params.conver !== "undefined" && req.params.conver.trim() !== "") {
+                let filter = {idConver: ObjectId(req.params.conver)};
+                let options = { sort: { date: 1} }; // 1 -> asc (antiguo -> actual); -1 -> desc (actual -> antiguo)
+                messagesRepository.findMessages(filter, options).then((messages) => {
+                    if(messages.length > 0) {
+                        res.status(200);
+                        res.json({ messages: messages });
+                    } else {
+                        res.status(404);
+                        res.json({ error: "La conversación no existe." });
+                    }
+                })
+            } else {
+                res.status(400);
+                res.json({ error: "Se necesita una conversación para obtener los mensajes." });
+            }
+        } catch(e) {
+            res.status(500);
+            res.json({ error: "Se ha producido un error al recuperar la conversación." })
+        }
     });
 
     app.get("/api/v1.0/convers/all", function (req, res) {
-        
+        let filter = { $or: [{owner: res.user}, {offertant: res.user}] };
+        conversRepository.getConvers(filter, {}).then(convers => {
+            res.status(200);
+            res.send({ convers: convers })
+        }).catch(error => {
+            res.status(500);
+            res.json({ error: "Se ha producido un error al recuperar las conversaciones." })
+        });
     });
 
     app.delete("/api/v1.0/convers/delete", function (req, res) {
