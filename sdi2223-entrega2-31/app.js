@@ -57,6 +57,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const userTokenRouter = require('./routes/userTokenRouter');
 app.use("/api/v1.0/offers/", userTokenRouter);
+app.use("/api/v1.0/convers/", userTokenRouter);
+app.use("/api/v1.0/messages/", userTokenRouter);
 
 const usersRepository = require("./repositories/usersRepository.js");
 usersRepository.init(app, MongoClient);
@@ -67,10 +69,16 @@ offersRepository.init(app, MongoClient);
 const logRepository = require("./repositories/logRepository.js");
 logRepository.init(app, MongoClient, log4js.getLogger("logRepository"));
 
+const conversRepository = require("./repositories/conversRepository.js");
+conversRepository.init(app, MongoClient);
+
+const messagesRepository = require("./repositories/messagesRepository.js");
+messagesRepository.init(app, MongoClient);
+
 require("./routes/users.js")(app, usersRepository, offersRepository, logRepository, log4js.getLogger("users"));
 require("./routes/admin.js")(app, usersRepository, logRepository, log4js.getLogger("admin"));
 require("./routes/offers.js")(app, usersRepository, offersRepository, logRepository, log4js.getLogger("offers"));
-require("./routes/api/APIv1.0.js")(app, usersRepository, offersRepository);
+require("./routes/api/APIv1.0.js")(app, usersRepository, offersRepository, conversRepository, messagesRepository);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
