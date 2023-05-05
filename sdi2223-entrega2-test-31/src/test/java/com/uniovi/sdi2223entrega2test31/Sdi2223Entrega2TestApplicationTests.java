@@ -18,11 +18,11 @@ class Sdi2223Entrega2TestApplicationTests {
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 //    static String Geckodriver = "C:\\Users\\alexr\\OneDrive\\Escritorio\\geckodriver-v0.30.0-win64.exe";
     //JORGE
-//    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-//    static String Geckodriver = "C:\\Users\\jorge\\OneDrive\\Escritorio\\SDI\\Practica\\Sesión6\\PL-SDI-Sesión5-material\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
-    //PATRI
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
+    static String Geckodriver = "C:\\Users\\jorge\\OneDrive\\Escritorio\\SDI\\Practica\\Sesión6\\PL-SDI-Sesión5-material\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
+    //PATRI
+//    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+//    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
     //ENRIQUE
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 //    static String Geckodriver = "C:\\Program Files\\Gekodriver\\geckodriver-v0.30.0-win64.exe";
@@ -838,7 +838,7 @@ class Sdi2223Entrega2TestApplicationTests {
     }
 
     // [Prueba29] Ir a la opción de ofertas compradas del usuario y mostrar la lista. Comprobar que aparecen
-    //las ofertas que deben aparecer.
+    // las ofertas que deben aparecer.
     @Test
     @Order(29)
     public void PR29() {
@@ -858,7 +858,7 @@ class Sdi2223Entrega2TestApplicationTests {
         List<WebElement> allOffers = PO_View.checkElementBy(driver, "free", checkPath);
         allOffers.get(0).click();
         // Compramos la primera oferta
-        checkPath = "/html/body/div/div[2]/table/tbody/tr[1]/td[5]/a";
+        checkPath = "/html/body/div/div[2]/table/tbody/tr[2]/td[5]/a";
         List<WebElement> buyLink = PO_View.checkElementBy(driver, "free", checkPath);
         buyLink.get(0).click();
         // Vamos a la vista de ofertas compradas
