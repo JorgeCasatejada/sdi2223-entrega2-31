@@ -18,16 +18,16 @@ class Sdi2223Entrega2TestApplicationTests {
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 //    static String Geckodriver = "C:\\Users\\alexr\\OneDrive\\Escritorio\\geckodriver-v0.30.0-win64.exe";
     //JORGE
-    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Users\\jorge\\OneDrive\\Escritorio\\SDI\\Practica\\Sesión6\\PL-SDI-Sesión5-material\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
-    //PATRI
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-//    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
+//    static String Geckodriver = "C:\\Users\\jorge\\OneDrive\\Escritorio\\SDI\\Practica\\Sesión6\\PL-SDI-Sesión5-material\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
+    //PATRI
+    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
     //ENRIQUE
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 //    static String Geckodriver = "C:\\Program Files\\Gekodriver\\geckodriver-v0.30.0-win64.exe";
 
-//static String Geckodriver = "/Users/USUARIO/selenium/geckodriver-v0.30.0-macos";
+    //static String Geckodriver = "/Users/USUARIO/selenium/geckodriver-v0.30.0-macos";
     //Común a Windows y a MACOSX
     static WebDriver driver = getDriver(PathFirefox, Geckodriver);
     static String URL = "http://localhost:8080";
@@ -690,6 +690,406 @@ class Sdi2223Entrega2TestApplicationTests {
         result = PO_View.checkElementBy(driver, "text", checkText);
         int totalSearch = result.size();
         Assertions.assertEquals(total, totalSearch);
+    }
+
+    // [Prueba26] Sobre una búsqueda determinada (a elección de desarrollador), comprar una oferta que
+    //deja un saldo positivo en el contador del comprobador. Y comprobar que el contador se actualiza
+    //correctamente en la vista del comprador.
+    @Test
+    @Order(26)
+    public void PR26() {
+        // CREAR OFERTA NUEVA (por si acaso esta borrada)
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user04.
+        PO_LoginView.fillLoginForm(driver, "user08@email.com", "admin");
+        //Vamos al apartado de añadir oferta
+        PO_NavView.clickOption(driver, "/offer/add", "@href", "/offer/add");
+        //Rellenamos la oferta
+        PO_PrivateView.fillFormAddOffer(driver, "Oferta Buscar", "Descripción ....", 90, false);
+
+        // LOGOUT Y COMPRAR OFERTA
+        //Hacemos click en la opción de logout
+        PO_NavView.clickOption(driver, "logout", "@href", "/users/login");
+        // LOGIN CON OTRO USUARIO
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user09 para que pueda comprar la oferta
+        PO_LoginView.fillLoginForm(driver, "user09@email.com", "admin");
+
+        //Vamos a todas las ofertas
+        String checkPath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        List<WebElement> allOffers = PO_View.checkElementBy(driver, "free", checkPath);
+        allOffers.get(0).click();
+        //Buscamos un titulo de oferta que coincida con mayusculas y minusculas
+        String textSearch = "Oferta Buscar";
+        WebElement search = driver.findElement(By.name("search"));
+        search.click();
+        search.clear();
+        search.sendKeys(textSearch);
+        //Hacemos clic en la búsqueda
+        checkPath = "/html/body/div/div[1]/div/form/div/span/button";
+        List<WebElement> searchButton = PO_View.checkElementBy(driver, "free", checkPath);
+        searchButton.get(0).click();
+        // Hacemos click en el enlace para comprar la oferta
+        checkPath = "/html/body/div/div[2]/table/tbody/tr[1]/td[5]/a";
+        List<WebElement> buyLink = PO_View.checkElementBy(driver, "free", checkPath);
+        buyLink.get(0).click();
+        // Comprobamos el monedero tiene ahora 10 € (100 iniciales - 90 de la oferta)
+        String wallet = "Monedero: 10 €";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", wallet);
+        Assertions.assertEquals(wallet, result.get(0).getText());
+    }
+
+    // [Prueba27] Sobre una búsqueda determinada (a elección de desarrollador), comprar una oferta que
+    //deja un saldo 0 en el contador del comprobador. Y comprobar que el contador se actualiza
+    //correctamente en la vista del comprador.
+    @Test
+    @Order(27)
+    public void PR27() {
+        // CREAR OFERTA DE 100 EUROS
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user08
+        PO_LoginView.fillLoginForm(driver, "user08@email.com", "admin");
+        //Vamos al apartado de añadir oferta
+        PO_NavView.clickOption(driver, "/offer/add", "@href", "/offer/add");
+        //Rellenamos la oferta
+        PO_PrivateView.fillFormAddOffer(driver, "Oferta cien", "Descripción ....", 100, false);
+        // LOGOUT Y LOGIN
+        //Hacemos click en la opción de logout
+        PO_NavView.clickOption(driver, "logout", "@href", "/users/login");
+        // LOGIN CON OTRO USUARIO
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user04.
+        PO_LoginView.fillLoginForm(driver, "user10@email.com", "admin");
+        // COMPRAR OFERTA CREADA
+        //Vamos a todas las ofertas
+        String checkPath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        List<WebElement> allOffers = PO_View.checkElementBy(driver, "free", checkPath);
+        allOffers.get(0).click();
+        //Buscamos un titulo de oferta que coincida con mayusculas y minusculas
+        String textSearch = "Oferta cien";
+        WebElement search = driver.findElement(By.name("search"));
+        search.click();
+        search.clear();
+        search.sendKeys(textSearch);
+        //Hacemos clic en la búsqueda
+        checkPath = "/html/body/div/div[1]/div/form/div/span/button";
+        List<WebElement> searchButton = PO_View.checkElementBy(driver, "free", checkPath);
+        searchButton.get(0).click();
+        // Hacemos click en el enlace para comprar la oferta
+        checkPath = "/html/body/div/div[2]/table/tbody/tr[1]/td[5]/a";
+        List<WebElement> buyLink = PO_View.checkElementBy(driver, "free", checkPath);
+        buyLink.get(0).click();
+        // Comprobamos que hay Monedero: 0 €
+        String checkText = "Monedero: 0 €";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+
+    // [Prueba28] Sobre una búsqueda determinada (a elección de desarrollador), intentar comprar una oferta
+    //que esté por encima de saldo disponible del comprador. Y comprobar que se muestra el mensaje
+    //de saldo no suficiente.
+    @Test
+    @Order(28)
+    public void PR28() {
+        // CREAR OFERTA DE MAÁS DE 100 EUROS
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user04.
+        PO_LoginView.fillLoginForm(driver, "user08@email.com", "admin");
+        //Vamos al apartado de añadir oferta
+        PO_NavView.clickOption(driver, "/offer/add", "@href", "/offer/add");
+        //Rellenamos la oferta
+        PO_PrivateView.fillFormAddOffer(driver, "Oferta muy cara", "Descripción ....", 110, false);
+        // LOGOUT Y LOGIN
+        //Hacemos click en la opción de logout
+        PO_NavView.clickOption(driver, "logout", "@href", "/users/login");
+        // LOGIN CON OTRO USUARIO
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user04.
+        PO_LoginView.fillLoginForm(driver, "user11@email.com", "admin");
+        // COMPRAR OFERTA CREADA
+        //Vamos a todas las ofertas
+        String checkPath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        List<WebElement> allOffers = PO_View.checkElementBy(driver, "free", checkPath);
+        allOffers.get(0).click();
+        //Buscamos un titulo de oferta que coincida con mayusculas y minusculas
+        String textSearch = "Oferta muy cara";
+        WebElement search = driver.findElement(By.name("search"));
+        search.click();
+        search.clear();
+        search.sendKeys(textSearch);
+        //Hacemos clic en la búsqueda
+        checkPath = "/html/body/div/div[1]/div/form/div/span/button";
+        List<WebElement> searchButton = PO_View.checkElementBy(driver, "free", checkPath);
+        searchButton.get(0).click();
+        // Hacemos click en el enlace para comprar la oferta
+        checkPath = "/html/body/div/div[2]/table/tbody/tr[1]/td[5]/a";
+        List<WebElement> buyLink = PO_View.checkElementBy(driver, "free", checkPath);
+        buyLink.get(0).click();
+        // Comprobamos que se muestra el mensaje de error
+        String checkText = "Saldo insuficiente en la cartera";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+
+    // [Prueba29] Ir a la opción de ofertas compradas del usuario y mostrar la lista. Comprobar que aparecen
+    //las ofertas que deben aparecer.
+    @Test
+    @Order(29)
+    public void PR29() {
+        // Utilizando el user11 que tiene UNA oferta comprada
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user04.
+        PO_LoginView.fillLoginForm(driver, "user15@email.com", "admin");
+        // Vamos al menu de ofertas compradas
+        PO_NavView.clickOption(driver, "/offers/purchases", "@href", "/offers/purchases");
+        // Comprobamos que solo haya una fila en la tabla de ofertas compradas
+        String checkPath = "/html/body/div/div/table/tbody";
+        List<WebElement> tableBodyRows = driver.findElements(By.xpath(checkPath + "/tr"));
+        int purchases = tableBodyRows.size();
+        // Vamos al listado de ofertas
+        checkPath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        List<WebElement> allOffers = PO_View.checkElementBy(driver, "free", checkPath);
+        allOffers.get(0).click();
+        // Compramos la primera oferta
+        checkPath = "/html/body/div/div[2]/table/tbody/tr[1]/td[5]/a";
+        List<WebElement> buyLink = PO_View.checkElementBy(driver, "free", checkPath);
+        buyLink.get(0).click();
+        // Vamos a la vista de ofertas compradas
+        PO_NavView.clickOption(driver, "/offers/purchases", "@href", "/offers/purchases");
+        //Verifica que el numero aumento en 1
+        checkPath = "/html/body/div/div/table/tbody";
+        List<WebElement> tableBodyRowsAfter = driver.findElements(By.xpath(checkPath + "/tr"));
+        Assertions.assertEquals(purchases+1, tableBodyRowsAfter.size());
+    }
+
+    // [Prueba30] Al crear una oferta, marcar dicha oferta como destacada y a continuación comprobar: i)
+    //que aparece en el listado de ofertas destacadas para los usuarios y que el saldo del usuario se
+    //actualiza adecuadamente en la vista del ofertante (comprobar saldo antes y después, que deberá
+    //diferir en 20€).
+    @Test
+    @Order(30)
+    public void PR30() {
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user12
+        PO_LoginView.fillLoginForm(driver, "user12@email.com", "admin");
+        // Sacar monedero
+        String checkPath = "/html/body/nav/div/div[2]/ul[2]/li[2]";
+        List<WebElement> result = PO_View.checkElementBy(driver, "free", checkPath);
+        int money = Integer.valueOf(result.get(0).getText().split(" ")[1]);
+        //Vamos al apartado de añadir oferta
+        PO_NavView.clickOption(driver, "/offer/add", "@href", "/offer/add");
+        //Rellenamos la oferta
+        PO_PrivateView.fillFormAddOffer(driver, "Oferta destacada", "Descripción ....", 110, true);
+        // mirar monedero
+        checkPath = "/html/body/nav/div/div[2]/ul[2]/li[2]";
+        List<WebElement> result2 = PO_View.checkElementBy(driver, "free", checkPath);
+        int afterMoney = Integer.valueOf(result2.get(0).getText().split(" ")[1]);
+        // Ya estamos en la lista de mis ofertas
+        // Comprobamos que la oferta está destacada
+        checkPath = "/html/body/div/div[2]/table/tbody/tr[1]/td[1]"; // comprobar titulo
+        List<WebElement> result3 = PO_View.checkElementBy(driver, "free", checkPath);
+        checkPath = "/html/body/div/div[2]/table/tbody/tr[1]/td[6]"; // comprobar que aparece como destacada
+        List<WebElement> result4 = PO_View.checkElementBy(driver, "free", checkPath);
+        // Asertos
+        // Diferencia de 20 entre el dinero que tenia antes y despues de destacar la oferta
+        Assertions.assertTrue(money - afterMoney == 20);
+        // El título de la primera oferta es la destacada
+        Assertions.assertEquals("Oferta destacada", result3.get(0).getText());
+        // El campo de la oferta destacada correspondiente a destacada es destacada
+        Assertions.assertEquals("Destacada", result4.get(0).getText());
+    }
+
+    // [Prueba31] Sobre el listado de ofertas de un usuario con más de 20 euros de saldo, pinchar en el enlace
+    //Destacada y a continuación comprobar: i) que aparece en el listado de ofertas destacadas para los
+    //usuarios y que el saldo del usuario se actualiza adecuadamente en la vista del ofertante (comprobar
+    //saldo antes y después, que deberá diferir en 20€ ).
+    @Test
+    @Order(31)
+    public void PR31() {
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user13
+        PO_LoginView.fillLoginForm(driver, "user13@email.com", "admin");
+        // Sacar monedero
+        String checkPath = "/html/body/nav/div/div[2]/ul[2]/li[2]";
+        List<WebElement> result = PO_View.checkElementBy(driver, "free", checkPath);
+        int money = Integer.valueOf(result.get(0).getText().split(" ")[1]);
+        // Ya estamos en la lista de mis ofertas
+        // Destacar la tercera oferta, por ejemplo
+        // Sacar el titulo de la tercera oferta
+        checkPath = "/html/body/div/div[2]/table/tbody/tr[3]/td[1]";
+        List<WebElement> titulo = PO_View.checkElementBy(driver, "free", checkPath);
+        var tituloOferta = titulo.get(0).getText();
+        // Clicar en la opcion de destacar
+        checkPath = "/html/body/div/div[2]/table/tbody/tr[3]/td[6]/a";
+        List<WebElement> result2 = PO_View.checkElementBy(driver, "free", checkPath);
+        result2.get(0).click();
+        // mirar monedero
+        checkPath = "/html/body/nav/div/div[2]/ul[2]/li[2]";
+        List<WebElement> result3 = PO_View.checkElementBy(driver, "free", checkPath);
+        int afterMoney = Integer.valueOf(result3.get(0).getText().split(" ")[1]);
+        // Vamos a la lista de ofertas
+        checkPath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        List<WebElement> allOffers = PO_View.checkElementBy(driver, "free", checkPath);
+        allOffers.get(0).click();
+        // Comprobar titulo: como actualmente solo hay dos ofertas destacadas, o es la primera o es la segunda (depende del titulo)
+        checkPath = "/html/body/div/div[2]/table/tbody/tr[1]/td[1]";
+        List<WebElement> opcion1 = PO_View.checkElementBy(driver, "free", checkPath);
+        checkPath = "/html/body/div/div[2]/table/tbody/tr[2]/td[1]";
+        List<WebElement> opcion2 = PO_View.checkElementBy(driver, "free", checkPath);
+        // Asertos
+        // Diferencia de 20 entre el dinero que tenia antes y despues de destacar la oferta
+        Assertions.assertTrue(money - afterMoney == 20);
+        // El título de la primera oferta es la destacada
+        Assertions.assertTrue(tituloOferta.equals(opcion1.get(0).getText()) || tituloOferta.equals(opcion2.get(0).getText()));
+    }
+
+    // [Prueba32] Sobre el listado de ofertas de un usuario con menos de 20 euros de saldo, pinchar en el
+    //enlace Destacada y a continuación comprobar que se muestra el mensaje de saldo no suficiente.
+    @Test
+    @Order(32)
+    public void PR32() {
+        // CREAR OFERTA DE 100 EUROS
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user08
+        PO_LoginView.fillLoginForm(driver, "user08@email.com", "admin");
+        //Vamos al apartado de añadir oferta
+        PO_NavView.clickOption(driver, "/offer/add", "@href", "/offer/add");
+        //Rellenamos la oferta
+        PO_PrivateView.fillFormAddOffer(driver, "Oferta 32", "Descripción ....", 100, false);
+        // LOGOUT Y LOGIN
+        //Hacemos click en la opción de logout
+        PO_NavView.clickOption(driver, "logout", "@href", "/users/login");
+        // LOGIN CON OTRO USUARIO
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user04.
+        PO_LoginView.fillLoginForm(driver, "user14@email.com", "admin");
+        // COMPRAR OFERTA CREADA
+        //Vamos a todas las ofertas
+        String checkPath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        List<WebElement> allOffers = PO_View.checkElementBy(driver, "free", checkPath);
+        allOffers.get(0).click();
+        //Buscamos un titulo de oferta que coincida con mayusculas y minusculas
+        String textSearch = "Oferta 32";
+        WebElement search = driver.findElement(By.name("search"));
+        search.click();
+        search.clear();
+        search.sendKeys(textSearch);
+        //Hacemos clic en la búsqueda
+        checkPath = "/html/body/div/div[1]/div/form/div/span/button";
+        List<WebElement> searchButton = PO_View.checkElementBy(driver, "free", checkPath);
+        searchButton.get(0).click();
+        // Hacemos click en el enlace para comprar la oferta
+        checkPath = "/html/body/div/div[2]/table/tbody/tr[1]/td[5]/a";
+        List<WebElement> buyLink = PO_View.checkElementBy(driver, "free", checkPath);
+        buyLink.get(0).click();
+
+        // YA TIENE MENOS DE 20€
+        // Vamos a mis ofertas
+        checkPath = "/html/body/nav/div/div[2]/ul[1]/li[1]/a";
+        List<WebElement> result = PO_View.checkElementBy(driver, "free", checkPath);
+        result.get(0).click();
+        // Clicamos en destacar la primera
+        checkPath = "/html/body/div/div[1]/table/tbody/tr[1]/td[6]/a";
+        List<WebElement> result2 = PO_View.checkElementBy(driver, "free", checkPath);
+        result2.get(0).click();
+        // Comprobamos que se muestra el mensaje de error
+        // Comprobamos que se muestra el mensaje de error
+        String checkText = "Saldo insuficiente para destacar la oferta";
+        List<WebElement> result3 = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result3.get(0).getText());
+    }
+
+    // [Prueba33] Intentar acceder sin estar autenticado a la opción de listado de usuarios. Se deberá volver
+    //al formulario de login.
+    @Test
+    @Order(33)
+    public void PR33() {
+        String listaUsuarios = "http://localhost:8080/admin/users";
+        driver.navigate().to(listaUsuarios);
+        String checkText = "Identificación de usuario";
+        String checkNotPresent = "Listado de usuarios";
+        SeleniumUtils.waitTextIsNotPresentOnPage(driver, checkNotPresent, PO_View.getTimeout());
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+
+    //[Prueba34] Intentar acceder sin estar autenticado a la opción de listado de conversaciones
+    //[REQUISITO OBLIGATORIO S5]. Se deberá volver al formulario de login.
+    @Test
+    @Order(34)
+    public void PR34() {
+
+    }
+
+    //[Prueba35] Estando autenticado como usuario estándar intentar acceder a una opción disponible solo
+    //para usuarios administradores (Añadir menú de auditoria (visualizar logs)). Se deberá indicar un
+    //mensaje de acción prohibida.
+    @Test
+    @Order(35)
+    public void PR35() {
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user08
+        PO_LoginView.fillLoginForm(driver, "user15@email.com", "admin");
+        // Vamos al menú de logs (solo para administrador)
+        String listaLogs = "http://localhost:8080/admin/logs";
+        driver.navigate().to(listaLogs);
+        String checkText = "Acción prohibida para el usuario";
+        String checkNotPresent = "Listado de logs";
+        SeleniumUtils.waitTextIsNotPresentOnPage(driver, checkNotPresent, PO_View.getTimeout());
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+    }
+
+    //[Prueba36] Estando autenticado como usuario administrador visualizar todos los logs generados en
+    //una serie de interacciones. Esta prueba deberá generar al menos dos interacciones de cada tipo y
+    //comprobar que el listado incluye los logs correspondientes.
+    @Test
+    @Order(36)
+    public void PR36() {
+        // Primera interaccion: login
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user08
+        PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+        // Segunda interacción: redireccion del login a listado de usuarios
+        // Tercera interacción: cambio de vista a listado de logs
+        String checkPath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        PO_NavView.clickOption(driver, "/admin/logs", "@href", "/admin/logs");
+        // Coger cantidad de logs
+        checkPath = "/html/body/div/div/table/tbody";
+        List<WebElement> tableBodyRows = driver.findElements(By.xpath(checkPath + "/tr"));
+        int sizeLogs = tableBodyRows.size();
+        // Ir a listado de usuarios: un log más
+        String usersPath = "http://localhost:8080/admin/users";
+        driver.navigate().to(usersPath);
+        // Volver a listado de logs: un log más
+        PO_NavView.clickOption(driver, "/admin/logs", "@href", "/admin/logs");
+        // Verificar que la cantidad de logs se incrementó en 2
+        checkPath = "/html/body/div/div/table/tbody";
+        List<WebElement> tableBodyRowsAfter = driver.findElements(By.xpath(checkPath + "/tr"));
+        int sizeLogsAfter = tableBodyRowsAfter.size();
+        Assertions.assertEquals(sizeLogsAfter - sizeLogs, 2);
+    }
+
+
+    //[Prueba37] Estando autenticado como usuario administrador, ir a visualización de logs, pulsar el
+    //botón/enlace borrar logs y comprobar que se eliminan los logs de la base de datos.
+    @Test
+    @Order(37)
+    public void PR37() {
+
     }
 
 
