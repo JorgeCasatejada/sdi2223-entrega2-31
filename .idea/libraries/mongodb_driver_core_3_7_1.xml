@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mongodb-driver-core-3.7.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/sdi2223-entrega2-31/lib/mongodb-driver-core-3.7.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

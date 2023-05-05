@@ -6,5 +6,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="sdi-2223-spring" level="project" />
+    <orderEntry type="library" name="mongodb-driver-3.7.1" level="project" />
+    <orderEntry type="library" name="mongodb-driver-core-3.7.1" level="project" />
   </component>
 </module>
