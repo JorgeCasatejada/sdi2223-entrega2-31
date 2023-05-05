@@ -41,18 +41,16 @@ module.exports = {
             throw (error);
         }
     },
-    /*
     deleteConver: async function (filter, options) {
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
             const database = client.db("myWallapop");
-            const collectionName = 'offers';
-            const offersCollection = database.collection(collectionName);
-            const result = await offersCollection.deleteOne(filter, options);
+            const collectionName = 'convers';
+            const conversCollection = database.collection(collectionName);
+            const result = await conversCollection.deleteOne(filter, options);
             return result;
         } catch (error) {
             throw (error);
         }
     }
-    */
 };

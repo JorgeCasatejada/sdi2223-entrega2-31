@@ -180,8 +180,37 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         });
     });
 
-    app.delete("/api/v1.0/convers/delete", function (req, res) {
+    app.delete("/api/v1.0/convers/delete/:conver", function (req, res) {
+        // validación pendiente
 
+        try {
+            if (req.params.conver !== null && typeof req.params.conver !== "undefined" && req.params.conver.trim() !== "") {
+                let filter = {_id: ObjectId(req.params.conver)};
+                conversRepository.deleteConver(filter, {}).then((result) => {
+                    if(result === null |result.deletedCount === 0) {
+                        res.status(404);
+                        res.json({error: "La conversación que se quiere borrar, no existe." });
+                    } else {
+                        let filter2 = {idConver: ObjectId(req.params.conver)};
+                        messagesRepository.deleteMessages(filter2, {}).then((result2) => {
+                            if(result2 === null | result2.deletedCount === 0) {
+                                res.status(404);
+                                res.json({error: "La conversación que se quiere borrar, no tiene mensajes." });
+                            } else {
+                                res.status(200);
+                                res.send(JSON.stringify(result2));
+                            }
+                        });
+                    }
+                })
+            } else {
+                res.status(400);
+                res.json({ error: "Se necesita una conversación para poder eliminarla." });
+            }
+        } catch(e) {
+            res.status(500);
+            res.json({ error: "Se ha producido un error al eliminar la conversación." })
+        }
     });
 
     app.put("/api/v1.0/messages/markasread", function (req, res) {
