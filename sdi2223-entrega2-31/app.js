@@ -111,50 +111,51 @@ app.use(function(err, req, res, next) {
 });
 
 function addToDB() {
-  // usersRepository.dropDatabase();
-  let securePassword = app.get("crypto").createHmac('sha256', app.get('clave'))
-      .update("admin").digest('hex');
-  let admin = {
-    email: "admin@email.com",
-    name: "admin",
-    surname: "admin",
-    birthDate: "26/12/1991",
-    password: securePassword,
-    wallet: 100,
-    profile: "Usuario Administrador"
-  }
-
-  let filter = {
-    email: admin.email
-  }
-  usersRepository.findUser(filter, {}).then(user => {
-    if (user == null) {
-      usersRepository.insertUser(admin);
-      for (let i = 1; i <= 20; i++) {
-        if (i < 10) {
-          i = "0" + i;
-        }
-        let securePassword = app.get("crypto").createHmac('sha256', app.get('clave'))
-            .update("user" + i).digest('hex');
-        let user = {
-          email: "user" + i + "@email.com",
-          name: "user" + i,
-          surname: "user" + i,
-          birthDate: i + "/12/1991",
-          password: securePassword,
-          wallet: 100,
-          profile: "Usuario Estándar"
-        }
-        usersRepository.insertUser(user);
-      }
-      createOffers();
+  usersRepository.dropDatabase().then(() => {
+    let securePassword = app.get("crypto").createHmac('sha256', app.get('clave'))
+        .update("admin").digest('hex');
+    let admin = {
+      email: "admin@email.com",
+      name: "admin",
+      surname: "admin",
+      birthDate: "26/12/1991",
+      password: securePassword,
+      wallet: 100,
+      profile: "Usuario Administrador"
     }
-  }).catch(error => {
-    req.session.user = null;
-    res.redirect("/users/login" +
-        "?message=Se ha producido un error al buscar el usuario" +
-        "&messageType=alert-danger ");
-  });
+
+    let filter = {
+      email: admin.email
+    }
+    usersRepository.findUser(filter, {}).then(user => {
+      if (user == null) {
+        usersRepository.insertUser(admin);
+        for (let i = 1; i <= 20; i++) {
+          if (i < 10) {
+            i = "0" + i;
+          }
+          let securePassword = app.get("crypto").createHmac('sha256', app.get('clave'))
+              .update("user" + i).digest('hex');
+          let user = {
+            email: "user" + i + "@email.com",
+            name: "user" + i,
+            surname: "user" + i,
+            birthDate: i + "/12/1991",
+            password: securePassword,
+            wallet: 100,
+            profile: "Usuario Estándar"
+          }
+          usersRepository.insertUser(user);
+        }
+        createOffers();
+      }
+    }).catch(error => {
+      req.session.user = null;
+      res.redirect("/users/login" +
+          "?message=Se ha producido un error al buscar el usuario" +
+          "&messageType=alert-danger ");
+    });
+  })
 }
 
 function createOffers() {
