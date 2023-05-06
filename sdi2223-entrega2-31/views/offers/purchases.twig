@@ -1,0 +1,27 @@
+{% extends "layout.twig" %}
+{% block title %} Mis Compras {% endblock %}
+{% block main_container %}
+<h2>Mis compras</h2>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Vendedor</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for purchase in response.purchases %}
+            <tr>
+                <td>{{ purchase.offer.title }}</td>
+                <td>{{ purchase.offer.description }}</td>
+                <td>{{ purchase.offer.price }}</td>
+                <td>{{ purchase.offer.author }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
