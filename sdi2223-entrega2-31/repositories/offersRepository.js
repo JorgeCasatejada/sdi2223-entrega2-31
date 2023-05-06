@@ -47,6 +47,9 @@ module.exports = {
             const database = client.db("myWallapop");
             const collectionName = 'offers';
             const offersCollection = database.collection(collectionName);
+            const collectionNameMessages = 'messages';
+            const messagesCollection = database.collection(collectionNameMessages);
+            await messagesCollection.deleteMany({idOffer: filter._id}, {});
             const result = await offersCollection.deleteOne(filter, options);
             return result;
         } catch (error) {

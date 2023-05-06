@@ -288,6 +288,8 @@ class Sdi2223Entrega2TestApplicationTests {
     public void PR12() {
         //Miramos cuantos usuarios había en la BBDD
         long before = m.usersSize();
+        //Miramos cuantas ofertas había en la BBDD
+        long before2 = m.offersSize();
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
         //Rellenamos el formulario con admin.
@@ -309,6 +311,9 @@ class Sdi2223Entrega2TestApplicationTests {
         //Mirar cuantos usuarios hay ahora en la BBDD
         long after = m.usersSize();
         Assertions.assertEquals(after, before - 1);
+        //Mirar cuantas ofertas hay ahora en la BBDD
+        long after2 = m.offersSize();
+        Assertions.assertNotEquals(after2, before2);
     }
 
     //  [Prueba13] Ir a la lista de usuarios, borrar el último usuario de la lista, comprobar que la lista se actualiza
@@ -354,6 +359,8 @@ class Sdi2223Entrega2TestApplicationTests {
     public void PR14() {
         //Miramos cuantos usuarios había en la BBDD
         long before = m.usersSize();
+        //Miramos cuantas ofertas había en la BBDD
+        long before2 = m.offersSize();
         //Vamos al formulario de inicio de sesión
         PO_NavView.clickOption(driver, "login", "@href", "/users/login");
         //Rellenamos el formulario con admin.
@@ -382,6 +389,9 @@ class Sdi2223Entrega2TestApplicationTests {
         //Mirar cuantos usuarios hay ahora en la BBDD
         long after = m.usersSize();
         Assertions.assertEquals(after, before - 3);
+        //Mirar cuantas ofertas hay ahora en la BBDD
+        long after2 = m.offersSize();
+        Assertions.assertNotEquals(after2, before2);
     }
 
     //  [Prueba15] Intentar borrar el usuario que se encuentra en sesión y comprobar que no ha sido borrado
