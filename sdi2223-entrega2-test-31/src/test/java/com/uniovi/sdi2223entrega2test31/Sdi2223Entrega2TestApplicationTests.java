@@ -2,6 +2,8 @@ package com.uniovi.sdi2223entrega2test31;
 
 import com.uniovi.sdi2223entrega2test31.pageobjects.*;
 import com.uniovi.sdi2223entrega2test31.util.SeleniumUtils;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,11 +20,11 @@ class Sdi2223Entrega2TestApplicationTests {
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 //    static String Geckodriver = "C:\\Users\\alexr\\OneDrive\\Escritorio\\geckodriver-v0.30.0-win64.exe";
     //JORGE
-    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Users\\jorge\\OneDrive\\Escritorio\\SDI\\Practica\\Sesión6\\PL-SDI-Sesión5-material\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
-    //PATRI
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-//    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
+//    static String Geckodriver = "C:\\Users\\jorge\\OneDrive\\Escritorio\\SDI\\Practica\\Sesión6\\PL-SDI-Sesión5-material\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
+    //PATRI
+    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
     //ENRIQUE
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 //    static String Geckodriver = "C:\\Program Files\\Gekodriver\\geckodriver-v0.30.0-win64.exe";
@@ -857,7 +859,7 @@ class Sdi2223Entrega2TestApplicationTests {
         checkPath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
         List<WebElement> allOffers = PO_View.checkElementBy(driver, "free", checkPath);
         allOffers.get(0).click();
-        // Compramos la primera oferta
+        // Compramos oferta
         checkPath = "/html/body/div/div[2]/table/tbody/tr[2]/td[5]/a";
         List<WebElement> buyLink = PO_View.checkElementBy(driver, "free", checkPath);
         buyLink.get(0).click();
@@ -1029,6 +1031,9 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(34)
     public void PR34() {
+//        final String RestAssuredURL = "http://localhost:8080/api/v1.0/convers/all";
+//        Response response = RestAssured.get(RestAssuredURL);
+//        Assertions.assertEquals(403, response.getStatusCode());
 
     }
 
@@ -1089,7 +1094,26 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(37)
     public void PR37() {
-
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user08
+        PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+        // Vamos al menú de logs (solo para administrador)
+        PO_NavView.clickOption(driver, "/admin/logs", "@href", "/admin/logs");
+        // Miramos el tamaño de la lista de logs
+        String checkPath = "/html/body/div/div/table/tbody";
+        List<WebElement> tableBodyRows = driver.findElements(By.xpath(checkPath + "/tr"));
+        int sizeLogs = tableBodyRows.size();
+        // Borramos los logs
+        checkPath = "/html/body/div/form[2]/button";
+        List<WebElement> deleteButton = PO_View.checkElementBy(driver, "free", checkPath);
+        deleteButton.get(0).click();
+        // Comprobamos que la lista ahora solo contiene el log de la redireccion
+        checkPath = "/html/body/div/div/table/tbody";
+        List<WebElement> tableBodyRowsAfter = driver.findElements(By.xpath(checkPath + "/tr"));
+        int sizeLogsAfter = tableBodyRowsAfter.size();
+        Assertions.assertTrue(sizeLogsAfter != sizeLogs);
+        Assertions.assertEquals(1, sizeLogsAfter);
     }
 
 
