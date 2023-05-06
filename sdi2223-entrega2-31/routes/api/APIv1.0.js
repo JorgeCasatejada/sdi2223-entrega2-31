@@ -2,6 +2,7 @@ const {ObjectId} = require("mongodb");
 const {offerAddValidator} = require("../validators/offerValidator");
 const {validationResult} = require("express-validator");
 module.exports = function (app, usersRepository, offersRepository, conversRepository, messagesRepository, logRepository, logger) {
+
     app.post('/api/v1.0/users/login', async function(req, res){
         try {
             // -------- LOG ------------
@@ -137,7 +138,8 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
                                 let newConv = {
                                     offertant: res.user,
                                     idOffer: offer._id,
-                                    owner: offer.author
+                                    owner: offer.author,
+                                    title: offer.title
                                 }
                                 conversRepository.insertConver(newConv).then((converId) => {
                                     if(converId !== null) {
@@ -313,6 +315,25 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
             res.status(500);
             res.json({error: "Se ha producido un error al intentar leer el mensaje."});
         }
+    });
+
+    app.get("/api/v1.0/offerConversation/:offerId", async function (req, res) {
+        // -------- LOG ------------
+        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+        logger.info(logText);
+        await logRepository.insertLog('PET', logText);
+        // -----------------
+
+        let filter = { offertant: res.user, idOffer: ObjectId(req.params.offerId)};
+        conversRepository.getConvers(filter, {}).then(convers => {
+            console.log(convers);
+            res.status(200);
+            res.send({ convers: convers })
+        }).catch(error => {
+            res.status(500);
+            res.json({ error: "Se ha producido un error al recuperar las conversaciones." })
+        });
     });
 
 }

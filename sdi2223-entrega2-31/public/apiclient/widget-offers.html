@@ -20,16 +20,15 @@
 <script>
   window.history.pushState("", "", "/apiclient/client.html?w=offers");
   var selectedConversationId;
+  var selectedOfferId;
   var offers;
   var createConver;
 
   function loadOffers() {
     $.ajax({
-      url: URLbase + "/offers",
+      url: URLbase + "/offers/availablefromothers",
       type: "GET",
-      data: {
-        email: Cookies.get('token')
-      },
+      data: {},
       dataType: 'json',
       headers: {"token": token},
       success: function (response) {
@@ -50,7 +49,7 @@
               "<td>" + offers[i].description + "</td>" +
               "<td>" + offers[i].price + "</td>" +
               "<td>" + offers[i].date + "</td>" +
-              "<td>" + offers[i].sellerEmail + "</td>" +
+              "<td>" + offers[i].author + "</td>" +
               "<td>" +
               "<a onclick=conversation('" + offers[i]._id + "')>Conversación</a><br>" +
               "</td>" +
@@ -58,18 +57,21 @@
     }
   }
   function conversation(_id) {
+    selectedOfferId = _id;
     $.ajax({
-      url: URLbase + "/conversation/" + _id,
+      url: URLbase + "/offerConversation/" + _id,
       type: "GET",
-      data: {
-        email: Cookies.get('token')
-      },
+      data: {},
       dataType: 'json',
       headers: {"token": token},
       success: function (response) {
-        selectedConversationId = response._id;
+        if(response.convers.length == 1) {
+          selectedConversationId = response.convers[0]._id;
+        } else {
+          selectedConversationId = undefined;
+        }
 
-        if(selectedConversationId == "undefined" || selectedConversationId === null) {
+        if(selectedConversationId === undefined || selectedConversationId === null) {
           createConver = true;
         } else {
           createConver = false;

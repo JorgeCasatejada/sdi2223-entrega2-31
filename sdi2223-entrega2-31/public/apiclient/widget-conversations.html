@@ -6,6 +6,7 @@
     <tr>
       <th><a onclick="sortByTitle()">Título</a></th>
       <th>Email del vendedor</th>
+      <th>Email del interesado</th>
       <th class="col-md-1"></th>
     </tr>
     </thead>
@@ -21,15 +22,13 @@
 
   function loadConversations() {
     $.ajax({
-      url: URLbase + "/conversations",
+      url: URLbase + "/convers/all",
       type: "GET",
-      data: {
-        email: Cookies.get('token')
-      },
+      data: {},
       dataType: 'json',
       headers: {"token": token},
       success: function (response) {
-        conversations = response.conversations;
+        conversations = response.convers;
         updateConversationsTable(conversations);
       },
       error: function (error) {
@@ -43,7 +42,8 @@
       $("#conversationsTableBody").append(
               "<tr id=" + conversations[i]._id + ">" +
               "<td>" + conversations[i].title + "</td>" +
-              "<td>" + conversations[i].sellerEmail + "</td>" +
+              "<td>" + conversations[i].owner + "</td>" +
+              "<td>" + conversations[i].offertant + "</td>" +
               "<td>" +
               "<a onclick=conversationView('" + conversations[i]._id + "')>Reanudar</a><br>" +
               "<a onclick=conversationDelete('" + conversations[i]._id + "')>Eliminar</a>" +
@@ -54,7 +54,7 @@
 
   function conversationDelete(_id) {
     $.ajax({
-      url: URLbase + "/conversation/" + _id,
+      url: URLbase + "/convers/delete/" + _id,
       type: "DELETE",
       data: {},
       dataType: 'json',
