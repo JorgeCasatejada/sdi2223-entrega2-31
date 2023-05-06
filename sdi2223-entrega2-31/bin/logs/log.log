@@ -5266,3 +5266,623 @@
                   Parámetros ruta: {} Parámetros consulta: {"message":"El usuario se ha desconectado correctamente","messageType":"alert-info "}
 [2023-05-05T22:48:19.121] [INFO] users - [Fri May 05 2023 22:48:19 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
                   Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:22:56.648] [INFO] users - [Sat May 06 2023 10:22:56 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:01.044] [INFO] users - [Sat May 06 2023 10:23:01 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/signup - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:03.017] [INFO] users - [Sat May 06 2023 10:23:03 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/signup - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:03.039] [INFO] users - [Sat May 06 2023 10:23:03 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/signup - Método HTTP: POST -
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:03.200] [INFO] users - [Sat May 06 2023 10:23:03 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:03.386] [INFO] users - [Sat May 06 2023 10:23:03 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/signup - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:05.357] [INFO] users - [Sat May 06 2023 10:23:05 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:05.541] [INFO] users - [Sat May 06 2023 10:23:05 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/signup - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:07.247] [INFO] users - [Sat May 06 2023 10:23:07 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/signup - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:07.279] [INFO] users - [Sat May 06 2023 10:23:07 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/signup?message=Las%20contrase%C3%B1as%20no%20coinciden%3Cbr%3E&messageType=alert-danger - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Las contraseñas no coinciden<br>","messageType":"alert-danger"}
+[2023-05-06T10:23:07.455] [INFO] users - [Sat May 06 2023 10:23:07 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:07.606] [INFO] users - [Sat May 06 2023 10:23:07 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/signup - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:09.239] [INFO] users - [Sat May 06 2023 10:23:09 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/signup - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:09.256] [INFO] users - [Sat May 06 2023 10:23:09 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/signup?message=Este%20correo%20ya%20est%C3%A1%20en%20uso%3Cbr%3E&messageType=alert-danger - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Este correo ya está en uso<br>","messageType":"alert-danger"}
+[2023-05-06T10:23:09.476] [INFO] users - [Sat May 06 2023 10:23:09 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:09.618] [INFO] users - [Sat May 06 2023 10:23:09 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:10.307] [INFO] users - [Sat May 06 2023 10:23:10 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:10.317] [INFO] admin - [Sat May 06 2023 10:23:10 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users?message=Inicio%20de%20sesi%C3%B3n%20correcto%20(Administrador)&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto (Administrador)","messageType":"alert-info "}
+[2023-05-06T10:23:10.445] [INFO] users - [Sat May 06 2023 10:23:10 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:10.588] [INFO] users - [Sat May 06 2023 10:23:10 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:11.206] [INFO] users - [Sat May 06 2023 10:23:11 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:11.213] [INFO] users - [Sat May 06 2023 10:23:11 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:11.362] [INFO] users - [Sat May 06 2023 10:23:11 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:11.507] [INFO] users - [Sat May 06 2023 10:23:11 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:12.167] [INFO] users - [Sat May 06 2023 10:23:12 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:12.180] [INFO] users - [Sat May 06 2023 10:23:12 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login?message=Email%20o%20password%20incorrecto&messageType=alert-danger%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Email o password incorrecto","messageType":"alert-danger "}
+[2023-05-06T10:23:12.320] [INFO] users - [Sat May 06 2023 10:23:12 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:12.482] [INFO] users - [Sat May 06 2023 10:23:12 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:13.582] [INFO] users - [Sat May 06 2023 10:23:13 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:13.723] [INFO] users - [Sat May 06 2023 10:23:13 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:14.389] [INFO] users - [Sat May 06 2023 10:23:14 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:14.395] [INFO] users - [Sat May 06 2023 10:23:14 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:14.523] [INFO] users - [Sat May 06 2023 10:23:14 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/logout - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:14.535] [INFO] users - [Sat May 06 2023 10:23:14 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login?message=El%20usuario%20se%20ha%20desconectado%20correctamente&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"El usuario se ha desconectado correctamente","messageType":"alert-info "}
+[2023-05-06T10:23:14.714] [INFO] users - [Sat May 06 2023 10:23:14 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:14.840] [INFO] users - [Sat May 06 2023 10:23:14 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:14.964] [INFO] users - [Sat May 06 2023 10:23:14 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:15.593] [INFO] users - [Sat May 06 2023 10:23:15 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:15.602] [INFO] admin - [Sat May 06 2023 10:23:15 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users?message=Inicio%20de%20sesi%C3%B3n%20correcto%20(Administrador)&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto (Administrador)","messageType":"alert-info "}
+[2023-05-06T10:23:16.003] [INFO] admin - [Sat May 06 2023 10:23:16 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users/?page=2 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"2"}
+[2023-05-06T10:23:16.365] [INFO] admin - [Sat May 06 2023 10:23:16 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users/?page=3 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"3"}
+[2023-05-06T10:23:16.651] [INFO] admin - [Sat May 06 2023 10:23:16 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users/?page=4 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"4"}
+[2023-05-06T10:23:16.953] [INFO] admin - [Sat May 06 2023 10:23:16 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users/?page=5 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"5"}
+[2023-05-06T10:23:17.224] [INFO] admin - [Sat May 06 2023 10:23:17 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users/?page=6 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"6"}
+[2023-05-06T10:23:17.401] [INFO] users - [Sat May 06 2023 10:23:17 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:17.551] [INFO] users - [Sat May 06 2023 10:23:17 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:18.219] [INFO] users - [Sat May 06 2023 10:23:18 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:18.227] [INFO] admin - [Sat May 06 2023 10:23:18 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users?message=Inicio%20de%20sesi%C3%B3n%20correcto%20(Administrador)&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto (Administrador)","messageType":"alert-info "}
+[2023-05-06T10:23:18.630] [INFO] admin - [Sat May 06 2023 10:23:18 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/delete - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:18.654] [INFO] admin - [Sat May 06 2023 10:23:18 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users?message=Se%20ha%20borrado%20correctamente%20el%20usuario&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha borrado correctamente el usuario","messageType":"alert-info"}
+[2023-05-06T10:23:18.766] [INFO] users - [Sat May 06 2023 10:23:18 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:18.937] [INFO] users - [Sat May 06 2023 10:23:18 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:19.558] [INFO] users - [Sat May 06 2023 10:23:19 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:19.563] [INFO] admin - [Sat May 06 2023 10:23:19 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users?message=Inicio%20de%20sesi%C3%B3n%20correcto%20(Administrador)&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto (Administrador)","messageType":"alert-info "}
+[2023-05-06T10:23:19.682] [INFO] admin - [Sat May 06 2023 10:23:19 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users/?page=3 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"3"}
+[2023-05-06T10:23:19.867] [INFO] admin - [Sat May 06 2023 10:23:19 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users/?page=5 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"5"}
+[2023-05-06T10:23:20.355] [INFO] admin - [Sat May 06 2023 10:23:20 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/delete - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:20.378] [INFO] admin - [Sat May 06 2023 10:23:20 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users?message=Se%20ha%20borrado%20correctamente%20el%20usuario&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha borrado correctamente el usuario","messageType":"alert-info"}
+[2023-05-06T10:23:20.529] [INFO] admin - [Sat May 06 2023 10:23:20 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users/?page=3 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"3"}
+[2023-05-06T10:23:20.730] [INFO] admin - [Sat May 06 2023 10:23:20 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users/?page=5 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"5"}
+[2023-05-06T10:23:20.908] [INFO] users - [Sat May 06 2023 10:23:20 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:21.059] [INFO] users - [Sat May 06 2023 10:23:21 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:21.698] [INFO] users - [Sat May 06 2023 10:23:21 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:21.708] [INFO] admin - [Sat May 06 2023 10:23:21 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users?message=Inicio%20de%20sesi%C3%B3n%20correcto%20(Administrador)&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto (Administrador)","messageType":"alert-info "}
+[2023-05-06T10:23:22.746] [INFO] admin - [Sat May 06 2023 10:23:22 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/delete - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:22.763] [INFO] admin - [Sat May 06 2023 10:23:22 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users?message=Se%20han%20borrado%20correctamente%20los%20usuarios&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se han borrado correctamente los usuarios","messageType":"alert-info"}
+[2023-05-06T10:23:22.946] [INFO] users - [Sat May 06 2023 10:23:22 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:23.097] [INFO] users - [Sat May 06 2023 10:23:23 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:23.761] [INFO] users - [Sat May 06 2023 10:23:23 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:23.766] [INFO] admin - [Sat May 06 2023 10:23:23 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users?message=Inicio%20de%20sesi%C3%B3n%20correcto%20(Administrador)&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto (Administrador)","messageType":"alert-info "}
+[2023-05-06T10:23:23.875] [INFO] users - [Sat May 06 2023 10:23:23 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:24.003] [INFO] users - [Sat May 06 2023 10:23:24 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:24.623] [INFO] users - [Sat May 06 2023 10:23:24 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:24.628] [INFO] users - [Sat May 06 2023 10:23:24 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:24.752] [INFO] offers - [Sat May 06 2023 10:23:24 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:25.360] [INFO] offers - [Sat May 06 2023 10:23:25 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:25.394] [INFO] users - [Sat May 06 2023 10:23:25 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Se%20ha%20a%C3%B1adido%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha añadido correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T10:23:25.543] [INFO] users - [Sat May 06 2023 10:23:25 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:25.693] [INFO] users - [Sat May 06 2023 10:23:25 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:26.400] [INFO] users - [Sat May 06 2023 10:23:26 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:26.410] [INFO] users - [Sat May 06 2023 10:23:26 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:26.610] [INFO] offers - [Sat May 06 2023 10:23:26 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:27.061] [INFO] offers - [Sat May 06 2023 10:23:27 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:27.075] [INFO] offers - [Sat May 06 2023 10:23:27 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add?message=El%20t%C3%ADtulo%20proporcionado%20es%20demasiado%20corto%3Cbr%3ELa%20descripci%C3%B3n%20proporcionada%20es%20demasiado%20corta%3Cbr%3EEl%20precio%20proporcionado%20no%20es%20v%C3%A1lido,%20debe%20ser%20positivo%3Cbr%3E&messageType=alert-danger - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"El título proporcionado es demasiado corto<br>La descripción proporcionada es demasiado corta<br>El precio proporcionado no es válido, debe ser positivo<br>","messageType":"alert-danger"}
+[2023-05-06T10:23:27.210] [INFO] users - [Sat May 06 2023 10:23:27 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:27.371] [INFO] users - [Sat May 06 2023 10:23:27 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:28.002] [INFO] users - [Sat May 06 2023 10:23:28 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:28.007] [INFO] users - [Sat May 06 2023 10:23:28 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:28.140] [INFO] users - [Sat May 06 2023 10:23:28 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers/?page=2 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"2"}
+[2023-05-06T10:23:28.333] [INFO] users - [Sat May 06 2023 10:23:28 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers/?page=3 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"3"}
+[2023-05-06T10:23:28.483] [INFO] users - [Sat May 06 2023 10:23:28 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:28.620] [INFO] users - [Sat May 06 2023 10:23:28 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:29.267] [INFO] users - [Sat May 06 2023 10:23:29 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:29.275] [INFO] users - [Sat May 06 2023 10:23:29 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:29.431] [INFO] offers - [Sat May 06 2023 10:23:29 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/delete/64560e7d07fe3ce46117b578 - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64560e7d07fe3ce46117b578"} Parámetros consulta: {}
+[2023-05-06T10:23:29.459] [INFO] users - [Sat May 06 2023 10:23:29 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Se%20ha%20borrado%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha borrado correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T10:23:29.587] [INFO] users - [Sat May 06 2023 10:23:29 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:29.730] [INFO] users - [Sat May 06 2023 10:23:29 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:30.390] [INFO] users - [Sat May 06 2023 10:23:30 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:30.402] [INFO] users - [Sat May 06 2023 10:23:30 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:30.562] [INFO] users - [Sat May 06 2023 10:23:30 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers/?page=3 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"3"}
+[2023-05-06T10:23:30.741] [INFO] offers - [Sat May 06 2023 10:23:30 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/delete/64560e603079203fa9ea38fc - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64560e603079203fa9ea38fc"} Parámetros consulta: {}
+[2023-05-06T10:23:30.768] [INFO] users - [Sat May 06 2023 10:23:30 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Se%20ha%20borrado%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha borrado correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T10:23:30.919] [INFO] users - [Sat May 06 2023 10:23:30 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers/?page=3 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"3"}
+[2023-05-06T10:23:31.067] [INFO] users - [Sat May 06 2023 10:23:31 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:31.253] [INFO] users - [Sat May 06 2023 10:23:31 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:31.966] [INFO] users - [Sat May 06 2023 10:23:31 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:31.972] [INFO] users - [Sat May 06 2023 10:23:31 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:32.085] [INFO] offers - [Sat May 06 2023 10:23:32 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:32.192] [INFO] users - [Sat May 06 2023 10:23:32 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:32.367] [INFO] users - [Sat May 06 2023 10:23:32 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:33.016] [INFO] users - [Sat May 06 2023 10:23:33 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:33.020] [INFO] users - [Sat May 06 2023 10:23:33 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:33.126] [INFO] offers - [Sat May 06 2023 10:23:33 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:33.239] [INFO] offers - [Sat May 06 2023 10:23:33 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/buy/64560e603079203fa9ea38f4 - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64560e603079203fa9ea38f4"} Parámetros consulta: {}
+[2023-05-06T10:23:33.337] [INFO] offers - [Sat May 06 2023 10:23:33 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers?message=Se%20ha%20comprado%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha comprado correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T10:23:33.470] [INFO] users - [Sat May 06 2023 10:23:33 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/logout - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:33.483] [INFO] users - [Sat May 06 2023 10:23:33 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login?message=El%20usuario%20se%20ha%20desconectado%20correctamente&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"El usuario se ha desconectado correctamente","messageType":"alert-info "}
+[2023-05-06T10:23:34.169] [INFO] users - [Sat May 06 2023 10:23:34 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:34.173] [INFO] users - [Sat May 06 2023 10:23:34 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:34.285] [INFO] offers - [Sat May 06 2023 10:23:34 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/delete/64560e603079203fa9ea38f4 - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64560e603079203fa9ea38f4"} Parámetros consulta: {}
+[2023-05-06T10:23:34.305] [INFO] users - [Sat May 06 2023 10:23:34 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=No%20puedes%20eliminar%20esta%20oferta&messageType=alert-danger - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"No puedes eliminar esta oferta","messageType":"alert-danger"}
+[2023-05-06T10:23:34.447] [INFO] users - [Sat May 06 2023 10:23:34 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:34.596] [INFO] users - [Sat May 06 2023 10:23:34 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:35.327] [INFO] users - [Sat May 06 2023 10:23:35 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:35.333] [INFO] users - [Sat May 06 2023 10:23:35 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:35.497] [INFO] offers - [Sat May 06 2023 10:23:35 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:35.712] [INFO] offers - [Sat May 06 2023 10:23:35 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers?search= - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"search":""}
+[2023-05-06T10:23:35.844] [INFO] users - [Sat May 06 2023 10:23:35 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:35.998] [INFO] users - [Sat May 06 2023 10:23:35 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:36.645] [INFO] users - [Sat May 06 2023 10:23:36 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:36.650] [INFO] users - [Sat May 06 2023 10:23:36 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:36.785] [INFO] offers - [Sat May 06 2023 10:23:36 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:37.246] [INFO] offers - [Sat May 06 2023 10:23:37 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers?search=Esto+no+coincide+de+ninguna+manera+33 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"search":"Esto no coincide de ninguna manera 33"}
+[2023-05-06T10:23:37.380] [INFO] users - [Sat May 06 2023 10:23:37 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:37.545] [INFO] users - [Sat May 06 2023 10:23:37 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:38.240] [INFO] users - [Sat May 06 2023 10:23:38 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:38.245] [INFO] users - [Sat May 06 2023 10:23:38 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:38.379] [INFO] offers - [Sat May 06 2023 10:23:38 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:38.759] [INFO] offers - [Sat May 06 2023 10:23:38 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers?search=Ejemplo+60 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"search":"Ejemplo 60"}
+[2023-05-06T10:23:39.198] [INFO] offers - [Sat May 06 2023 10:23:39 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers?search=eJeMpLO+60 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"search":"eJeMpLO 60"}
+[2023-05-06T10:23:39.365] [INFO] users - [Sat May 06 2023 10:23:39 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:39.528] [INFO] users - [Sat May 06 2023 10:23:39 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:40.198] [INFO] users - [Sat May 06 2023 10:23:40 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:40.208] [INFO] users - [Sat May 06 2023 10:23:40 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:40.342] [INFO] offers - [Sat May 06 2023 10:23:40 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:40.796] [INFO] offers - [Sat May 06 2023 10:23:40 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:40.845] [INFO] users - [Sat May 06 2023 10:23:40 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Se%20ha%20a%C3%B1adido%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha añadido correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T10:23:40.974] [INFO] users - [Sat May 06 2023 10:23:40 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/logout - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:40.993] [INFO] users - [Sat May 06 2023 10:23:40 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login?message=El%20usuario%20se%20ha%20desconectado%20correctamente&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"El usuario se ha desconectado correctamente","messageType":"alert-info "}
+[2023-05-06T10:23:41.125] [INFO] users - [Sat May 06 2023 10:23:41 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:41.746] [INFO] users - [Sat May 06 2023 10:23:41 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:41.755] [INFO] users - [Sat May 06 2023 10:23:41 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:41.883] [INFO] offers - [Sat May 06 2023 10:23:41 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:42.263] [INFO] offers - [Sat May 06 2023 10:23:42 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers?search=Oferta+Buscar - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"search":"Oferta Buscar"}
+[2023-05-06T10:23:42.390] [INFO] offers - [Sat May 06 2023 10:23:42 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/buy/64560e8c07fe3ce46117b5c1 - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64560e8c07fe3ce46117b5c1"} Parámetros consulta: {}
+[2023-05-06T10:23:42.429] [INFO] offers - [Sat May 06 2023 10:23:42 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers?message=Se%20ha%20comprado%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha comprado correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T10:23:42.560] [INFO] users - [Sat May 06 2023 10:23:42 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:42.697] [INFO] users - [Sat May 06 2023 10:23:42 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:43.404] [INFO] users - [Sat May 06 2023 10:23:43 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:43.410] [INFO] users - [Sat May 06 2023 10:23:43 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:43.518] [INFO] offers - [Sat May 06 2023 10:23:43 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:43.938] [INFO] offers - [Sat May 06 2023 10:23:43 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:43.966] [INFO] users - [Sat May 06 2023 10:23:43 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Se%20ha%20a%C3%B1adido%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha añadido correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T10:23:44.089] [INFO] users - [Sat May 06 2023 10:23:44 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/logout - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:44.102] [INFO] users - [Sat May 06 2023 10:23:44 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login?message=El%20usuario%20se%20ha%20desconectado%20correctamente&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"El usuario se ha desconectado correctamente","messageType":"alert-info "}
+[2023-05-06T10:23:44.248] [INFO] users - [Sat May 06 2023 10:23:44 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:44.909] [INFO] users - [Sat May 06 2023 10:23:44 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:44.914] [INFO] users - [Sat May 06 2023 10:23:44 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:45.034] [INFO] offers - [Sat May 06 2023 10:23:45 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:45.404] [INFO] offers - [Sat May 06 2023 10:23:45 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers?search=Oferta+cien - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"search":"Oferta cien"}
+[2023-05-06T10:23:45.508] [INFO] offers - [Sat May 06 2023 10:23:45 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/buy/64560e8f07fe3ce46117b5d3 - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64560e8f07fe3ce46117b5d3"} Parámetros consulta: {}
+[2023-05-06T10:23:45.547] [INFO] offers - [Sat May 06 2023 10:23:45 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers?message=Se%20ha%20comprado%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha comprado correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T10:23:45.667] [INFO] users - [Sat May 06 2023 10:23:45 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:45.783] [INFO] users - [Sat May 06 2023 10:23:45 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:46.465] [INFO] users - [Sat May 06 2023 10:23:46 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:46.469] [INFO] users - [Sat May 06 2023 10:23:46 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:46.579] [INFO] offers - [Sat May 06 2023 10:23:46 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:47.016] [INFO] offers - [Sat May 06 2023 10:23:47 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:47.044] [INFO] users - [Sat May 06 2023 10:23:47 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Se%20ha%20a%C3%B1adido%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha añadido correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T10:23:47.150] [INFO] users - [Sat May 06 2023 10:23:47 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/logout - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:47.166] [INFO] users - [Sat May 06 2023 10:23:47 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login?message=El%20usuario%20se%20ha%20desconectado%20correctamente&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"El usuario se ha desconectado correctamente","messageType":"alert-info "}
+[2023-05-06T10:23:47.304] [INFO] users - [Sat May 06 2023 10:23:47 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:47.980] [INFO] users - [Sat May 06 2023 10:23:47 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:47.985] [INFO] users - [Sat May 06 2023 10:23:47 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:48.088] [INFO] offers - [Sat May 06 2023 10:23:48 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:48.473] [INFO] offers - [Sat May 06 2023 10:23:48 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers?search=Oferta+muy+cara - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"search":"Oferta muy cara"}
+[2023-05-06T10:23:48.581] [INFO] offers - [Sat May 06 2023 10:23:48 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/buy/64560e9307fe3ce46117b5e5 - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64560e9307fe3ce46117b5e5"} Parámetros consulta: {}
+[2023-05-06T10:23:48.603] [INFO] offers - [Sat May 06 2023 10:23:48 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers?message=Saldo%20insuficiente%20en%20la%20cartera&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Saldo insuficiente en la cartera","messageType":"alert-info"}
+[2023-05-06T10:23:48.721] [INFO] users - [Sat May 06 2023 10:23:48 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:48.858] [INFO] users - [Sat May 06 2023 10:23:48 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:49.527] [INFO] users - [Sat May 06 2023 10:23:49 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:49.535] [INFO] users - [Sat May 06 2023 10:23:49 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:49.716] [INFO] offers - [Sat May 06 2023 10:23:49 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers/purchases - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:49.963] [INFO] offers - [Sat May 06 2023 10:23:49 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:50.138] [INFO] offers - [Sat May 06 2023 10:23:50 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/buy/64560e603079203fa9ea3925 - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64560e603079203fa9ea3925"} Parámetros consulta: {}
+[2023-05-06T10:23:50.201] [INFO] offers - [Sat May 06 2023 10:23:50 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers?message=Se%20ha%20comprado%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha comprado correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T10:23:50.358] [INFO] offers - [Sat May 06 2023 10:23:50 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers/purchases - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:50.480] [INFO] users - [Sat May 06 2023 10:23:50 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:50.601] [INFO] users - [Sat May 06 2023 10:23:50 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:51.267] [INFO] users - [Sat May 06 2023 10:23:51 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:51.272] [INFO] users - [Sat May 06 2023 10:23:51 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:51.459] [INFO] offers - [Sat May 06 2023 10:23:51 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:52.150] [INFO] offers - [Sat May 06 2023 10:23:52 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:52.185] [INFO] users - [Sat May 06 2023 10:23:52 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Se%20ha%20a%C3%B1adido%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha añadido correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T10:23:52.445] [INFO] users - [Sat May 06 2023 10:23:52 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:52.976] [INFO] users - [Sat May 06 2023 10:23:52 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:53.867] [INFO] users - [Sat May 06 2023 10:23:53 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:53.873] [INFO] users - [Sat May 06 2023 10:23:53 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:54.037] [INFO] offers - [Sat May 06 2023 10:23:54 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/highlight/64560e603079203fa9ea3943 - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64560e603079203fa9ea3943"} Parámetros consulta: {}
+[2023-05-06T10:23:54.078] [INFO] users - [Sat May 06 2023 10:23:54 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Oferta%20destacada%20correctamente&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Oferta destacada correctamente","messageType":"alert-info"}
+[2023-05-06T10:23:54.217] [INFO] offers - [Sat May 06 2023 10:23:54 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:54.372] [INFO] users - [Sat May 06 2023 10:23:54 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:54.502] [INFO] users - [Sat May 06 2023 10:23:54 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:55.188] [INFO] users - [Sat May 06 2023 10:23:55 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:55.194] [INFO] users - [Sat May 06 2023 10:23:55 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:55.308] [INFO] offers - [Sat May 06 2023 10:23:55 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:55.784] [INFO] offers - [Sat May 06 2023 10:23:55 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:55.821] [INFO] users - [Sat May 06 2023 10:23:55 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Se%20ha%20a%C3%B1adido%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha añadido correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T10:23:55.945] [INFO] users - [Sat May 06 2023 10:23:55 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/logout - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:55.956] [INFO] users - [Sat May 06 2023 10:23:55 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login?message=El%20usuario%20se%20ha%20desconectado%20correctamente&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"El usuario se ha desconectado correctamente","messageType":"alert-info "}
+[2023-05-06T10:23:56.082] [INFO] users - [Sat May 06 2023 10:23:56 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:56.771] [INFO] users - [Sat May 06 2023 10:23:56 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:56.776] [INFO] users - [Sat May 06 2023 10:23:56 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:56.921] [INFO] offers - [Sat May 06 2023 10:23:56 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:57.374] [INFO] offers - [Sat May 06 2023 10:23:57 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers?search=Oferta+32 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"search":"Oferta 32"}
+[2023-05-06T10:23:57.517] [INFO] offers - [Sat May 06 2023 10:23:57 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/buy/64560e9b07fe3ce46117b60f - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64560e9b07fe3ce46117b60f"} Parámetros consulta: {}
+[2023-05-06T10:23:57.585] [INFO] offers - [Sat May 06 2023 10:23:57 GMT+0200 (hora de verano de Europa central)] - Mapping: /offers?message=Se%20ha%20comprado%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha comprado correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T10:23:57.713] [INFO] users - [Sat May 06 2023 10:23:57 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:57.865] [INFO] offers - [Sat May 06 2023 10:23:57 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/highlight/64560e603079203fa9ea3954 - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64560e603079203fa9ea3954"} Parámetros consulta: {}
+[2023-05-06T10:23:57.902] [INFO] users - [Sat May 06 2023 10:23:57 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Saldo%20insuficiente%20para%20destacar%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Saldo insuficiente para destacar la oferta","messageType":"alert-info"}
+[2023-05-06T10:23:58.033] [INFO] users - [Sat May 06 2023 10:23:58 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:58.123] [INFO] users - [Sat May 06 2023 10:23:58 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:58.230] [INFO] users - [Sat May 06 2023 10:23:58 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:58.311] [INFO] users - [Sat May 06 2023 10:23:58 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:58.428] [INFO] users - [Sat May 06 2023 10:23:58 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:59.123] [INFO] users - [Sat May 06 2023 10:23:59 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:59.131] [INFO] users - [Sat May 06 2023 10:23:59 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T10:23:59.209] [INFO] users - [Sat May 06 2023 10:23:59 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Acci%C3%B3n%20prohibida%20para%20el%20usuario&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Acción prohibida para el usuario","messageType":"alert-info"}
+[2023-05-06T10:23:59.338] [INFO] users - [Sat May 06 2023 10:23:59 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:23:59.469] [INFO] users - [Sat May 06 2023 10:23:59 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:24:00.110] [INFO] users - [Sat May 06 2023 10:24:00 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:24:00.118] [INFO] admin - [Sat May 06 2023 10:24:00 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users?message=Inicio%20de%20sesi%C3%B3n%20correcto%20(Administrador)&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto (Administrador)","messageType":"alert-info "}
+[2023-05-06T10:24:00.253] [INFO] admin - [Sat May 06 2023 10:24:00 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/logs - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:24:00.440] [INFO] admin - [Sat May 06 2023 10:24:00 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:24:00.563] [INFO] admin - [Sat May 06 2023 10:24:00 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/logs - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:24:00.701] [INFO] users - [Sat May 06 2023 10:24:00 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:24:00.817] [INFO] users - [Sat May 06 2023 10:24:00 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:24:01.496] [INFO] users - [Sat May 06 2023 10:24:01 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:24:01.504] [INFO] admin - [Sat May 06 2023 10:24:01 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/users?message=Inicio%20de%20sesi%C3%B3n%20correcto%20(Administrador)&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto (Administrador)","messageType":"alert-info "}
+[2023-05-06T10:24:01.659] [INFO] admin - [Sat May 06 2023 10:24:01 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/logs - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:24:01.873] [INFO] admin - [Sat May 06 2023 10:24:01 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/logs/delete - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T10:24:01.898] [INFO] admin - [Sat May 06 2023 10:24:01 GMT+0200 (hora de verano de Europa central)] - Mapping: /admin/logs?message=Se%20han%20borrado%20correctamente%20los%20logs&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se han borrado correctamente los logs","messageType":"alert-info"}
+[2023-05-06T11:36:27.264] [INFO] users - [Sat May 06 2023 11:36:27 GMT+0200 (hora de verano de Europa central)] - Mapping: /myWallapop - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:36:30.338] [INFO] users - [Sat May 06 2023 11:36:30 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:36:32.907] [INFO] users - [Sat May 06 2023 11:36:32 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:36:32.917] [INFO] users - [Sat May 06 2023 11:36:32 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T11:36:35.179] [INFO] offers - [Sat May 06 2023 11:36:35 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:36:54.611] [INFO] offers - [Sat May 06 2023 11:36:54 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:36:54.652] [INFO] users - [Sat May 06 2023 11:36:54 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Se%20ha%20a%C3%B1adido%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha añadido correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T11:40:50.278] [INFO] users - [Sat May 06 2023 11:40:50 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers/?page=3 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"3"}
+[2023-05-06T11:40:57.171] [INFO] offers - [Sat May 06 2023 11:40:57 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/highlight/64561fb6acc7f96bb5ea2dcd - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64561fb6acc7f96bb5ea2dcd"} Parámetros consulta: {}
+[2023-05-06T11:40:57.218] [INFO] users - [Sat May 06 2023 11:40:57 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Oferta%20destacada%20correctamente&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Oferta destacada correctamente","messageType":"alert-info"}
+[2023-05-06T11:41:00.707] [INFO] offers - [Sat May 06 2023 11:41:00 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/highlight/64561f95acc7f96bb5ea2cff - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64561f95acc7f96bb5ea2cff"} Parámetros consulta: {}
+[2023-05-06T11:41:00.746] [INFO] users - [Sat May 06 2023 11:41:00 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Oferta%20destacada%20correctamente&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Oferta destacada correctamente","messageType":"alert-info"}
+[2023-05-06T11:41:02.436] [INFO] offers - [Sat May 06 2023 11:41:02 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/highlight/64561f95acc7f96bb5ea2d08 - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64561f95acc7f96bb5ea2d08"} Parámetros consulta: {}
+[2023-05-06T11:41:02.471] [INFO] users - [Sat May 06 2023 11:41:02 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Oferta%20destacada%20correctamente&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Oferta destacada correctamente","messageType":"alert-info"}
+[2023-05-06T11:41:03.562] [INFO] offers - [Sat May 06 2023 11:41:03 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/highlight/64561f95acc7f96bb5ea2d00 - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64561f95acc7f96bb5ea2d00"} Parámetros consulta: {}
+[2023-05-06T11:41:03.602] [INFO] users - [Sat May 06 2023 11:41:03 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Oferta%20destacada%20correctamente&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Oferta destacada correctamente","messageType":"alert-info"}
+[2023-05-06T11:41:04.997] [INFO] users - [Sat May 06 2023 11:41:04 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers/?page=2 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"2"}
+[2023-05-06T11:41:07.290] [INFO] offers - [Sat May 06 2023 11:41:07 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/highlight/64561f95acc7f96bb5ea2d01 - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"64561f95acc7f96bb5ea2d01"} Parámetros consulta: {}
+[2023-05-06T11:41:07.316] [INFO] users - [Sat May 06 2023 11:41:07 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Saldo%20insuficiente%20para%20destacar%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Saldo insuficiente para destacar la oferta","messageType":"alert-info"}
+[2023-05-06T11:41:13.671] [INFO] offers - [Sat May 06 2023 11:41:13 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:41:28.479] [INFO] offers - [Sat May 06 2023 11:41:28 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:41:28.522] [INFO] users - [Sat May 06 2023 11:41:28 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Se%20ha%20a%C3%B1adido%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha añadido correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T11:44:44.452] [INFO] users - [Sat May 06 2023 11:44:44 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:44:47.288] [INFO] users - [Sat May 06 2023 11:44:47 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:44:47.296] [INFO] users - [Sat May 06 2023 11:44:47 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T11:44:49.030] [INFO] offers - [Sat May 06 2023 11:44:49 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:45:05.521] [INFO] offers - [Sat May 06 2023 11:45:05 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:45:05.564] [INFO] users - [Sat May 06 2023 11:45:05 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Se%20ha%20a%C3%B1adido%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha añadido correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T11:47:46.339] [INFO] users - [Sat May 06 2023 11:47:46 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:47:49.554] [INFO] users - [Sat May 06 2023 11:47:49 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:47:49.570] [INFO] users - [Sat May 06 2023 11:47:49 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T11:47:51.654] [INFO] offers - [Sat May 06 2023 11:47:51 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:48:19.684] [INFO] offers - [Sat May 06 2023 11:48:19 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:51:48.616] [INFO] users - [Sat May 06 2023 11:51:48 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:51:51.517] [INFO] users - [Sat May 06 2023 11:51:51 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:51:51.531] [INFO] users - [Sat May 06 2023 11:51:51 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T11:51:53.507] [INFO] offers - [Sat May 06 2023 11:51:53 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:52:18.854] [INFO] offers - [Sat May 06 2023 11:52:18 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:54:43.782] [INFO] users - [Sat May 06 2023 11:54:43 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:54:49.390] [INFO] users - [Sat May 06 2023 11:54:49 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:54:49.405] [INFO] users - [Sat May 06 2023 11:54:49 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T11:54:52.013] [INFO] offers - [Sat May 06 2023 11:54:52 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:55:06.438] [INFO] offers - [Sat May 06 2023 11:55:06 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:57:31.676] [INFO] users - [Sat May 06 2023 11:57:31 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:57:35.226] [INFO] users - [Sat May 06 2023 11:57:35 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:57:35.240] [INFO] users - [Sat May 06 2023 11:57:35 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-06T11:57:38.638] [INFO] users - [Sat May 06 2023 11:57:38 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers/?page=3 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"3"}
+[2023-05-06T11:57:42.536] [INFO] offers - [Sat May 06 2023 11:57:42 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/delete/645623faf50fd888ead66c63 - Método HTTP: GET -  
+                  Parámetros ruta: {"id":"645623faf50fd888ead66c63"} Parámetros consulta: {}
+[2023-05-06T11:57:42.571] [INFO] users - [Sat May 06 2023 11:57:42 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Se%20ha%20borrado%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha borrado correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T11:57:46.146] [INFO] offers - [Sat May 06 2023 11:57:46 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:58:03.159] [INFO] offers - [Sat May 06 2023 11:58:03 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:58:03.215] [INFO] users - [Sat May 06 2023 11:58:03 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Se%20ha%20a%C3%B1adido%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha añadido correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T11:58:19.418] [INFO] offers - [Sat May 06 2023 11:58:19 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:58:39.053] [INFO] offers - [Sat May 06 2023 11:58:39 GMT+0200 (hora de verano de Europa central)] - Mapping: /offer/add - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T11:58:39.092] [INFO] users - [Sat May 06 2023 11:58:39 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Se%20ha%20a%C3%B1adido%20correctamente%20la%20oferta&messageType=alert-info - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Se ha añadido correctamente la oferta","messageType":"alert-info"}
+[2023-05-06T11:58:41.699] [INFO] users - [Sat May 06 2023 11:58:41 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers/?page=3 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"3"}
+[2023-05-06T11:58:45.293] [INFO] users - [Sat May 06 2023 11:58:45 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers/?page=4 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"page":"4"}

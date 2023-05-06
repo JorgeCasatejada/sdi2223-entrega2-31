@@ -35,10 +35,10 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
                 let hasMoney = false;
                 getWallet(req.session.user).then(wallet => {
                     hasMoney = wallet >= 20 ? true : false;
-                    if (req.body.highlight=='on' && !hasMoney)
+                    if (req.body.highlight ==='on' && !hasMoney)
                         res.redirect("/offer/add?message=Saldo insuficiente para destacar la oferta&messageType=alert-danger");
                     else {
-                        let isHighlighted = req.body.highlight == 'on'? true : false;
+                        let isHighlighted = req.body.highlight === 'on'? true : false;
                         let offer = {
                             title: req.body.title,
                             description: req.body.description,
@@ -49,12 +49,20 @@ module.exports = function (app, usersRepository, offersRepository, logRepository
                             highlighted:isHighlighted
                         }
                         offersRepository.insertOffer(offer).then(offerId => {
-                            usersRepository.decrementWallet(req.session.user, 20).then(result => {
-                                if (result.modifiedCount > 0)
-                                    res.redirect("/user/offers" +
-                                        "?message=Se ha añadido correctamente la oferta"+
-                                        "&messageType=alert-info");
-                            })
+                            // si se destaca quitar dinero
+                            if (isHighlighted){
+                                usersRepository.decrementWallet(req.session.user, 20).then(result => {
+                                    if (result.modifiedCount > 0)
+                                        res.redirect("/user/offers" +
+                                            "?message=Se ha añadido correctamente la oferta"+
+                                            "&messageType=alert-info");
+                                })
+                                // si no se destaca no se quita dinero
+                            } else {
+                                res.redirect("/user/offers" +
+                                    "?message=Se ha añadido correctamente la oferta"+
+                                    "&messageType=alert-info");
+                            }
                         }).catch(async error => {
                             await logRepository.insertLog('ALTA', logText);// alta de oferta
                             res.redirect("/offer/add" +
