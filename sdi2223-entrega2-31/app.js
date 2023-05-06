@@ -31,7 +31,7 @@ app.use("/offer/highlight",userSessionRouter);
 app.use("/user/offers",userSessionRouter);
 app.use("/user/logout",userSessionRouter);
 app.use("/offers",userSessionRouter);
-app.use("/offers/buy", userSessionRouter);
+app.use("/offer/buy", userSessionRouter);
 app.use("/offers/purchases", userSessionRouter);
 
 let crypto = require('crypto');
@@ -78,7 +78,7 @@ messagesRepository.init(app, MongoClient);
 require("./routes/users.js")(app, usersRepository, offersRepository, logRepository, log4js.getLogger("users"));
 require("./routes/admin.js")(app, usersRepository, logRepository, log4js.getLogger("admin"));
 require("./routes/offers.js")(app, usersRepository, offersRepository, logRepository, log4js.getLogger("offers"));
-require("./routes/api/APIv1.0.js")(app, usersRepository, offersRepository, conversRepository, messagesRepository);
+require("./routes/api/APIv1.0.js")(app, usersRepository, offersRepository, conversRepository, messagesRepository, logRepository, log4js.getLogger("api"));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
