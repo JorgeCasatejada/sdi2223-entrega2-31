@@ -317,7 +317,10 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         }
     });
 
+
+    //TODO: Devuelve la conversación asociada al usuario activo y a la oferta pasada por parametro en la url.
     app.get("/api/v1.0/offerConversation/:offerId", async function (req, res) {
+        //TODO: LOGS
         // -------- LOG ------------
         const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
                   Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
@@ -326,8 +329,8 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         // -----------------
 
         let filter = { offertant: res.user, idOffer: ObjectId(req.params.offerId)};
+        console.log(filter);
         conversRepository.getConvers(filter, {}).then(convers => {
-            console.log(convers);
             res.status(200);
             res.send({ convers: convers })
         }).catch(error => {

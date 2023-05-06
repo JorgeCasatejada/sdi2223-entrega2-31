@@ -5886,3 +5886,141 @@
                   Parámetros ruta: {} Parámetros consulta: {"page":"3"}
 [2023-05-06T11:58:45.293] [INFO] users - [Sat May 06 2023 11:58:45 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers/?page=4 - Método HTTP: GET -  
                   Parámetros ruta: {} Parámetros consulta: {"page":"4"}
+[2023-05-06T23:07:17.531] [INFO] api - [Sat May 06 2023 23:07:17 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:07:42.533] [INFO] api - [Sat May 06 2023 23:07:42 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:07:45.177] [INFO] api - [Sat May 06 2023 23:07:45 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:07:46.975] [INFO] api - [Sat May 06 2023 23:07:46 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offerConversation/6456be13902ec199ee00f1a7 - Método HTTP: GET -  
+                  Parámetros ruta: {"offerId":"6456be13902ec199ee00f1a7"} Parámetros consulta: {}
+[2023-05-06T23:09:29.165] [INFO] api - [Sat May 06 2023 23:09:29 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:09:34.398] [INFO] api - [Sat May 06 2023 23:09:34 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:09:35.938] [INFO] api - [Sat May 06 2023 23:09:35 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:09:36.236] [INFO] api - [Sat May 06 2023 23:09:36 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST -  
+                    Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:09:36.539] [INFO] api - [Sat May 06 2023 23:09:36 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:09:40.055] [INFO] api - [Sat May 06 2023 23:09:40 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:09:41.964] [INFO] api - [Sat May 06 2023 23:09:41 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/delete/6456c12d276ac9b7ea282d0d - Método HTTP: DELETE -  
+                  Parámetros ruta: {"conver":"6456c12d276ac9b7ea282d0d"} Parámetros consulta: {}
+[2023-05-06T23:09:43.793] [INFO] api - [Sat May 06 2023 23:09:43 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:09:45.431] [INFO] api - [Sat May 06 2023 23:09:45 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offerConversation/6456be13902ec199ee00f1a9 - Método HTTP: GET -  
+                  Parámetros ruta: {"offerId":"6456be13902ec199ee00f1a9"} Parámetros consulta: {}
+[2023-05-06T23:10:31.334] [INFO] api - [Sat May 06 2023 23:10:31 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:10:34.543] [INFO] api - [Sat May 06 2023 23:10:34 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -
+                                                Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:10:34.554] [INFO] api - [Sat May 06 2023 23:10:34 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/fromconver/6456c24ac957cc30f7facc8b - Método HTTP: GET -  
+                  Parámetros ruta: {"conver":"6456c24ac957cc30f7facc8b"} Parámetros consulta: {}
+[2023-05-06T23:10:37.815] [INFO] api - [Sat May 06 2023 23:10:37 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:10:50.675] [INFO] api - [Sat May 06 2023 23:10:50 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/fromconver/6456c24ac957cc30f7facc8b - Método HTTP: GET -  
+                  Parámetros ruta: {"conver":"6456c24ac957cc30f7facc8b"} Parámetros consulta: {}
+[2023-05-06T23:10:54.039] [INFO] api - [Sat May 06 2023 23:10:54 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:10:56.170] [INFO] api - [Sat May 06 2023 23:10:56 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:10:58.161] [INFO] api - [Sat May 06 2023 23:10:58 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:11:00.398] [INFO] api - [Sat May 06 2023 23:11:00 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:12:16.370] [INFO] api - [Sat May 06 2023 23:12:16 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offerConversation/6456be13902ec199ee00f1a6 - Método HTTP: GET -  
+                  Parámetros ruta: {"offerId":"6456be13902ec199ee00f1a6"} Parámetros consulta: {}
+[2023-05-06T23:13:08.613] [INFO] api - [Sat May 06 2023 23:13:08 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offerConversation/6456be13902ec199ee00f1a2 - Método HTTP: GET -  
+                  Parámetros ruta: {"offerId":"6456be13902ec199ee00f1a2"} Parámetros consulta: {}
+[2023-05-06T23:13:25.944] [INFO] api - [Sat May 06 2023 23:13:25 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:13:25.980] [INFO] api - [Sat May 06 2023 23:13:25 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:13:29.443] [INFO] api - [Sat May 06 2023 23:13:29 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:13:31.093] [INFO] api - [Sat May 06 2023 23:13:31 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:13:31.118] [INFO] api - [Sat May 06 2023 23:13:31 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:13:38.910] [INFO] api - [Sat May 06 2023 23:13:38 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offerConversation/6456be13902ec199ee00f1a6 - Método HTTP: GET -  
+                  Parámetros ruta: {"offerId":"6456be13902ec199ee00f1a6"} Parámetros consulta: {}
+[2023-05-06T23:14:05.359] [INFO] api - [Sat May 06 2023 23:14:05 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:14:05.373] [INFO] api - [Sat May 06 2023 23:14:05 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST -  
+                    Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:14:05.388] [INFO] api - [Sat May 06 2023 23:14:05 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:14:06.272] [INFO] api - [Sat May 06 2023 23:14:06 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:14:09.334] [INFO] api - [Sat May 06 2023 23:14:09 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:16:21.772] [INFO] api - [Sat May 06 2023 23:16:21 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:16:22.527] [INFO] api - [Sat May 06 2023 23:16:22 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:16:23.615] [INFO] api - [Sat May 06 2023 23:16:23 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offerConversation/6456be13902ec199ee00f1a9 - Método HTTP: GET -  
+                  Parámetros ruta: {"offerId":"6456be13902ec199ee00f1a9"} Parámetros consulta: {}
+[2023-05-06T23:16:25.912] [INFO] api - [Sat May 06 2023 23:16:25 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:18:08.723] [INFO] api - [Sat May 06 2023 23:18:08 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:18:08.766] [INFO] api - [Sat May 06 2023 23:18:08 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST -  
+                    Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:18:08.790] [INFO] api - [Sat May 06 2023 23:18:08 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:18:10.895] [INFO] api - [Sat May 06 2023 23:18:10 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offerConversation/6456be13902ec199ee00f135 - Método HTTP: GET -  
+                  Parámetros ruta: {"offerId":"6456be13902ec199ee00f135"} Parámetros consulta: {}
+[2023-05-06T23:18:17.840] [INFO] api - [Sat May 06 2023 23:18:17 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:18:19.543] [INFO] api - [Sat May 06 2023 23:18:19 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:18:22.056] [INFO] api - [Sat May 06 2023 23:18:22 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:18:26.512] [INFO] api - [Sat May 06 2023 23:18:26 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:18:32.711] [INFO] api - [Sat May 06 2023 23:18:32 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offerConversation/6456be13902ec199ee00f135 - Método HTTP: GET -  
+                  Parámetros ruta: {"offerId":"6456be13902ec199ee00f135"} Parámetros consulta: {}
+[2023-05-06T23:18:37.079] [INFO] api - [Sat May 06 2023 23:18:37 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:20:00.050] [INFO] api - [Sat May 06 2023 23:20:00 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:20:04.064] [INFO] api - [Sat May 06 2023 23:20:04 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:20:04.087] [INFO] api - [Sat May 06 2023 23:20:04 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/fromconver/undefined - Método HTTP: GET -  
+                  Parámetros ruta: {"conver":"undefined"} Parámetros consulta: {}
+[2023-05-06T23:20:05.469] [INFO] api - [Sat May 06 2023 23:20:05 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:20:06.366] [INFO] api - [Sat May 06 2023 23:20:06 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/delete/6456c24ac957cc30f7facc8b - Método HTTP: DELETE -  
+                  Parámetros ruta: {"conver":"6456c24ac957cc30f7facc8b"} Parámetros consulta: {}
+[2023-05-06T23:20:07.309] [INFO] api - [Sat May 06 2023 23:20:07 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:20:08.871] [INFO] api - [Sat May 06 2023 23:20:08 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offerConversation/6456be13902ec199ee00f1a6 - Método HTTP: GET -  
+                  Parámetros ruta: {"offerId":"6456be13902ec199ee00f1a6"} Parámetros consulta: {}
+[2023-05-06T23:20:11.254] [INFO] api - [Sat May 06 2023 23:20:11 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:20:11.286] [INFO] api - [Sat May 06 2023 23:20:11 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -
+                                                Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:20:11.295] [INFO] api - [Sat May 06 2023 23:20:11 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/fromconver/6456c48b96f034e99fe11a0c - Método HTTP: GET -  
+                  Parámetros ruta: {"conver":"6456c48b96f034e99fe11a0c"} Parámetros consulta: {}
+[2023-05-06T23:20:14.455] [INFO] api - [Sat May 06 2023 23:20:14 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:20:14.477] [INFO] api - [Sat May 06 2023 23:20:14 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/fromconver/6456c48b96f034e99fe11a0c - Método HTTP: GET -  
+                  Parámetros ruta: {"conver":"6456c48b96f034e99fe11a0c"} Parámetros consulta: {}
+[2023-05-06T23:20:15.382] [INFO] api - [Sat May 06 2023 23:20:15 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:20:15.404] [INFO] api - [Sat May 06 2023 23:20:15 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/fromconver/6456c48b96f034e99fe11a0c - Método HTTP: GET -  
+                  Parámetros ruta: {"conver":"6456c48b96f034e99fe11a0c"} Parámetros consulta: {}
+[2023-05-06T23:20:16.759] [INFO] api - [Sat May 06 2023 23:20:16 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:20:16.781] [INFO] api - [Sat May 06 2023 23:20:16 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/fromconver/6456c48b96f034e99fe11a0c - Método HTTP: GET -  
+                  Parámetros ruta: {"conver":"6456c48b96f034e99fe11a0c"} Parámetros consulta: {}
+[2023-05-06T23:20:20.663] [INFO] api - [Sat May 06 2023 23:20:20 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-06T23:20:21.898] [INFO] api - [Sat May 06 2023 23:20:21 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/fromconver/6456c48b96f034e99fe11a0c - Método HTTP: GET -  
+                  Parámetros ruta: {"conver":"6456c48b96f034e99fe11a0c"} Parámetros consulta: {}
+[2023-05-06T23:20:21.911] [INFO] api - [Sat May 06 2023 23:20:21 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/fromconver/6456c48b96f034e99fe11a0c - Método HTTP: GET -  
+                  Parámetros ruta: {"conver":"6456c48b96f034e99fe11a0c"} Parámetros consulta: {}
+[2023-05-06T23:20:24.159] [INFO] api - [Sat May 06 2023 23:20:24 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
