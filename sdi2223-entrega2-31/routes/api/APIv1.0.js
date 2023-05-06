@@ -185,7 +185,7 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
                                 res.status(500);
                                 res.json({ error: "El usuario no puede iniciar una conversación por un producto propio." });
                             } else {
-                                let filter2 = {};
+                                let filter2 = { offertant: res.user, idOffer: offer._id };
                                 // Comprobación de que la oferta no tenga una conversación ya asignada con el usuario interesado
                                 conversRepository.findConver(filter2, {}).then((conv) => {
                                     // Si la conversación para esa oferta y ofertante no existía
@@ -304,6 +304,7 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         logger.info(logText);
         await logRepository.insertLog('PET', logText);
         // -----------------
+
         let filter = { $or: [{owner: res.user}, {offertant: res.user}] };
         conversRepository.getConvers(filter, {}).then(convers => {
             res.status(200);
@@ -321,25 +322,38 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         logger.info(logText);
         await logRepository.insertLog('PET', logText);
         // -----------------
-        // validación pendiente
+
         try {
             if (req.params.conver !== null && typeof req.params.conver !== "undefined" && req.params.conver.trim() !== "") {
                 let filter = {_id: ObjectId(req.params.conver)};
-                conversRepository.deleteConver(filter, {}).then((result) => {
-                    if(result === null |result.deletedCount === 0) {
+                conversRepository.findConver(filter, {}).then((conver) => {
+                    if(conver === null) {
                         res.status(404);
                         res.json({error: "La conversación que se quiere borrar, no existe." });
-                    } else {
-                        let filter2 = {idConver: ObjectId(req.params.conver)};
-                        messagesRepository.deleteMessages(filter2, {}).then((result2) => {
-                            if(result2 === null | result2.deletedCount === 0) {
+                    }
+                    // VALIDACIÓN: Borrado de una conversación ajena
+                    else if(conver.owner !== res.user && conver.offertant !== res.user) {
+                        res.status(500);
+                        res.json({ error: "El usuario no puede borrar una conversación ajena." });
+                    }
+                    else {
+                        conversRepository.deleteConver(filter, {}).then((result) => {
+                            if(result === null | result.deletedCount === 0) {
                                 res.status(404);
-                                res.json({error: "La conversación que se quiere borrar, no tiene mensajes." });
+                                res.json({error: "La conversación que se quiere borrar, no existe." });
                             } else {
-                                res.status(200);
-                                res.send(JSON.stringify(result2));
+                                let filter2 = {idConver: conver._id};
+                                messagesRepository.deleteMessages(filter2, {}).then((result2) => {
+                                    if (result2 === null | result2.deletedCount === 0) {
+                                        res.status(404);
+                                        res.json({error: "La conversación que se quiere borrar, no tiene mensajes."});
+                                    } else {
+                                        res.status(200);
+                                        res.send(JSON.stringify(result2));
+                                    }
+                                });
                             }
-                        });
+                        })
                     }
                 })
             } else {
@@ -359,28 +373,46 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         logger.info(logText);
         await logRepository.insertLog('PET', logText);
         // -----------------
-        // validación pendiente
 
         try {
             if (req.params.message !== null && typeof req.params.message !== "undefined" && req.params.message.trim() !== "") {
                 let filter = {_id: ObjectId(req.params.message)};
-                let options = {upsert: false};
-                let newInfo = {
-                    read: true
-                }
-                messagesRepository.updateMessage(newInfo, filter, options).then((result) => {
-                    console.log(result);
-                    if (result === null || result.matchedCount == 0) {
+                messagesRepository.findMessage(filter, {}).then((message) => {
+                    if(message === null) {
                         res.status(404);
                         res.json({error: "El mensaje que se quiere marcar como leído, no existe."});
-                    } else if (result.modifiedCount === 0) {
-                        res.status(409);
-                        res.json({error: "El mensaje ya se había leído"});
                     } else {
-                        res.status(200);
-                        res.json({message: "Mensaje marcado a leído", result: result});
+                        let filter2 = {_id: message.idConver}
+                        conversRepository.findConver(filter2, {}).then((conver) => {
+                            // VALIDACIÓN: Usuario ajeno a la conversación quiere marcar un mensaje como leído
+                            if(conver.offertant !== res.user && conver.owner !== res.user) {
+                                res.status(500);
+                                res.json({ error: "El usuario no puede marcar como leído un mensaje de una conversación ajena." });
+                            }
+                            // VALIDACIÓN: Un usuario de la conversación quiere marcar como leído un mensaje escrito por él
+                            else if(message.author === res.user) {
+                                res.status(500);
+                                res.json({ error: "El usuario no puede marcar como leído un mensaje escrito por él." });
+                            }
+                            else {
+                                let options = {upsert: false};
+                                let newInfo = {read: true};
+                                messagesRepository.updateMessage(newInfo, filter, options).then((result) => {
+                                    if (result === null || result.matchedCount == 0) {
+                                        res.status(404);
+                                        res.json({error: "El mensaje que se quiere marcar como leído, no existe."});
+                                    } else if (result.modifiedCount === 0) {
+                                        res.status(409);
+                                        res.json({error: "El mensaje ya se había leído"});
+                                    } else {
+                                        res.status(200);
+                                        res.json({message: "Mensaje marcado a leído", result: result});
+                                    }
+                                });
+                            }
+                        })
                     }
-                });
+                })
             } else {
                 res.status(400);
                 res.json({ error: "Se necesita un mensaje para poder leerlo." });
