@@ -45,5 +45,5 @@ exports.userLoginValidator = [
     check("email", "El email proporcionado no es válido").trim().not().isEmpty(),
     check("email", "El email proporcionado es demasiado corto").trim().isLength({min: 3}),
     check("password", "La contraseña proporcionada no es válida").trim().not().isEmpty(),
-    check("password", "La contraseña debe tener al menos 6 caracteres").trim().isLength({min: 3})
+    check("password", "La contraseña debe tener al menos 3 caracteres").trim().isLength({min: 3})
 ]
