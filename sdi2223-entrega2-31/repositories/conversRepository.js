@@ -5,6 +5,7 @@ module.exports = {
         this.mongoClient = mongoClient;
         this.app = app;
     },
+    // Método para insertar una conversación en la BBDD
     insertConver: async function (conver) {
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
@@ -17,6 +18,7 @@ module.exports = {
             throw (error);
         }
     },
+    // Método para encontrar una conversación de la BBDD
     findConver: async function (filter, options) {
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
@@ -29,6 +31,7 @@ module.exports = {
             throw (error);
         }
     },
+    // Obtener un listado de conversaciones
     getConvers: async function (filter, options) {
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
@@ -41,6 +44,7 @@ module.exports = {
             throw (error);
         }
     },
+    // Eliminar una conversación de la base de datos
     deleteConver: async function (filter, options) {
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));

@@ -5,6 +5,7 @@ const {validationResult} = require("express-validator");
 
 module.exports = function (app, usersRepository, offersRepository, conversRepository, messagesRepository, logRepository, logger) {
 
+    // Método encargado de hacer el login de un usuario en APIRest
     app.post('/api/v1.0/users/login', userLoginValidator, async function(req, res){
         // -------- LOG ------------
         const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
@@ -98,6 +99,7 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         }
     });
 
+    // Método encargado de extraer las ofertas de la bbdd, cuyo propietario no sea el usuario en sesión
     app.get("/api/v1.0/offers/availablefromothers", async function (req, res) {
         // -------- LOG ------------
         const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
@@ -116,6 +118,7 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         });
     });
 
+    // Método para enviar un mensaje a una oferta (si es el primero) o a una conversación
     app.post('/api/v1.0/messages/send', firstMessageValidator, async function (req, res) {
         // -------- LOG ------------
         const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
@@ -257,6 +260,7 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         }
     });
 
+    // Método que obtiene los mensajes de una conversación
     app.get("/api/v1.0/messages/fromconver/:conver", async function (req, res) {
         // -------- LOG ------------
         const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
@@ -297,6 +301,7 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         }
     });
 
+    // Método que recupera el listado de conversaciones del usuario en sesión
     app.get("/api/v1.0/convers/all", async function (req, res) {
         // -------- LOG ------------
         const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
@@ -346,6 +351,7 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         });
     });
 
+    // Método para borrar una conversación y sus mensajes
     app.delete("/api/v1.0/convers/delete/:conver", async function (req, res) {
         // -------- LOG ------------
         const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
@@ -397,6 +403,7 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         }
     });
 
+    // Método para marcar como leído un mensaje
     app.put("/api/v1.0/messages/markasread/:message", async function (req, res) {
         // -------- LOG ------------
         const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  

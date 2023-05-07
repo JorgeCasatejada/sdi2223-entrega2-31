@@ -5,6 +5,7 @@ module.exports = {
         this.mongoClient = mongoClient;
         this.app = app;
     },
+    // Método para insertar un mensaje
     insertMessage: async function (message) {
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
@@ -17,6 +18,7 @@ module.exports = {
             throw (error);
         }
     },
+    // Método para encontrar un mensaje de la BBDD
     findMessage: async function (filter, options) {
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
@@ -29,6 +31,7 @@ module.exports = {
             throw (error);
         }
     },
+    // Método para extraer una lista de mensajes
     findMessages: async function (filter, options) {
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
@@ -41,6 +44,7 @@ module.exports = {
             throw (error);
         }
     },
+    // Método para el borrado de mensajes de la BBDD
     deleteMessages: async function (filter, options) {
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
@@ -53,6 +57,7 @@ module.exports = {
             throw (error);
         }
     },
+    // Método para actualizar un mensaje (se empleará para marcar a leídos)
     updateMessage: async function (newMessage, filter, options) {
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
@@ -65,6 +70,7 @@ module.exports = {
             throw (error);
         }
     },
+    // Método para obtener mensajes con el campo "read" a false
     getUnreadMessages: async function (converId, autor) {
         try {
             const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
