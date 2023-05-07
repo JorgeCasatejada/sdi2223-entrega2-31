@@ -453,25 +453,33 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         }
     });
 
-    //TODO: Devuelve la conversación asociada al usuario activo y a la oferta pasada por parametro en la url.
-    app.get("/api/v1.0/offerConversation/:offerId", async function (req, res) {
-        //TODO: LOGS
-        // -------- LOG ------------
-        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
-                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
-        logger.info(logText);
-        await logRepository.insertLog('PET', logText);
-        // -----------------
-
-        let filter = { offertant: res.user, idOffer: ObjectId(req.params.offerId)};
-        console.log(filter);
-        conversRepository.getConvers(filter, {}).then(convers => {
-            res.status(200);
-            res.send({ convers: convers })
-        }).catch(error => {
+    app.get("/api/v1.0/convers/:offerId", async function(req, res) {
+        try {
+            if(req.params.offerId !== null && typeof req.params.offerId !== "undefined" && req.params.offerId.trim() !== "") {
+                let filter = { _id: ObjectId(req.params.offerId) };
+                offersRepository.findOffer(filter, {}).then((offer) => {
+                    if(offer !== null) {
+                        let filter2 = {idOffer: ObjectId(req.params.offerId), offertant: res.user};
+                        conversRepository.findConver(filter2, {}).then(conver => {
+                            res.status(200);
+                            res.send({conver: conver})
+                        }).catch(error => {
+                            res.status(500);
+                            res.json({error: "Se ha producido un error al intentar acceder a la conversación de la oferta."})
+                        });
+                    } else {
+                        res.status(404);
+                        res.json({error: "La oferta cuya conversación se quiere acceder, no existe."});
+                    }
+                })
+            } else {
+                res.status(400);
+                res.json({ error: "Se necesita una oferta para acceder a la conversación." });
+            }
+        } catch(e) {
             res.status(500);
-            res.json({ error: "Se ha producido un error al recuperar las conversaciones." })
-        });
+            res.json({error: "Se ha producido un error al intentar acceder a la conversación de la oferta."});
+        }
     });
 
 }
