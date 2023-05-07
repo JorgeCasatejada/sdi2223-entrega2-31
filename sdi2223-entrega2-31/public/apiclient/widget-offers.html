@@ -29,6 +29,7 @@
     clearInterval(intervaloActualización);
   }
 
+  //LLamada a la API REST para obtener el resto de ofertas.
   function loadOffers() {
     $.ajax({
       url: URLbase + "/offers/availablefromothers",
@@ -45,6 +46,8 @@
       }
     });
   }
+
+  //Carga en la tabla las ofertas ajenas.
   function updateOffersTable(offers) {
     $("#offersTableBody").empty(); // Vaciar la tabla
     for (i = 0; i < offers.length; i++) {
@@ -61,8 +64,11 @@
               "</tr>");
     }
   }
+
+  //Accede a la conversación asociada a la oferta seleccionada.
   function conversation(_id) {
     selectedOfferId = _id;
+    //Comprueba con una llamada a la API REST si existe la conversación.
     $.ajax({
       url: URLbase + "/convers/" + _id,
       type: "GET",
@@ -70,21 +76,22 @@
       dataType: 'json',
       headers: {"token": token},
       success: function (response) {
-        console.log(response)
         if(response.conver !== null) {
+          //Si existe la conversación se guarda su id.
           selectedConversationId = response.conver._id;
         } else {
+          //Si no existe la conversación se establece a undefined para posteriormente crearla.
           selectedConversationId = undefined;
         }
 
+        //Flag para indicar que hay que crear una conversación, por lo que no se han de cargar los mensajes de esta.
         if(selectedConversationId === undefined || selectedConversationId === null) {
           createConver = true;
         } else {
           createConver = false;
         }
-        console.log(createConver);
-        console.log(selectedConversationId);
-        $("#main-container").load("widget-chat.html");
+
+        $("#main-container").load("widget-chat.html");  //Vamos al chat.
 
       },
       error: function (error) {
@@ -93,6 +100,7 @@
     });
   }
 
+  //Busqueda por nombre de la oferta (no requerido).
   $('#filter-by-name').on('input',function(e){
     let filteredOffers = [];
     let filterValue = $("#filter-by-name").val();
@@ -100,6 +108,8 @@
     updateOffersTable(filteredOffers);
   });
 
+
+  //Filtro por precio (no requerido).
   var priceDesc = true;
   function sortByPrice() {
     if (priceDesc) {
@@ -115,6 +125,8 @@
     priceDesc = !priceDesc //invertir ordenación
   }
 
+
+  //Filtro por nombre de la oferta (no requerido).
   var titleDesc = true;
   function sortByTitle() {
     if(titleDesc) {

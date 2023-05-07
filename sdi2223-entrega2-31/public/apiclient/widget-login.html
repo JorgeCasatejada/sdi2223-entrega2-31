@@ -27,6 +27,7 @@
     clearInterval(intervaloActualización);
   }
 
+  //Inicia sesión con una llamada a la API REST
   $("#boton-login").click(function(){
     var username = $("#email").val();
     $.ajax({
@@ -40,7 +41,7 @@
       success:function success(response){
         token = response.token;
         Cookies.set('token', response.token);
-        Cookies.set('username', username);
+        Cookies.set('username', username);  //Guarda el nombre de usuario en la cookie.
         $("#main-container").load("widget-offers.html");
       },
       error:function(error){

@@ -25,6 +25,7 @@
   var conversations;
   var selectedConversationId;
 
+  //LLamada a la API REST para obtener mis conversaciones.
   function loadConversations() {
     $.ajax({
       url: URLbase + "/convers/all",
@@ -41,6 +42,8 @@
       }
     });
   }
+
+  //Carga en la tabla todas mis cpnversaciones.
   function updateConversationsTable(conversations) {
     $("#conversationsTableBody").empty(); // Vaciar la tabla
     for (i = 0; i < conversations.length; i++) {
@@ -58,6 +61,8 @@
     }
   }
 
+
+  //Elimina una conversación (Usando la API REST)
   function conversationDelete(_id) {
     $.ajax({
       url: URLbase + "/convers/delete/" + _id,
@@ -74,6 +79,7 @@
     });
   }
 
+  //Para acceder a la conversación seleccionada.
   function conversationView(_id) {
     selectedConversationId = _id;
     $("#main-container").load("widget-chat.html");
