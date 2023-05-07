@@ -1154,6 +1154,411 @@ class Sdi2223Entrega2TestApplicationTests {
 //        Assertions.assertEquals(200, response.getStatusCode());
 //    }
 
+    //[Prueba38] Inicio de sesión con datos válidos.
+    @Test
+    @Order(38)
+    public void PR38() {
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        Assertions.assertEquals(200, response.getStatusCode());
+        Assertions.assertEquals("Usuario autenticado correctamente", jsonPath.get("message"));
+        Assertions.assertTrue(jsonPath.getBoolean("authenticated"));
+        Assertions.assertNotNull(jsonPath.get("token"));
+    }
+
+    //[Prueba39] Inicio de sesión con datos inválidos (email existente, pero contraseña incorrecta).
+    @Test
+    @Order(39)
+    public void PR39() {
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "noadmin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        Assertions.assertEquals(401, response.getStatusCode());
+        Assertions.assertEquals("Inicio de sesión incorrecto", jsonPath.get("message"));
+        Assertions.assertFalse(jsonPath.getBoolean("authenticated"));
+    }
+
+    //[Prueba40] Inicio de sesión con datos inválidos (campo email o contraseña vacíos).
+    @Test
+    @Order(40)
+    public void PR40() {
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        Assertions.assertEquals(500, response.getStatusCode());
+        Assertions.assertEquals("Se ha producido un error al verificar las credenciales", jsonPath.get("message"));
+        Assertions.assertFalse(jsonPath.getBoolean("authenticated"));
+        Assertions.assertEquals(2, jsonPath.getList("errors").size());
+    }
+
+    //[Prueba41] Mostrar el listado de ofertas para dicho usuario y comprobar que se muestran todas las que
+    //existen para este usuario. Esta prueba implica invocar a dos servicios: S1 y S2.
+    @Test
+    @Order(41)
+    public void PR41() {
+        // Servicio S1
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        // Servicio S2
+        final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/offers/availablefromothers";
+        RequestSpecification request2 = RestAssured.given();
+        request2.header("Content-Type", "application/json");
+        request2.header("token", jsonPath.get("token"));
+
+        Response response2 = request2.get(RestAssuredURL2);
+
+        JsonPath jsonPath2 = response2.jsonPath();
+
+        Assertions.assertEquals(200, response2.getStatusCode());
+        Assertions.assertEquals(m.othersOffersSize("user16@email.com"), jsonPath2.getList("offers").size());
+    }
+
+    //[Prueba42] Enviar un mensaje a una oferta. Esta prueba consistirá en comprobar que el servicio
+    //almacena correctamente el mensaje para dicha oferta. Por lo tanto, el usuario tendrá que
+    //identificarse (S1), enviar un mensaje para una oferta de id conocido (S3) y comprobar que el
+    //mensaje ha quedado bien registrado (S4).
+    @Test
+    @Order(42)
+    public void PR42() {
+        // Servicio S1
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        // Servicio S3
+        final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/messages/send";
+        RequestSpecification request2 = RestAssured.given();
+        JSONObject requestParams2 = new JSONObject();
+        requestParams2.put("offer", m.getOneOfferIdByAuthor("user17@email.com")); // oferta de otro
+        requestParams2.put("text", "hola");
+        request2.header("Content-Type", "application/json");
+        request2.header("token", jsonPath.get("token"));
+        request2.body(requestParams2.toJSONString());
+
+        Response response2 = request2.post(RestAssuredURL2);
+
+        JsonPath jsonPath2 = response2.jsonPath();
+
+        // Servicio S4
+        final String RestAssuredURL3 = "http://localhost:8080/api/v1.0/messages/fromconver/" + jsonPath2.get("_idConv");
+        RequestSpecification request3 = RestAssured.given();
+        request3.header("Content-Type", "application/json");
+        request3.header("token", jsonPath.get("token"));
+
+        Response response3 = request3.get(RestAssuredURL3);
+
+        JsonPath jsonPath3 = response3.jsonPath();
+
+        Assertions.assertEquals(200, response3.getStatusCode());
+        Assertions.assertEquals(1, jsonPath3.getList("messages").size());
+        Assertions.assertEquals("hola", jsonPath3.getList("messages.text").get(0));
+    }
+
+    //[Prueba43] Enviar un primer mensaje una oferta propia y comprobar que no se inicia la conversación.
+    //En este caso de prueba, el propietario de la oferta tendrá que identificarse (S1), enviar un mensaje
+    //para una oferta propia (S3) y comprobar que el mensaje no se almacena (S4).
+    @Test
+    @Order(43)
+    public void PR43() {
+        // Servicio S1
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        // Servicio S3
+        final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/messages/send";
+        RequestSpecification request2 = RestAssured.given();
+        JSONObject requestParams2 = new JSONObject();
+        requestParams2.put("offer", m.getOneOfferIdByAuthor("user16@email.com")); // oferta propia
+        requestParams2.put("text", "hola");
+        request2.header("Content-Type", "application/json");
+        request2.header("token", jsonPath.get("token"));
+        request2.body(requestParams2.toJSONString());
+
+        Response response2 = request2.post(RestAssuredURL2);
+
+        JsonPath jsonPath2 = response2.jsonPath();
+
+        // Servicio S4 (no se puede invocar porque hay que darle una conversación y no pueden existir conversaciones
+        // de un usuario consigo mismo. Por ello, se comprueba que lo devuelto por el servicio anterior refleje el fallo)
+        Assertions.assertEquals(500, response2.getStatusCode());
+        Assertions.assertEquals("El usuario no puede iniciar una conversación por un producto propio.", jsonPath2.get("error"));
+    }
+
+    //[Prueba44] Obtener los mensajes de una conversación. Esta prueba consistirá en comprobar que el
+    //servicio retorna el número correcto de mensajes para una conversación. El ID de la conversación
+    //deberá conocerse a priori. Por lo tanto, se tendrá primero que invocar al servicio de identificación
+    //(S1), y solicitar el listado de mensajes de una conversación de id conocido a continuación (S4),
+    //comprobando que se retornan los mensajes adecuados.
+    @Test
+    @Order(44)
+    public void PR44() {
+        // Previo P1: Inicio de sesión con un participante de una conver ya existente
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user17@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        // Previo P2: Envío de un mensaje más a la conversación ya existente para probar bien
+        final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/messages/send";
+        RequestSpecification request2 = RestAssured.given();
+        JSONObject requestParams2 = new JSONObject();
+        String idConver = m.getOneConverIdByParticipants("user17@email.com", "user16@email.com");
+        requestParams2.put("conver", idConver);
+        requestParams2.put("text", "buenas");
+        request2.header("Content-Type", "application/json");
+        request2.header("token", jsonPath.get("token"));
+        request2.body(requestParams2.toJSONString());
+
+        Response response2 = request2.post(RestAssuredURL2);
+
+        JsonPath jsonPath2 = response2.jsonPath();
+
+        // Servicio S1 (Nos autenticamos con el otro participante de la conver)
+        final String RestAssuredURL3 = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request3 = RestAssured.given();
+        JSONObject requestParams3 = new JSONObject();
+        requestParams3.put("email", "user16@email.com");
+        requestParams3.put("password", "admin");
+        request3.header("Content-Type", "application/json");
+        request3.body(requestParams3.toJSONString());
+
+        Response response3 = request3.post(RestAssuredURL3);
+
+        JsonPath jsonPath3 = response3.jsonPath();
+
+        // Servicio S4
+        final String RestAssuredURL4 = "http://localhost:8080/api/v1.0/messages/fromconver/" + idConver;
+        RequestSpecification request4 = RestAssured.given();
+        request4.header("Content-Type", "application/json");
+        request4.header("token", jsonPath3.get("token"));
+
+        Response response4 = request4.get(RestAssuredURL4);
+
+        JsonPath jsonPath4 = response4.jsonPath();
+
+        Assertions.assertEquals(200, response4.getStatusCode());
+        Assertions.assertEquals(2, jsonPath4.getList("messages").size());
+        Assertions.assertEquals("hola", jsonPath4.getList("messages.text").get(0));
+        Assertions.assertEquals("buenas", jsonPath4.getList("messages.text").get(1));
+    }
+
+    //[Prueba45] Obtener la lista de conversaciones de un usuario. Esta prueba consistirá en comprobar que
+    //el servicio retorna el número correcto de conversaciones para dicho usuario. Por lo tanto, se tendrá
+    //primero que invocar al servicio de identificación (S1), y solicitar el listado de conversaciones a
+    //continuación (S5) comprobando que se retornan las conversaciones adecuadas.
+    @Test
+    @Order(45)
+    public void PR45() {
+        // Servicio S1
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        // Servicio S5
+        final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/convers/all";
+        RequestSpecification request2 = RestAssured.given();
+        request2.header("Content-Type", "application/json");
+        request2.header("token", jsonPath.get("token"));
+
+        Response response2 = request2.get(RestAssuredURL2);
+
+        JsonPath jsonPath2 = response2.jsonPath();
+
+        Assertions.assertEquals(200, response2.getStatusCode());
+        Assertions.assertEquals(1, jsonPath2.getList("convers").size());
+    }
+
+    //[Prueba46] Eliminar una conversación de ID conocido. Esta prueba consistirá en comprobar que se
+    //elimina correctamente una conversación concreta. Por lo tanto, se tendrá primero que invocar al
+    //servicio de identificación (S1), eliminar la conversación ID (S6) y solicitar el listado de
+    //conversaciones a continuación (S5), comprobando que se retornan las conversaciones adecuadas.
+    @Test
+    @Order(46)
+    public void PR46() {
+        // Servicio S1
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        // Servicio S6
+        String idConver = m.getOneConverIdByParticipants("user17@email.com", "user16@email.com");
+        final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/convers/delete/" + idConver;
+        RequestSpecification request2 = RestAssured.given();
+        request2.header("Content-Type", "application/json");
+        request2.header("token", jsonPath.get("token"));
+
+        Response response2 = request2.delete(RestAssuredURL2);
+
+        JsonPath jsonPath2 = response2.jsonPath();
+
+        // Servicio S5
+        final String RestAssuredURL3 = "http://localhost:8080/api/v1.0/convers/all";
+        RequestSpecification request3 = RestAssured.given();
+        request3.header("Content-Type", "application/json");
+        request3.header("token", jsonPath.get("token"));
+
+        Response response3 = request3.get(RestAssuredURL3);
+
+        JsonPath jsonPath3 = response3.jsonPath();
+
+        Assertions.assertEquals(200, response3.getStatusCode());
+        Assertions.assertEquals(0, jsonPath3.getList("convers").size());
+    }
+
+    //[Prueba47] Marcar como leído un mensaje de ID conocido. Esta prueba consistirá en comprobar que
+    //el mensaje marcado de ID conocido queda marcado correctamente a true como leído. Por lo
+    //tanto, se tendrá primero que invocar al servicio de identificación (S1), solicitar el servicio de
+    //marcado (S7), comprobando que el mensaje marcado ha quedado marcado a true como leído (S4).
+    @Test
+    @Order(47)
+    public void PR47() {
+        // Previo P1: Inicio de sesión para crear una conver enviando un nuevo mensaje
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        // Previo P2: Envío del mensaje para disponer de un mensaje que marcar como leído
+        final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/messages/send";
+        RequestSpecification request2 = RestAssured.given();
+        JSONObject requestParams2 = new JSONObject();
+        requestParams2.put("offer", m.getOneOfferIdByAuthor("user17@email.com")); // oferta de otro
+        requestParams2.put("text", "hola");
+        request2.header("Content-Type", "application/json");
+        request2.header("token", jsonPath.get("token"));
+        request2.body(requestParams2.toJSONString());
+
+        Response response2 = request2.post(RestAssuredURL2);
+
+        JsonPath jsonPath2 = response2.jsonPath();
+
+        // Servicio S1 (Nos autenticamos con el otro participante de la conver para que pueda marcar a leído)
+        final String RestAssuredURL3 = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request3 = RestAssured.given();
+        JSONObject requestParams3 = new JSONObject();
+        requestParams3.put("email", "user17@email.com");
+        requestParams3.put("password", "admin");
+        request3.header("Content-Type", "application/json");
+        request3.body(requestParams3.toJSONString());
+
+        Response response3 = request3.post(RestAssuredURL3);
+
+        JsonPath jsonPath3 = response3.jsonPath();
+
+        // Servicio S7
+        String idMessage = m.getOneMessageIdByAuthor("user16@email.com");
+        final String RestAssuredURL4 = "http://localhost:8080/api/v1.0/messages/markasread/" + idMessage;
+        RequestSpecification request4 = RestAssured.given();
+        request4.header("Content-Type", "application/json");
+        request4.header("token", jsonPath3.get("token"));
+
+        Response response4 = request4.put(RestAssuredURL4);
+
+        JsonPath jsonPath4 = response4.jsonPath();
+
+        // Servicio S4
+        String idConver = m.getOneConverIdByParticipants("user17@email.com", "user16@email.com");
+        final String RestAssuredURL5 = "http://localhost:8080/api/v1.0/messages/fromconver/" + idConver;
+        RequestSpecification request5 = RestAssured.given();
+        request5.header("Content-Type", "application/json");
+        request5.header("token", jsonPath3.get("token"));
+
+        Response response5 = request5.get(RestAssuredURL5);
+
+        JsonPath jsonPath5 = response5.jsonPath();
+
+        Assertions.assertEquals(200, response5.getStatusCode());
+        Assertions.assertEquals(1, jsonPath5.getList("messages").size());
+        Assertions.assertEquals("hola", jsonPath5.getList("messages.text").get(0));
+        Assertions.assertEquals(true, jsonPath5.getList("messages.read").get(0));
+    }
+
+
 
 
 

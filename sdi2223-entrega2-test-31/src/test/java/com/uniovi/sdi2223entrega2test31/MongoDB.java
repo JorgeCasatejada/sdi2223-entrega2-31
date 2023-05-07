@@ -6,12 +6,14 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import static com.mongodb.client.model.Filters.eq;
 
+import static com.mongodb.client.model.Filters.*;
 
 
 public class MongoDB {
@@ -91,6 +93,38 @@ public class MongoDB {
 
     public long offersSize() {
         return getMongodb().getCollection("offers").count();
+    }
+
+    public long othersOffersSize(String email) {
+        List<Document> results = getMongodb().getCollection("offers").find(ne("author", email)).into(new ArrayList<>());
+        return results.size();
+    }
+
+    public String getOneOfferIdByAuthor(String email) {
+        Document offer = getMongodb().getCollection("offers").find(eq("author", email)).first();
+        if (offer != null) {
+            ObjectId id = offer.getObjectId("_id");
+            return id.toString();
+        }
+        return " ";
+    }
+
+    public String getOneConverIdByParticipants(String owner, String offertant) {
+        Document conver = getMongodb().getCollection("convers").find(and(eq("owner", owner), eq("offertant", offertant))).first();
+        if (conver != null) {
+            ObjectId id = conver.getObjectId("_id");
+            return id.toString();
+        }
+        return " ";
+    }
+
+    public String getOneMessageIdByAuthor(String email) {
+        Document message = getMongodb().getCollection("messages").find(eq("author", email)).first();
+        if (message != null) {
+            ObjectId id = message.getObjectId("_id");
+            return id.toString();
+        }
+        return " ";
     }
 
     private void deleteData() {
