@@ -23,11 +23,11 @@ class Sdi2223Entrega2TestApplicationTests {
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 //    static String Geckodriver = "C:\\Users\\jorge\\OneDrive\\Escritorio\\SDI\\Practica\\Sesión6\\PL-SDI-Sesión5-material\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
     //PATRI
-    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
-    //ENRIQUE
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-//    static String Geckodriver = "C:\\Program Files\\Gekodriver\\geckodriver-v0.30.0-win64.exe";
+//    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
+    //ENRIQUE
+    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    static String Geckodriver = "C:\\Program Files\\Gekodriver\\geckodriver-v0.30.0-win64.exe";
 
     //static String Geckodriver = "/Users/USUARIO/selenium/geckodriver-v0.30.0-macos";
     //Común a Windows y a MACOSX
@@ -1153,4 +1153,97 @@ class Sdi2223Entrega2TestApplicationTests {
 //        //4. Comprobamos que el servicio ha tenido exito
 //        Assertions.assertEquals(200, response.getStatusCode());
 //    }
+
+
+
+
+    //[Prueba48] Inicio de sesión con datos válidos.
+    @Test
+    @Order(48)
+    public void PR48() {
+        //Vamos al formulario de inicio de sesión
+        PO_NavView.clickOption(driver, "login", "@href", "/users/login");
+        //Rellenamos el formulario con user08
+        PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+        // Vamos al menú de logs (solo para administrador)
+        PO_NavView.clickOption(driver, "/admin/logs", "@href", "/admin/logs");
+        // Miramos el tamaño de la lista de logs
+        String checkPath = "/html/body/div/div/table/tbody";
+        List<WebElement> tableBodyRows = driver.findElements(By.xpath(checkPath + "/tr"));
+        int sizeLogs = tableBodyRows.size();
+        // Borramos los logs
+        checkPath = "/html/body/div/form[2]/button";
+        List<WebElement> deleteButton = PO_View.checkElementBy(driver, "free", checkPath);
+        deleteButton.get(0).click();
+        // Comprobamos que la lista ahora solo contiene el log de la redireccion
+        checkPath = "/html/body/div/div/table/tbody";
+        List<WebElement> tableBodyRowsAfter = driver.findElements(By.xpath(checkPath + "/tr"));
+        int sizeLogsAfter = tableBodyRowsAfter.size();
+        Assertions.assertTrue(sizeLogsAfter != sizeLogs);
+        Assertions.assertEquals(1, sizeLogsAfter);
+    }
+
+    //[Prueba49] Inicio de sesión con datos inválidos (email existente, pero contraseña incorrecta).
+    @Test
+    @Order(49)
+    public void PR49() {
+
+    }
+
+    //[Prueba50] Inicio de sesión con datos inválidos (campo email o contraseña vacíos).
+    @Test
+    @Order(50)
+    public void PR50() {
+
+    }
+
+    //[Prueba51] Mostrar el listado de ofertas disponibles y comprobar que se muestran todas las que existen,
+    //menos las del usuario identificado.
+    @Test
+    @Order(51)
+    public void PR51() {
+
+    }
+
+    //[Prueba52] Sobre listado de ofertas disponibles (a elección de desarrollador), enviar un mensaje a una
+    //oferta concreta. Se abriría dicha conversación por primera vez. Comprobar que el mensaje aparece
+    //en el listado de mensajes.
+    @Test
+    @Order(52)
+    public void PR52() {
+
+    }
+
+    //[Prueba53] Sobre el listado de conversaciones enviar un mensaje a una conversación ya abierta.
+    //Comprobar que el mensaje aparece en el listado de mensajes.
+    @Test
+    @Order(53)
+    public void PR53() {
+
+    }
+
+    //[Prueba54] Mostrar el listado de conversaciones ya abiertas. Comprobar que el listado contiene la
+    //cantidad correcta de conversaciones.
+    @Test
+    @Order(54)
+    public void PR54() {
+
+    }
+
+    //[Prueba55] Sobre el listado de conversaciones ya abiertas. Pinchar el enlace Eliminar en la primera y
+    //comprobar que el listado se actualiza correctamente.
+    @Test
+    @Order(55)
+    public void PR55() {
+
+    }
+
+    //[Prueba56] Sobre el listado de conversaciones ya abiertas. Pinchar el enlace Eliminar en la última y
+    //comprobar que el listado se actualiza correctamente.
+    @Test
+    @Order(56)
+    public void PR56() {
+
+    }
+
 }

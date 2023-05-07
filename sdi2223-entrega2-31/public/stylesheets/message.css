@@ -28,6 +28,11 @@ Stylesheet for the conversations.
     background-color: #88fd92;
     text-align: right;
 }
+
+.chat .messageblock .message.sent .visto {
+    font-size: x-small;
+}
+
 .chat .messageblock .message.received {
     background-color: #dfe6e9;
 }
