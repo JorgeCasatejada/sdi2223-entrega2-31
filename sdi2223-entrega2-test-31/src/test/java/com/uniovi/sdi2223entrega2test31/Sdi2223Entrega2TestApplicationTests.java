@@ -3,7 +3,10 @@ package com.uniovi.sdi2223entrega2test31;
 import com.uniovi.sdi2223entrega2test31.pageobjects.*;
 import com.uniovi.sdi2223entrega2test31.util.SeleniumUtils;
 import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import org.json.simple.JSONObject;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,14 +20,14 @@ import java.util.List;
 class Sdi2223Entrega2TestApplicationTests {
     static MongoDB m;
     //ALEX
-//    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-//    static String Geckodriver = "C:\\Users\\alexr\\OneDrive\\Escritorio\\geckodriver-v0.30.0-win64.exe";
+    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    static String Geckodriver = "C:\\Users\\alexr\\OneDrive\\Escritorio\\geckodriver-v0.30.0-win64.exe";
     //JORGE
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 //    static String Geckodriver = "C:\\Users\\jorge\\OneDrive\\Escritorio\\SDI\\Practica\\Sesión6\\PL-SDI-Sesión5-material\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
     //PATRI
-    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
+//    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+//    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
     //ENRIQUE
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 //    static String Geckodriver = "C:\\Program Files\\Gekodriver\\geckodriver-v0.30.0-win64.exe";
@@ -1126,7 +1129,6 @@ class Sdi2223Entrega2TestApplicationTests {
         Assertions.assertEquals(1, sizeLogsAfter);
     }
 
-
     /* Ejemplos de pruebas de llamada a una API-REST */
     /* ---- Probamos a obtener lista de canciones sin token ---- */
 //    @Test
@@ -1153,4 +1155,231 @@ class Sdi2223Entrega2TestApplicationTests {
 //        //4. Comprobamos que el servicio ha tenido exito
 //        Assertions.assertEquals(200, response.getStatusCode());
 //    }
+
+    //[Prueba38] Inicio de sesión con datos válidos.
+    @Test
+    @Order(38)
+    public void PR38() {
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        Assertions.assertEquals(200, response.getStatusCode());
+        Assertions.assertEquals("Usuario autenticado correctamente", jsonPath.get("message"));
+        Assertions.assertTrue(jsonPath.getBoolean("authenticated"));
+        Assertions.assertNotNull(jsonPath.get("token"));
+    }
+
+    //[Prueba39] Inicio de sesión con datos inválidos (email existente, pero contraseña incorrecta).
+    @Test
+    @Order(39)
+    public void PR39() {
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "noadmin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        Assertions.assertEquals(401, response.getStatusCode());
+        Assertions.assertEquals("Inicio de sesión incorrecto", jsonPath.get("message"));
+        Assertions.assertFalse(jsonPath.getBoolean("authenticated"));
+    }
+
+    //[Prueba40] Inicio de sesión con datos inválidos (campo email o contraseña vacíos).
+    @Test
+    @Order(40)
+    public void PR40() {
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        Assertions.assertEquals(500, response.getStatusCode());
+        Assertions.assertEquals("Se ha producido un error al verificar las credenciales", jsonPath.get("message"));
+        Assertions.assertFalse(jsonPath.getBoolean("authenticated"));
+        Assertions.assertEquals(2, jsonPath.getList("errors").size());
+    }
+
+    //[Prueba41] Mostrar el listado de ofertas para dicho usuario y comprobar que se muestran todas las que
+    //existen para este usuario. Esta prueba implica invocar a dos servicios: S1 y S2.
+    @Test
+    @Order(41)
+    public void PR41() {
+        // Servicio S1
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        // Servicio S2
+        final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/offers/availablefromothers";
+        RequestSpecification request2 = RestAssured.given();
+        request2.header("Content-Type", "application/json");
+        request2.header("token", jsonPath.get("token"));
+
+        Response response2 = request2.get(RestAssuredURL2);
+
+        JsonPath jsonPath2 = response2.jsonPath();
+
+        Assertions.assertEquals(200, response2.getStatusCode());
+        Assertions.assertEquals(154, jsonPath2.getList("offers").size());
+    }
+
+    //[Prueba42] Enviar un mensaje a una oferta. Esta prueba consistirá en comprobar que el servicio
+    //almacena correctamente el mensaje para dicha oferta. Por lo tanto, el usuario tendrá que
+    //identificarse (S1), enviar un mensaje para una oferta de id conocido (S3) y comprobar que el
+    //mensaje ha quedado bien registrado (S4).
+    @Test
+    @Order(42)
+    public void PR42() {
+        // Servicio S1
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        // Servicio S3
+        final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/messages/send";
+        RequestSpecification request2 = RestAssured.given();
+        JSONObject requestParams2 = new JSONObject();
+        requestParams2.put("offer", "TODO con oferta ajena");
+        requestParams2.put("text", "hola");
+        request2.header("Content-Type", "application/json");
+        request2.header("token", jsonPath.get("token"));
+        request2.body(requestParams2.toJSONString());
+
+        Response response2 = request2.post(RestAssuredURL2);
+
+        JsonPath jsonPath2 = response2.jsonPath();
+
+        // Servicio S4
+        final String RestAssuredURL3 = "http://localhost:8080/api/v1.0/messages/fromconver/" + jsonPath2.get("_idConv");
+        RequestSpecification request3 = RestAssured.given();
+        request3.header("Content-Type", "application/json");
+        request3.header("token", jsonPath.get("token"));
+
+        Response response3 = request3.post(RestAssuredURL3);
+
+        JsonPath jsonPath3 = response3.jsonPath();
+
+        Assertions.assertEquals(200, response3.getStatusCode());
+        Assertions.assertEquals(1, jsonPath3.getList("messages").size());
+        Assertions.assertEquals("hola", jsonPath3.getList("messages.text").get(0));
+    }
+
+    //[Prueba43] Enviar un primer mensaje una oferta propia y comprobar que no se inicia la conversación.
+    //En este caso de prueba, el propietario de la oferta tendrá que identificarse (S1), enviar un mensaje
+    //para una oferta propia (S3) y comprobar que el mensaje no se almacena (S4).
+    @Test
+    @Order(43)
+    public void PR43() {
+        // Servicio S1
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
+
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        // Servicio S3
+        final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/messages/send";
+        RequestSpecification request2 = RestAssured.given();
+        JSONObject requestParams2 = new JSONObject();
+        requestParams2.put("offer", "TODO con oferta propia");
+        requestParams2.put("text", "hola");
+        request2.header("Content-Type", "application/json");
+        request2.header("token", jsonPath.get("token"));
+        request2.body(requestParams2.toJSONString());
+
+        Response response2 = request2.post(RestAssuredURL2);
+
+        JsonPath jsonPath2 = response2.jsonPath();
+
+        // Servicio S4 (no se puede invocar porque hay que darle una conversación y no pueden existir conversaciones
+        // de un usuario consigo mismo. Por ello, se comprueba que lo devuelto por el servicio anterior refleje el fallo)
+        Assertions.assertEquals(500, response2.getStatusCode());
+        Assertions.assertEquals("El usuario no puede iniciar una conversación por un producto propio.", jsonPath2.get("error"));
+    }
+
+    //[Prueba44] Obtener los mensajes de una conversación. Esta prueba consistirá en comprobar que el
+    //servicio retorna el número correcto de mensajes para una conversación. El ID de la conversación
+    //deberá conocerse a priori. Por lo tanto, se tendrá primero que invocar al servicio de identificación
+    //(S1), y solicitar el listado de mensajes de una conversación de id conocido a continuación (S4),
+    //comprobando que se retornan los mensajes adecuados.
+    @Test
+    @Order(44)
+    public void PR44() {
+
+    }
+
+    //[Prueba45] Obtener la lista de conversaciones de un usuario. Esta prueba consistirá en comprobar que
+    //el servicio retorna el número correcto de conversaciones para dicho usuario. Por lo tanto, se tendrá
+    //primero que invocar al servicio de identificación (S1), y solicitar el listado de conversaciones a
+    //continuación (S5) comprobando que se retornan las conversaciones adecuadas.
+    @Test
+    @Order(45)
+    public void PR45() {
+
+    }
+
+    //[Prueba46] Eliminar una conversación de ID conocido. Esta prueba consistirá en comprobar que se
+    //elimina correctamente una conversación concreta. Por lo tanto, se tendrá primero que invocar al
+    //servicio de identificación (S1), eliminar la conversación ID (S6) y solicitar el listado de
+    //conversaciones a continuación (S5), comprobando que se retornan las conversaciones adecuadas.
+    @Test
+    @Order(46)
+    public void PR46() {
+
+    }
+
+    //[Prueba47] Marcar como leído un mensaje de ID conocido. Esta prueba consistirá en comprobar que
+    //el mensaje marcado de ID conocido queda marcado correctamente a true como leído. Por lo
+    //tanto, se tendrá primero que invocar al servicio de identificación (S1), solicitar el servicio de
+    //marcado (S7), comprobando que el mensaje marcado ha quedado marcado a true como leído (S4).
+    @Test
+    @Order(47)
+    public void PR47() {
+
+    }
+
 }
