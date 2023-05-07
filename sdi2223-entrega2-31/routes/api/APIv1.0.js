@@ -305,6 +305,7 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         await logRepository.insertLog('PET', logText);
         // -----------------
 
+        /*
         let filter = { $or: [{owner: res.user}, {offertant: res.user}] };
         conversRepository.getConvers(filter, {}).then(convers => {
             res.status(200);
@@ -312,6 +313,35 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         }).catch(error => {
             res.status(500);
             res.json({ error: "Se ha producido un error al recuperar las conversaciones." })
+        });
+        */
+
+        let filter = { $or: [{owner: res.user}, {offertant: res.user}] };
+        const conversPromise = conversRepository.getConvers(filter, {});
+
+        conversPromise.then(async (convers) => {
+            const offerIds = convers.map((conver) => conver.idOffer);
+            const filter2 = {_id: {$in: offerIds}};
+            const options2 = {projection: {title: 1}};
+            const offersPromise = offersRepository.getOffers(filter2, options2);
+
+            const [offers] = await Promise.all([offersPromise]);
+            const offerMap = {};
+            offers.forEach((offer) => (offerMap[offer._id] = offer.title));
+
+            const result = convers.map((conver) => ({
+                _id: conver._id,
+                offertant: conver.offertant,
+                idOffer: conver.idOffer,
+                owner: conver.owner,
+                offerTitle: offerMap[conver.idOffer],
+            }));
+
+            res.status(200);
+            res.send({ convers: result });
+        }).catch((error) => {
+            res.status(500);
+            res.json({ error: "Se ha producido un error al recuperar las conversaciones." });
         });
     });
 

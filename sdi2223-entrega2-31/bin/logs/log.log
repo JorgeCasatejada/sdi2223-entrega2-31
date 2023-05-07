@@ -6258,3 +6258,85 @@
                         Parámetros ruta: {} Parámetros consulta: {}
 [2023-05-07T01:25:23.117] [INFO] api - [Sun May 07 2023 01:25:23 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/markasread/6456e0d1019908ba52a191fd - Método HTTP: PUT -  
                   Parámetros ruta: {"message":"6456e0d1019908ba52a191fd"} Parámetros consulta: {}
+[2023-05-07T01:48:18.544] [INFO] api - [Sun May 07 2023 01:48:18 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:48:18.580] [INFO] api - [Sun May 07 2023 01:48:18 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST - 
+                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:48:46.877] [INFO] api - [Sun May 07 2023 01:48:46 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:48:46.928] [INFO] api - [Sun May 07 2023 01:48:46 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST - 
+                                                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:48:56.334] [INFO] api - [Sun May 07 2023 01:48:56 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:48:56.362] [INFO] api - [Sun May 07 2023 01:48:56 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST - 
+                                                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:49:03.998] [INFO] api - [Sun May 07 2023 01:49:03 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:49:04.024] [INFO] api - [Sun May 07 2023 01:49:04 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST - 
+                                                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:49:11.615] [INFO] api - [Sun May 07 2023 01:49:11 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:49:11.644] [INFO] api - [Sun May 07 2023 01:49:11 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST - 
+                                                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:49:34.545] [INFO] api - [Sun May 07 2023 01:49:34 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:50:28.142] [INFO] api - [Sun May 07 2023 01:50:28 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:51:18.291] [INFO] api - [Sun May 07 2023 01:51:18 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:51:18.324] [INFO] api - [Sun May 07 2023 01:51:18 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST - 
+                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:51:39.954] [INFO] api - [Sun May 07 2023 01:51:39 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:51:40.006] [INFO] api - [Sun May 07 2023 01:51:40 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST - 
+                                                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:51:52.702] [INFO] api - [Sun May 07 2023 01:51:52 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:52:04.634] [INFO] api - [Sun May 07 2023 01:52:04 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:52:04.677] [INFO] api - [Sun May 07 2023 01:52:04 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST - 
+                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:52:27.647] [INFO] api - [Sun May 07 2023 01:52:27 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:52:27.715] [INFO] api - [Sun May 07 2023 01:52:27 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST - 
+                                                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:52:31.551] [INFO] api - [Sun May 07 2023 01:52:31 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:54:39.150] [INFO] api - [Sun May 07 2023 01:54:39 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:54:39.183] [INFO] api - [Sun May 07 2023 01:54:39 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST - 
+                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:54:50.411] [INFO] api - [Sun May 07 2023 01:54:50 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:55:06.419] [INFO] api - [Sun May 07 2023 01:55:06 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:55:06.470] [INFO] api - [Sun May 07 2023 01:55:06 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST - 
+                                                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:55:08.894] [INFO] api - [Sun May 07 2023 01:55:08 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:55:32.655] [INFO] api - [Sun May 07 2023 01:55:32 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:55:32.685] [INFO] api - [Sun May 07 2023 01:55:32 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST - 
+                                                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:55:45.976] [INFO] api - [Sun May 07 2023 01:55:45 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:55:46.006] [INFO] api - [Sun May 07 2023 01:55:46 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST - 
+                                                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:55:51.962] [INFO] api - [Sun May 07 2023 01:55:51 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:55:51.993] [INFO] api - [Sun May 07 2023 01:55:51 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST - 
+                                                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:56:19.131] [INFO] api - [Sun May 07 2023 01:56:19 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:56:19.145] [INFO] api - [Sun May 07 2023 01:56:19 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST - 
+                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:56:40.770] [INFO] api - [Sun May 07 2023 01:56:40 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:56:40.802] [INFO] api - [Sun May 07 2023 01:56:40 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST - 
+                                                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:56:48.910] [INFO] api - [Sun May 07 2023 01:56:48 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:56:48.926] [INFO] api - [Sun May 07 2023 01:56:48 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST - 
+                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T01:56:58.375] [INFO] api - [Sun May 07 2023 01:56:58 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
