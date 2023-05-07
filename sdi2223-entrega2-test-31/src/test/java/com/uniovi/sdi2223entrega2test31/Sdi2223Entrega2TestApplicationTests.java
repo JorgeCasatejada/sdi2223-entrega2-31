@@ -1250,7 +1250,7 @@ class Sdi2223Entrega2TestApplicationTests {
         JsonPath jsonPath2 = response2.jsonPath();
 
         Assertions.assertEquals(200, response2.getStatusCode());
-        Assertions.assertEquals(154, jsonPath2.getList("offers").size());
+        Assertions.assertEquals(m.othersOffersSize("user16@email.com"), jsonPath2.getList("offers").size());
     }
 
     //[Prueba42] Enviar un mensaje a una oferta. Esta prueba consistirá en comprobar que el servicio
@@ -1277,7 +1277,7 @@ class Sdi2223Entrega2TestApplicationTests {
         final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/messages/send";
         RequestSpecification request2 = RestAssured.given();
         JSONObject requestParams2 = new JSONObject();
-        requestParams2.put("offer", "TODO con oferta ajena");
+        requestParams2.put("offer", m.getOneOfferIdByAuthor("user17@email.com")); // oferta de otro
         requestParams2.put("text", "hola");
         request2.header("Content-Type", "application/json");
         request2.header("token", jsonPath.get("token"));
@@ -1293,7 +1293,7 @@ class Sdi2223Entrega2TestApplicationTests {
         request3.header("Content-Type", "application/json");
         request3.header("token", jsonPath.get("token"));
 
-        Response response3 = request3.post(RestAssuredURL3);
+        Response response3 = request3.get(RestAssuredURL3);
 
         JsonPath jsonPath3 = response3.jsonPath();
 
@@ -1325,7 +1325,7 @@ class Sdi2223Entrega2TestApplicationTests {
         final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/messages/send";
         RequestSpecification request2 = RestAssured.given();
         JSONObject requestParams2 = new JSONObject();
-        requestParams2.put("offer", "TODO con oferta propia");
+        requestParams2.put("offer", m.getOneOfferIdByAuthor("user16@email.com")); // oferta propia
         requestParams2.put("text", "hola");
         request2.header("Content-Type", "application/json");
         request2.header("token", jsonPath.get("token"));
@@ -1349,7 +1349,61 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(44)
     public void PR44() {
+        // Previo P1: Inicio de sesión con un participante de una conver ya existente
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user17@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
 
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        // Previo P2: Envío de un mensaje más a la conversación ya existente para probar bien
+        final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/messages/send";
+        RequestSpecification request2 = RestAssured.given();
+        JSONObject requestParams2 = new JSONObject();
+        String idConver = m.getOneConverIdByParticipants("user17@email.com", "user16@email.com");
+        requestParams2.put("conver", idConver);
+        requestParams2.put("text", "buenas");
+        request2.header("Content-Type", "application/json");
+        request2.header("token", jsonPath.get("token"));
+        request2.body(requestParams2.toJSONString());
+
+        Response response2 = request2.post(RestAssuredURL2);
+
+        JsonPath jsonPath2 = response2.jsonPath();
+
+        // Servicio S1 (Nos autenticamos con el otro participante de la conver)
+        final String RestAssuredURL3 = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request3 = RestAssured.given();
+        JSONObject requestParams3 = new JSONObject();
+        requestParams3.put("email", "user16@email.com");
+        requestParams3.put("password", "admin");
+        request3.header("Content-Type", "application/json");
+        request3.body(requestParams3.toJSONString());
+
+        Response response3 = request3.post(RestAssuredURL3);
+
+        JsonPath jsonPath3 = response3.jsonPath();
+
+        // Servicio S4
+        final String RestAssuredURL4 = "http://localhost:8080/api/v1.0/messages/fromconver/" + idConver;
+        RequestSpecification request4 = RestAssured.given();
+        request4.header("Content-Type", "application/json");
+        request4.header("token", jsonPath3.get("token"));
+
+        Response response4 = request4.get(RestAssuredURL4);
+
+        JsonPath jsonPath4 = response4.jsonPath();
+
+        Assertions.assertEquals(200, response4.getStatusCode());
+        Assertions.assertEquals(2, jsonPath4.getList("messages").size());
+        Assertions.assertEquals("hola", jsonPath4.getList("messages.text").get(0));
+        Assertions.assertEquals("buenas", jsonPath4.getList("messages.text").get(1));
     }
 
     //[Prueba45] Obtener la lista de conversaciones de un usuario. Esta prueba consistirá en comprobar que
@@ -1359,7 +1413,31 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(45)
     public void PR45() {
+        // Servicio S1
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
 
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        // Servicio S5
+        final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/convers/all";
+        RequestSpecification request2 = RestAssured.given();
+        request2.header("Content-Type", "application/json");
+        request2.header("token", jsonPath.get("token"));
+
+        Response response2 = request2.get(RestAssuredURL2);
+
+        JsonPath jsonPath2 = response2.jsonPath();
+
+        Assertions.assertEquals(200, response2.getStatusCode());
+        Assertions.assertEquals(1, jsonPath2.getList("convers").size());
     }
 
     //[Prueba46] Eliminar una conversación de ID conocido. Esta prueba consistirá en comprobar que se
@@ -1369,7 +1447,42 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(46)
     public void PR46() {
+        // Servicio S1
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
 
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        // Servicio S6
+        String idConver = m.getOneConverIdByParticipants("user17@email.com", "user16@email.com");
+        final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/convers/delete/" + idConver;
+        RequestSpecification request2 = RestAssured.given();
+        request2.header("Content-Type", "application/json");
+        request2.header("token", jsonPath.get("token"));
+
+        Response response2 = request2.delete(RestAssuredURL2);
+
+        JsonPath jsonPath2 = response2.jsonPath();
+
+        // Servicio S5
+        final String RestAssuredURL3 = "http://localhost:8080/api/v1.0/convers/all";
+        RequestSpecification request3 = RestAssured.given();
+        request3.header("Content-Type", "application/json");
+        request3.header("token", jsonPath.get("token"));
+
+        Response response3 = request3.get(RestAssuredURL3);
+
+        JsonPath jsonPath3 = response3.jsonPath();
+
+        Assertions.assertEquals(200, response3.getStatusCode());
+        Assertions.assertEquals(0, jsonPath3.getList("convers").size());
     }
 
     //[Prueba47] Marcar como leído un mensaje de ID conocido. Esta prueba consistirá en comprobar que
@@ -1379,7 +1492,72 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(47)
     public void PR47() {
+        // Previo P1: Inicio de sesión para crear una conver enviando un nuevo mensaje
+        final String RestAssuredURL = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("email", "user16@email.com");
+        requestParams.put("password", "admin");
+        request.header("Content-Type", "application/json");
+        request.body(requestParams.toJSONString());
 
+        Response response = request.post(RestAssuredURL);
+
+        JsonPath jsonPath = response.jsonPath();
+
+        // Previo P2: Envío del mensaje para disponer de un mensaje que marcar como leído
+        final String RestAssuredURL2 = "http://localhost:8080/api/v1.0/messages/send";
+        RequestSpecification request2 = RestAssured.given();
+        JSONObject requestParams2 = new JSONObject();
+        requestParams2.put("offer", m.getOneOfferIdByAuthor("user17@email.com")); // oferta de otro
+        requestParams2.put("text", "hola");
+        request2.header("Content-Type", "application/json");
+        request2.header("token", jsonPath.get("token"));
+        request2.body(requestParams2.toJSONString());
+
+        Response response2 = request2.post(RestAssuredURL2);
+
+        JsonPath jsonPath2 = response2.jsonPath();
+
+        // Servicio S1 (Nos autenticamos con el otro participante de la conver para que pueda marcar a leído)
+        final String RestAssuredURL3 = "http://localhost:8080/api/v1.0/users/login";
+        RequestSpecification request3 = RestAssured.given();
+        JSONObject requestParams3 = new JSONObject();
+        requestParams3.put("email", "user17@email.com");
+        requestParams3.put("password", "admin");
+        request3.header("Content-Type", "application/json");
+        request3.body(requestParams3.toJSONString());
+
+        Response response3 = request3.post(RestAssuredURL3);
+
+        JsonPath jsonPath3 = response3.jsonPath();
+
+        // Servicio S7
+        String idMessage = m.getOneMessageIdByAuthor("user16@email.com");
+        final String RestAssuredURL4 = "http://localhost:8080/api/v1.0/messages/markasread/" + idMessage;
+        RequestSpecification request4 = RestAssured.given();
+        request4.header("Content-Type", "application/json");
+        request4.header("token", jsonPath3.get("token"));
+
+        Response response4 = request4.put(RestAssuredURL4);
+
+        JsonPath jsonPath4 = response4.jsonPath();
+
+        // Servicio S4
+        String idConver = m.getOneConverIdByParticipants("user17@email.com", "user16@email.com");
+        final String RestAssuredURL5 = "http://localhost:8080/api/v1.0/messages/fromconver/" + idConver;
+        RequestSpecification request5 = RestAssured.given();
+        request5.header("Content-Type", "application/json");
+        request5.header("token", jsonPath3.get("token"));
+
+        Response response5 = request5.get(RestAssuredURL5);
+
+        JsonPath jsonPath5 = response5.jsonPath();
+
+        Assertions.assertEquals(200, response5.getStatusCode());
+        Assertions.assertEquals(1, jsonPath5.getList("messages").size());
+        Assertions.assertEquals("hola", jsonPath5.getList("messages.text").get(0));
+        Assertions.assertEquals(true, jsonPath5.getList("messages.read").get(0));
     }
 
 }
