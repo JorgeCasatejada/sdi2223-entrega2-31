@@ -20,10 +20,10 @@
 
 <script>
 
-    //var messagesLength = 0;
-
+    //Carga los mensajes haciendo una llamada a la API REST.
     function loadMessages() {
         $("#conversationsTableBody").empty();
+        //Si no existe la conversación no cargamos ningún mensaje.
         if(createConver == false || createConver === undefined) {
             $.ajax({
                 url: URLbase + "/messages/fromconver/" + selectedConversationId,
@@ -34,10 +34,8 @@
                     "token": token
                 },
                 success: function (response) {
-                    //if(messagesLength < response.messages.length) {
-                        //messagesLength = response.messages.length;
-                        showMessages(response.messages);
-                    //}
+                    showMessages(response.messages);
+
                 },
                 error: function (error) {
                     $("#main-container").load("widget-login.html");
@@ -46,12 +44,14 @@
         }
     }
 
+    //Muestra por pantalla los mensajes.
     function showMessages(messages) {
         $("#messageList").empty();
         for (i = 0; i < messages.length; i++) {
             if(Cookies.get('username') === messages[i].author) {
                 var texto = messages[i].text
                 if(messages[i].read == true) {
+                    //Si es un mensaje nuestro y lo ha visto el otro usuario se indicará por pantalla.
                     texto = texto + '<p class="visto" >visto ✓✓</p>';
                 }
                 $("#messageList").append(
@@ -62,12 +62,14 @@
                     '<li class="message received" >'+ messages[i].text + '</li>'
                 );
                 if(messages[i].read == false) {
+                    //Si es un mensaje ajeno y lo ha habíamos visto el se marcará automáticamente como leido.
                     autoleer(messages[i]._id);
                 }
             }
         }
     }
 
+    //Función para enviar un mensaje y se almacene en la conversación.
     function sendMessage() {
         $.ajax({
             url: URLbase + "/messages/send",
@@ -94,6 +96,7 @@
         });
     }
 
+    //Hace una llamada a la API REST para que marque el mensaje como leido.
     function autoleer(_id) {
         $.ajax({
             url: URLbase + "/messages/markasread/" + _id,
@@ -108,6 +111,7 @@
         });
     }
 
+    //Función para que cada 2 segundos se actualicen los mensajes.
     intervaloActualización = setInterval(loadMessages, 2000);
 
     loadMessages();
