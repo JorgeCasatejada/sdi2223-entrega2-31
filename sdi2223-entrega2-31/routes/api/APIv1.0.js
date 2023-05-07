@@ -454,6 +454,12 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
     });
 
     app.get("/api/v1.0/convers/:offerId", async function(req, res) {
+        // -------- LOG ------------
+        const logText = `[${new Date()}] - Mapping: ${req.originalUrl} - Método HTTP: ${req.method} -  
+                  Parámetros ruta: ${JSON.stringify(req.params)} Parámetros consulta: ${JSON.stringify(req.query)}`;
+        logger.info(logText);
+        await logRepository.insertLog('PET', logText);
+        // -----------------
         try {
             if(req.params.offerId !== null && typeof req.params.offerId !== "undefined" && req.params.offerId.trim() !== "") {
                 let filter = { _id: ObjectId(req.params.offerId) };
