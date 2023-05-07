@@ -453,4 +453,33 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         }
     });
 
+    app.get("/api/v1.0/convers/:offerId", async function(req, res) {
+        try {
+            if(req.params.offerId !== null && typeof req.params.offerId !== "undefined" && req.params.offerId.trim() !== "") {
+                let filter = { _id: ObjectId(req.params.offerId) };
+                offersRepository.findOffer(filter, {}).then((offer) => {
+                    if(offer !== null) {
+                        let filter2 = {idOffer: ObjectId(req.params.offerId), offertant: res.user};
+                        conversRepository.findConver(filter2, {}).then(conver => {
+                            res.status(200);
+                            res.send({conver: conver})
+                        }).catch(error => {
+                            res.status(500);
+                            res.json({error: "Se ha producido un error al intentar acceder a la conversación de la oferta."})
+                        });
+                    } else {
+                        res.status(404);
+                        res.json({error: "La oferta cuya conversación se quiere acceder, no existe."});
+                    }
+                })
+            } else {
+                res.status(400);
+                res.json({ error: "Se necesita una oferta para acceder a la conversación." });
+            }
+        } catch(e) {
+            res.status(500);
+            res.json({error: "Se ha producido un error al intentar acceder a la conversación de la oferta."});
+        }
+    });
+
 }
