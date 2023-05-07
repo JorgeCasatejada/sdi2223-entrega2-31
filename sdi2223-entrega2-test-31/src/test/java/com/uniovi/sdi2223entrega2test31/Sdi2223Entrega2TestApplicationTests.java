@@ -1713,12 +1713,13 @@ class Sdi2223Entrega2TestApplicationTests {
         Assertions.assertEquals(1, mensajes.size());
         Assertions.assertEquals("Hola, buenas tardes", mensajes.get(0).getText());
 
-        //Volvemos a acceder a las ofertas
-        driver.findElements(By.xpath("/html/body/nav/div/div[2]/ul[1]/li[1]/a")).get(0).click();
+        //Accedemos a mis conversacioens
+        String xpathConvers = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathConvers, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpathConvers)).get(0).click();
 
-        //Accedemos a la misma conversación con el usuario 7.
-        SeleniumUtils.waitLoadElementsByXpath(driver, xpathNewConver, PO_PrivateView.getTimeout());
-        driver.findElements(By.xpath(xpathNewConver)).get(0).click();
+        //Ver mi conversacion con el usuario07 (Marca como leigo los mensajes escritos por usuario01)
+        driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr/td[4]/a[1]")).get(0).click();
 
         //Añade un mensaje en el chat.
         PO_ChatView.createMessage(driver, "Me interesa la oferta");
@@ -1926,6 +1927,60 @@ class Sdi2223Entrega2TestApplicationTests {
         Assertions.assertEquals(1, vistos.size());
         //Comprobamos que se muestra el texto de (visto ✓✓)
         Assertions.assertEquals("visto ✓✓", vistos.get(0).getText());
+    }
+
+
+    //[Prueba58] Identificarse en la aplicación y enviar tres mensajes a una oferta, validar que los mensajes
+    //enviados aparecen en el chat. Identificarse después con el usuario propietario de la oferta y validar
+    //que el número de mensajes sin leer aparece en su oferta.
+    @Test
+    @Order(58)
+    public void PR58() {
+        //Reiniciamos la base de datos para evitar problemas con tests anteriores.
+        m.resetMongo();
+
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+        SeleniumUtils.waitLoadElementsBy(driver, "id", "boton-login", PO_PrivateView.getTimeout());
+
+        //Rellenamos el formulario con user01
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "admin");
+        //Tras esto nos redirecciona a las ofertas disponibles.
+
+
+        //Creamos una conversación con el usuario02.
+        String xpathNewConver = "/html/body/div/div/table/tbody/tr[1]/td[6]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathNewConver, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpathNewConver)).get(0).click();
+
+        //Añade un mensaje en el chat.
+        PO_ChatView.createMessage(driver, "Hey");
+
+        //########################### Para solucionar errores de Seleium #################################//
+        driver.navigate().to("http://localhost:8080/");
+        driver.manage().deleteAllCookies();
+        //###################################### Fin ############################################//
+
+
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+
+        //Rellenamos el formulario con user02
+        PO_LoginView.fillLoginForm(driver, "user02@email.com", "admin");
+        //Tras esto nos redirecciona a las ofertas disponibles.
+
+        //Accedemos a mis conversaciones que solo debe haber 1.
+        String xpathConvers = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathConvers, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpathConvers)).get(0).click();
+
+        //Comprobaos que solo hay 1 conversacion.
+        SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/div/table/tbody", PO_PrivateView.getTimeout());
+        Assertions.assertEquals(1, driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr")).size());
+
+        //Comprobamos que hay 1 mensaje sin leer.
+        Assertions.assertEquals("1", driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr/td[5]")).get(0).getText());
+
     }
 
 }
