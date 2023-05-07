@@ -453,6 +453,7 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
         }
     });
 
+    //Metodo creado adicionalmente para poder reanudar conversaciones desde el apartado offers
     app.get("/api/v1.0/convers/:offerId", async function(req, res) {
         try {
             if(req.params.offerId !== null && typeof req.params.offerId !== "undefined" && req.params.offerId.trim() !== "") {

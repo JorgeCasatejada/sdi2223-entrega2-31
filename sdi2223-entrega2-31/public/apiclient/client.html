@@ -40,9 +40,11 @@
 </div>
 <script>
     let token;
-    let intervaloActualización;
+    let intervaloActualización;     //Para actualizar cada 2 segundos los mensajes del chat.
     let URLbase = "http://localhost:8080/api/v1.0";
 
+    //Si tiene la sesión iniciada permite acceder a las diferentes partes del cliente ligero,
+    //sino autoredirecciona al login.
     if ( Cookies.get('token') != null ){
         token = Cookies.get('token');
         $( "#main-container" ).load("widget-offers.html");
@@ -63,6 +65,7 @@
         $( "#main-container" ).load("widget-login.html");
     }
 
+    //Para que funcione la barra superior de navegación.
     function widgetConversations() {
         $( "#main-container" ).load( "widget-conversations.html");
     }
