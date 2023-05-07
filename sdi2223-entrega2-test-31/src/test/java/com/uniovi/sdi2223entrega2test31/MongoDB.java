@@ -47,6 +47,8 @@ public class MongoDB {
         deleteData();
         insertUsuarios();
         insertOffers();
+        insertConversations();
+        insertMessages();
     }
 
     public List<String> usersEmail() {
@@ -96,6 +98,8 @@ public class MongoDB {
         getMongodb().getCollection("offers").drop();
         getMongodb().getCollection("purchases").drop();
         getMongodb().getCollection("users").drop();
+        getMongodb().getCollection("convers").drop();
+        getMongodb().getCollection("messages").drop();
     }
 
     private void insertUsuarios() {
@@ -150,6 +154,44 @@ public class MongoDB {
                 offers.insertOne(offer);
             }
         }
+    }
+
+    private void insertConversations() {
+        MongoCollection<Document> convers = getMongodb().getCollection("convers");
+        MongoCursor<Document> it = getMongodb().getCollection("offers").find(eq("author", "user15@email.com")).iterator();
+        for (int j = 1; j <= 10; j++){
+            Document offer = it.next();
+            Document conver = new Document()
+                    .append("offertant", "user08@email.com")
+                    .append("idOffer", offer.getObjectId("_id"))
+                    .append("owner", "user15@email.com");
+
+            convers.insertOne(conver);
+        }
+
+        it.close();
+
+    }
+
+    private void insertMessages() {
+        MongoCollection<Document> messages = getMongodb().getCollection("messages");
+        MongoCursor<Document> it = getMongodb().getCollection("convers").find().iterator();
+        boolean bol = true;
+        while(it.hasNext()) {
+            Document conver = it.next();
+            Document message = new Document()
+                    .append("author", "user08@email.com")
+                    .append("text", "hola")
+                    .append("date", "7/5/23 0:45:54 UTC")
+                    .append("read", bol)
+                    .append("idConver", conver.getObjectId("_id"));
+
+            messages.insertOne(message);
+            bol = !bol;
+        }
+
+        it.close();
+
     }
 
 }

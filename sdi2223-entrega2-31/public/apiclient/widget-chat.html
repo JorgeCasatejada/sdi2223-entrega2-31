@@ -20,9 +20,11 @@
 
 <script>
 
+    //var messagesLength = 0;
+
     function loadMessages() {
         $("#conversationsTableBody").empty();
-        if(createConver == false) {
+        if(createConver == false || createConver === undefined) {
             $.ajax({
                 url: URLbase + "/messages/fromconver/" + selectedConversationId,
                 type: "GET",
@@ -32,7 +34,10 @@
                     "token": token
                 },
                 success: function (response) {
-                    showMessages(response.messages);
+                    //if(messagesLength < response.messages.length) {
+                        //messagesLength = response.messages.length;
+                        showMessages(response.messages);
+                    //}
                 },
                 error: function (error) {
                     $("#main-container").load("widget-login.html");
@@ -44,14 +49,21 @@
     function showMessages(messages) {
         $("#messageList").empty();
         for (i = 0; i < messages.length; i++) {
-            if(true) {
+            if(Cookies.get('username') === messages[i].author) {
+                var texto = messages[i].text
+                if(messages[i].read == true) {
+                    texto = texto + '<p class="visto" >visto ✓✓</p>';
+                }
                 $("#messageList").append(
-                    '<li class="message sent" >'+ messages[i].text + '</li>'
+                    '<li class="message sent" >'+ texto + '</li>'
                 );
             } else {
                 $("#messageList").append(
                     '<li class="message received" >'+ messages[i].text + '</li>'
                 );
+                if(messages[i].read == false) {
+                    autoleer(messages[i]._id);
+                }
             }
         }
     }
@@ -82,7 +94,21 @@
         });
     }
 
-    $(document).ready(loadMessages());
+    function autoleer(_id) {
+        $.ajax({
+            url: URLbase + "/messages/markasread/" + _id,
+            type: "PUT",
+            data: {},
+            dataType: 'json',
+            headers: {"token": token},
+            success: function (response) {},
+            error: function (error) {
+                $("#main-container").load("widget-login.html");
+            }
+        });
+    }
+
+    intervaloActualización = setInterval(loadMessages, 2000);
 
     loadMessages();
 

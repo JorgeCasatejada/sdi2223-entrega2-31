@@ -4,7 +4,7 @@
   <table class="table table-hover">
     <thead>
     <tr>
-      <th><a onclick="sortByTitle()">Título</a></th>
+      <th><a onclick="sortByTitle()">Título de la oferta</a></th>
       <th>Email del vendedor</th>
       <th>Email del interesado</th>
       <th class="col-md-1"></th>
@@ -16,6 +16,10 @@
 
 <script>
   window.history.pushState("", "", "/apiclient/client.html?w=conversations");
+
+  if(intervaloActualización !== undefined) {
+    clearInterval(intervaloActualización);
+  }
 
   var conversations;
   var selectedConversationId;
@@ -41,7 +45,7 @@
     for (i = 0; i < conversations.length; i++) {
       $("#conversationsTableBody").append(
               "<tr id=" + conversations[i]._id + ">" +
-              "<td>" + conversations[i].title + "</td>" +
+              "<td>" + conversations[i].offerTitle + "</td>" +
               "<td>" + conversations[i].owner + "</td>" +
               "<td>" + conversations[i].offertant + "</td>" +
               "<td>" +

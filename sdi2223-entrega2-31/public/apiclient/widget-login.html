@@ -15,7 +15,7 @@
   </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="button" id="boton-login">Aceptar</button>
+      <button type="button" class="btn btn-primary" id="boton-login">Aceptar</button>
     </div>
   </div>
 </div>
@@ -23,22 +23,30 @@
 <script>
   window.history.pushState("", "", "/apiclient/client.html?w=login");
 
+  if(intervaloActualización !== undefined) {
+    clearInterval(intervaloActualización);
+  }
+
   $("#boton-login").click(function(){
+    var username = $("#email").val();
     $.ajax({
       url:URLbase + "/users/login",
       type:"POST",
       data:{
-        email:$("#email").val(),
+        email: username,
         password:$("#password").val()
       },
       dataType:"json",
       success:function success(response){
         token = response.token;
         Cookies.set('token', response.token);
+        Cookies.set('username', username);
         $("#main-container").load("widget-offers.html");
       },
       error:function(error){
         Cookies.remove('token');
+        Cookies.remove('username');
+        username = undefined;
         $("#widget-login").prepend("<div class='alert alert-danger'>Usuario no encontrado</div>");
       }
     });

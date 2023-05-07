@@ -24,6 +24,11 @@
   var offers;
   var createConver;
 
+
+  if(intervaloActualización !== undefined) {
+    clearInterval(intervaloActualización);
+  }
+
   function loadOffers() {
     $.ajax({
       url: URLbase + "/offers/availablefromothers",
