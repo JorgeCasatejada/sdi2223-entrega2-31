@@ -18402,3 +18402,37 @@
                   Parámetros ruta: {} Parámetros consulta: {}
 [2023-05-07T17:32:52.515] [INFO] api - [Sun May 07 2023 17:32:52 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/messages/send - Método HTTP: POST - 
                                                         Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T19:35:54.596] [INFO] users - [Sun May 07 2023 19:35:54 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T19:35:57.723] [INFO] users - [Sun May 07 2023 19:35:57 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T19:35:57.736] [INFO] users - [Sun May 07 2023 19:35:57 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-07T19:36:10.909] [INFO] users - [Sun May 07 2023 19:36:10 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/logout - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T19:36:10.927] [INFO] users - [Sun May 07 2023 19:36:10 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login?message=El%20usuario%20se%20ha%20desconectado%20correctamente&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"El usuario se ha desconectado correctamente","messageType":"alert-info "}
+[2023-05-07T19:36:15.442] [INFO] users - [Sun May 07 2023 19:36:15 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T19:37:08.112] [INFO] users - [Sun May 07 2023 19:37:08 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T19:37:21.936] [INFO] users - [Sun May 07 2023 19:37:21 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T19:37:21.945] [INFO] users - [Sun May 07 2023 19:37:21 GMT+0200 (hora de verano de Europa central)] - Mapping: /user/offers?message=Inicio%20de%20sesi%C3%B3n%20correcto&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"Inicio de sesión correcto","messageType":"alert-info "}
+[2023-05-07T19:39:53.177] [INFO] users - [Sun May 07 2023 19:39:53 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/logout - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T19:39:53.194] [INFO] users - [Sun May 07 2023 19:39:53 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login?message=El%20usuario%20se%20ha%20desconectado%20correctamente&messageType=alert-info%20 - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {"message":"El usuario se ha desconectado correctamente","messageType":"alert-info "}
+[2023-05-07T19:41:10.204] [INFO] users - [Sun May 07 2023 19:41:10 GMT+0200 (hora de verano de Europa central)] - Mapping: /users/login - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T19:54:24.068] [INFO] api - [Sun May 07 2023 19:54:24 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T19:54:24.105] [INFO] api - [Sun May 07 2023 19:54:24 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/users/login - Método HTTP: POST - 
+                        Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T19:54:24.149] [INFO] api - [Sun May 07 2023 19:54:24 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T19:54:30.401] [INFO] api - [Sun May 07 2023 19:54:30 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/convers/all - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
+[2023-05-07T19:54:33.450] [INFO] api - [Sun May 07 2023 19:54:33 GMT+0200 (hora de verano de Europa central)] - Mapping: /api/v1.0/offers/availablefromothers - Método HTTP: GET -  
+                  Parámetros ruta: {} Parámetros consulta: {}
