@@ -1,0 +1,115 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="chat">
+                <div class="messageblock">
+                    <ul id="messageList">
+                        <!-- Agrega más mensajes aquí (class="message sent) (class="message received") -->
+                    </ul>
+                </div>
+                <div class="newMessageForm">
+                    <div class="messageForm">
+                        <input id="newMessage" type="text" name="message" placeholder="Mensaje..." />
+                        <button type="button" id="botonEnviar" class="btn btn-primary" onclick="sendMessage()" >Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    //var messagesLength = 0;
+
+    function loadMessages() {
+        $("#conversationsTableBody").empty();
+        if(createConver == false || createConver === undefined) {
+            $.ajax({
+                url: URLbase + "/messages/fromconver/" + selectedConversationId,
+                type: "GET",
+                data: {},
+                dataType: 'json',
+                headers: {
+                    "token": token
+                },
+                success: function (response) {
+                    //if(messagesLength < response.messages.length) {
+                        //messagesLength = response.messages.length;
+                        showMessages(response.messages);
+                    //}
+                },
+                error: function (error) {
+                    $("#main-container").load("widget-login.html");
+                }
+            });
+        }
+    }
+
+    function showMessages(messages) {
+        $("#messageList").empty();
+        for (i = 0; i < messages.length; i++) {
+            if(Cookies.get('username') === messages[i].author) {
+                var texto = messages[i].text
+                if(messages[i].read == true) {
+                    texto = texto + '<p class="visto" >visto ✓✓</p>';
+                }
+                $("#messageList").append(
+                    '<li class="message sent" >'+ texto + '</li>'
+                );
+            } else {
+                $("#messageList").append(
+                    '<li class="message received" >'+ messages[i].text + '</li>'
+                );
+                if(messages[i].read == false) {
+                    autoleer(messages[i]._id);
+                }
+            }
+        }
+    }
+
+    function sendMessage() {
+        $.ajax({
+            url: URLbase + "/messages/send",
+            type: "POST",
+            data: {
+                conver: selectedConversationId,
+                offer: selectedOfferId,
+                text: $("#newMessage").val()
+            },
+            dataType: 'json',
+            headers: {"token": token},
+            success: function (response) {
+                if(createConver == true) {
+                    createConver = false;
+                    selectedConversationId = response._idConv;
+                }
+
+                $("#newMessage").val("");
+                loadMessages();
+            },
+            error: function (error) {
+                $("#main-container").load("widget-login.html");
+            }
+        });
+    }
+
+    function autoleer(_id) {
+        $.ajax({
+            url: URLbase + "/messages/markasread/" + _id,
+            type: "PUT",
+            data: {},
+            dataType: 'json',
+            headers: {"token": token},
+            success: function (response) {},
+            error: function (error) {
+                $("#main-container").load("widget-login.html");
+            }
+        });
+    }
+
+    intervaloActualización = setInterval(loadMessages, 2000);
+
+    loadMessages();
+
+</script>

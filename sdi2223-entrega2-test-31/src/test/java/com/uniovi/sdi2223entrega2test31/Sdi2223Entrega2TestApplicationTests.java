@@ -20,8 +20,8 @@ import java.util.List;
 class Sdi2223Entrega2TestApplicationTests {
     static MongoDB m;
     //ALEX
-    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Users\\alexr\\OneDrive\\Escritorio\\geckodriver-v0.30.0-win64.exe";
+//    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+//    static String Geckodriver = "C:\\Users\\alexr\\OneDrive\\Escritorio\\geckodriver-v0.30.0-win64.exe";
     //JORGE
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 //    static String Geckodriver = "C:\\Users\\jorge\\OneDrive\\Escritorio\\SDI\\Practica\\Sesión6\\PL-SDI-Sesión5-material\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
@@ -29,8 +29,8 @@ class Sdi2223Entrega2TestApplicationTests {
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 //    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
     //ENRIQUE
-//    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-//    static String Geckodriver = "C:\\Program Files\\Gekodriver\\geckodriver-v0.30.0-win64.exe";
+    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+    static String Geckodriver = "C:\\Program Files\\Gekodriver\\geckodriver-v0.30.0-win64.exe";
 
     //static String Geckodriver = "/Users/USUARIO/selenium/geckodriver-v0.30.0-macos";
     //Común a Windows y a MACOSX
@@ -1129,6 +1129,7 @@ class Sdi2223Entrega2TestApplicationTests {
         Assertions.assertEquals(1, sizeLogsAfter);
     }
 
+
     /* Ejemplos de pruebas de llamada a una API-REST */
     /* ---- Probamos a obtener lista de canciones sin token ---- */
 //    @Test
@@ -1558,6 +1559,359 @@ class Sdi2223Entrega2TestApplicationTests {
         Assertions.assertEquals(1, jsonPath5.getList("messages").size());
         Assertions.assertEquals("hola", jsonPath5.getList("messages.text").get(0));
         Assertions.assertEquals(true, jsonPath5.getList("messages.read").get(0));
+    }
+
+
+
+
+
+    //[Prueba48] Inicio de sesión con datos válidos.
+    @Test
+    @Order(48)
+    public void PR48() {
+        //Reiniciamos la base de datos para evitar problemas con tests anteriores.
+        m.resetMongo();
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+
+        //Rellenamos el formulario con user01
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "admin");
+
+        // Miramos el tamaño de la lista de ofertas
+        String checkPath = "/html/body/div/div/table/tbody";
+        SeleniumUtils.waitLoadElementsByXpath(driver, checkPath, PO_PrivateView.getTimeout());
+        List<WebElement> tableBodyRows = driver.findElements(By.xpath(checkPath));
+        int sizeOffers = tableBodyRows.get(0).findElements(By.tagName("tr")).size();
+
+        //Comporbamos que posee al menos 1 oferta disponible
+        //(normalmente poseerá varias debido a la gran cantidad de datos de prueba)
+        //Esto nos asegura que tras el login correcto, se nos redirige a la página con el resto de ofertas.
+        Assertions.assertTrue(sizeOffers >= 1);
+        //De hecho tiene que haber 10 ofertas por cada usuario (20 usuarios - 1 [usuario activo]) 10*19 = 190 ofertas
+        Assertions.assertEquals(190, sizeOffers);
+    }
+
+    //[Prueba49] Inicio de sesión con datos inválidos (email existente, pero contraseña incorrecta).
+    @Test
+    @Order(49)
+    public void PR49() {
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+
+        //Rellenamos el formulario con user01 pero contraseña incorrecta
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "user02");
+
+        //Se nos muestras por pantalla un error diciendonos que no se ha encontrado al usuario.
+        List<WebElement> errors = driver.findElements(By.xpath("/html/body/div/div/div[1]"));
+        Assertions.assertEquals("Usuario no encontrado", errors.get(0).getText());
+    }
+
+    //[Prueba50] Inicio de sesión con datos inválidos (campo email o contraseña vacíos).
+    @Test
+    @Order(50)
+    public void PR50() {
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+
+        //Rellenamos el formulario con user01 pero contraseña vacía
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "");
+
+        //Se nos muestras por pantalla un error diciendonos que no se ha encontrado al usuario.
+        List<WebElement> errors = driver.findElements(By.xpath("/html/body/div/div/div[1]"));
+        Assertions.assertEquals("Usuario no encontrado", errors.get(0).getText());
+    }
+
+    //[Prueba51] Mostrar el listado de ofertas disponibles y comprobar que se muestran todas las que existen,
+    //menos las del usuario identificado.
+    @Test
+    @Order(51)
+    public void PR51() {
+        //Reiniciamos la base de datos para evitar problemas con tests anteriores.
+        m.resetMongo();
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+
+        //Rellenamos el formulario con user01
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "admin");
+        //Tras esto nos redirecciona a las ofertas disponibles.
+
+
+        // Obtenemos cada fila de la tabla de ofertas
+        String checkPath = "/html/body/div/div/table/tbody";
+        SeleniumUtils.waitLoadElementsByXpath(driver, checkPath, PO_PrivateView.getTimeout());
+        List<WebElement> tableBodyRows = driver.findElements(By.xpath(checkPath + "/tr"));
+
+        //Comporbamos que existen ofertas.
+        Assertions.assertTrue(tableBodyRows.size() > 0);
+
+        //Número de veces que aparece nuestro correo en el de los ofertantes
+        //(Ha de ser 0 para asegurarnos de no ver nuestras ofertas)
+        int sizeMyOffers = 0;
+
+        for(WebElement we : tableBodyRows) {
+            if(we.findElement(By.xpath("//td[5]")).getText().equals("user01@email.com")) {
+                sizeMyOffers++;
+            }
+        }
+
+        //Comporbamos que no se nos muestra nuestras ofertas.
+        Assertions.assertEquals(0, sizeMyOffers);
+    }
+
+    //[Prueba52] Sobre listado de ofertas disponibles (a elección de desarrollador), enviar un mensaje a una
+    //oferta concreta. Se abriría dicha conversación por primera vez. Comprobar que el mensaje aparece
+    //en el listado de mensajes.
+    @Test
+    @Order(52)
+    public void PR52() {
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+
+        //Rellenamos el formulario con user13
+        PO_LoginView.fillLoginForm(driver, "user13@email.com", "admin");
+        //Tras esto nos redirecciona a las ofertas disponibles.
+
+        //Creamos una nueva conversación con el usuario 7.
+        String xpathNewConver = "/html/body/div/div/table/tbody/tr[66]/td[6]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathNewConver, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpathNewConver)).get(0).click();
+
+        //Añade un mensaje en el chat.
+        PO_ChatView.createMessage(driver, "Hola, buenas tardes");
+
+        //Comprobaos que hay un mensaje con el texto mandado.
+        List<WebElement> mensajes = driver.findElements(By.xpath("/html/body/div/div/div/div/div/div[1]/ul/li"));
+        Assertions.assertEquals(1, mensajes.size());
+        Assertions.assertEquals("Hola, buenas tardes", mensajes.get(0).getText());
+    }
+
+    //[Prueba53] Sobre el listado de conversaciones enviar un mensaje a una conversación ya abierta.
+    //Comprobar que el mensaje aparece en el listado de mensajes.
+    @Test
+    @Order(53)
+    public void PR53() {
+        //Reiniciamos la base de datos para evitar problemas con tests anteriores.
+        m.resetMongo();
+
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+
+        //Rellenamos el formulario con user13
+        PO_LoginView.fillLoginForm(driver, "user13@email.com", "admin");
+        //Tras esto nos redirecciona a las ofertas disponibles.
+
+        //Creamos una nueva conversación con el usuario 7.
+        String xpathNewConver = "/html/body/div/div/table/tbody/tr[66]/td[6]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathNewConver, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpathNewConver)).get(0).click();
+
+        //Añade un mensaje en el chat.
+        PO_ChatView.createMessage(driver, "Hola, buenas tardes");
+
+        //Comprobaos que hay un mensaje con el texto mandado.
+        List<WebElement> mensajes = driver.findElements(By.xpath("/html/body/div/div/div/div/div/div[1]/ul/li"));
+        Assertions.assertEquals(1, mensajes.size());
+        Assertions.assertEquals("Hola, buenas tardes", mensajes.get(0).getText());
+
+        //Volvemos a acceder a las ofertas
+        driver.findElements(By.xpath("/html/body/nav/div/div[2]/ul[1]/li[1]/a")).get(0).click();
+
+        //Accedemos a la misma conversación con el usuario 7.
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathNewConver, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpathNewConver)).get(0).click();
+
+        //Añade un mensaje en el chat.
+        PO_ChatView.createMessage(driver, "Me interesa la oferta");
+
+        //Comprobaos que hay dos mensaje con el texto mandado.
+        mensajes = driver.findElements(By.xpath("/html/body/div/div/div/div/div/div[1]/ul/li"));
+        Assertions.assertEquals(2, mensajes.size());
+        //Comprobamos el contenido de los mensajes.
+        Assertions.assertEquals("Hola, buenas tardes", mensajes.get(0).getText());
+        Assertions.assertEquals("Me interesa la oferta", mensajes.get(1).getText());
+    }
+
+    //[Prueba54] Mostrar el listado de conversaciones ya abiertas. Comprobar que el listado contiene la
+    //cantidad correcta de conversaciones.
+    @Test
+    @Order(54)
+    public void PR54() {
+        //Reiniciamos la base de datos para evitar problemas con tests anteriores.
+        m.resetMongo();
+
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+
+        //Rellenamos el formulario con user08
+        PO_LoginView.fillLoginForm(driver, "user08@email.com", "admin");
+        //Tras esto nos redirecciona a las ofertas disponibles.
+
+
+        //Accedemos a mis conversaciones.
+        String xpathConvers = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathConvers, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpathConvers)).get(0).click();
+
+        //Comprobaos que solo hay 10 conversaciones.
+        SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/div/table/tbody", PO_PrivateView.getTimeout());
+        Assertions.assertEquals(10, driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr")).size());
+    }
+
+    //[Prueba55] Sobre el listado de conversaciones ya abiertas. Pinchar el enlace Eliminar en la primera y
+    //comprobar que el listado se actualiza correctamente.
+    @Test
+    @Order(55)
+    public void PR55() {
+        //Reiniciamos la base de datos para evitar problemas con tests anteriores.
+        m.resetMongo();
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+
+        //Rellenamos el formulario con user08 (Posee varias conversaciones)
+        PO_LoginView.fillLoginForm(driver, "user08@email.com", "admin");
+        //Tras esto nos redirecciona a las ofertas disponibles.
+
+        //Accedemos a mis conversaciones.
+        String xpath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpath, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpath)).get(0).click();
+
+        //Comprobaos que hay 10 conversaciones.
+        String xpathTableElements = "/html/body/div/div/table/tbody/tr";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathTableElements, PO_PrivateView.getTimeout());
+        Assertions.assertEquals(10, driver.findElements(By.xpath(xpathTableElements)).size());
+
+        //Obtenemos el nombre de la primera.
+        String oldFirst = driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr[1]/td[1]")).get(0).getText();
+
+        //Lo eliminamos.
+        driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr[1]/td[4]/a[2]")).get(0).click();
+
+        //Comprobaos que hay 9 conversaciones.
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathTableElements, PO_PrivateView.getTimeout());
+        Assertions.assertEquals(9, driver.findElements(By.xpath(xpathTableElements)).size());
+
+        //Obtenemos el nombre de la primera.
+        String newFirst = driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr[1]/td[1]")).get(0).getText();
+
+        //Nos aseguramos de que son distintas ofertas.
+        Assertions.assertNotEquals(newFirst, oldFirst);
+    }
+
+    //[Prueba56] Sobre el listado de conversaciones ya abiertas. Pinchar el enlace Eliminar en la última y
+    //comprobar que el listado se actualiza correctamente.
+    @Test
+    @Order(56)
+    public void PR56() {
+        //Reiniciamos la base de datos para evitar problemas con tests anteriores.
+        m.resetMongo();
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+
+        //Rellenamos el formulario con user08 (Posee varias conversaciones)
+        PO_LoginView.fillLoginForm(driver, "user08@email.com", "admin");
+        //Tras esto nos redirecciona a las ofertas disponibles.
+
+        //Accedemos a mis conversaciones.
+        String xpath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpath, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpath)).get(0).click();
+
+        //Comprobaos que hay 10 conversaciones.
+        String xpathTableElements = "/html/body/div/div/table/tbody/tr";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathTableElements, PO_PrivateView.getTimeout());
+        Assertions.assertEquals(10, driver.findElements(By.xpath(xpathTableElements)).size());
+
+        //Obtenemos el nombre de la ultima.
+        String oldFirst = driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr[10]/td[1]")).get(0).getText();
+
+        //Lo eliminamos.
+        driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr[10]/td[4]/a[2]")).get(0).click();
+
+        //Comprobaos que hay 9 conversaciones.
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathTableElements, PO_PrivateView.getTimeout());
+        Assertions.assertEquals(9, driver.findElements(By.xpath(xpathTableElements)).size());
+
+        //Obtenemos el nombre de la primera.
+        String newFirst = driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr[9]/td[1]")).get(0).getText();
+
+        //Nos aseguramos de que son distintas ofertas.
+        Assertions.assertNotEquals(newFirst, oldFirst);
+    }
+
+    //[Prueba57] Identificarse en la aplicación y enviar un mensaje a una oferta, validar que el mensaje
+    //enviado aparece en el chat. Identificarse después con el usuario propietario de la oferta y validar
+    //que tiene un mensaje sin leer, entrar en el chat y comprobar que el mensaje pasa a tener el estado
+    //leído.
+    @Test
+    @Order(57)
+    public void PR57() {
+        //Reiniciamos la base de datos para evitar problemas con tests anteriores.
+        m.resetMongo();
+
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+
+        //Rellenamos el formulario con user01
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "admin");
+        //Tras esto nos redirecciona a las ofertas disponibles.
+
+
+        //Creamos una conversación con el usuario02.
+        String xpathNewConver = "/html/body/div/div/table/tbody/tr[1]/td[6]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathNewConver, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpathNewConver)).get(0).click();
+
+        //Añade un mensaje en el chat.
+        PO_ChatView.createMessage(driver, "Hey");
+
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+
+        //Rellenamos el formulario con user02
+        PO_LoginView.fillLoginForm(driver, "user02@email.com", "admin");
+        //Tras esto nos redirecciona a las ofertas disponibles.
+
+        //Accedemos a mis conversaciones que solo debe haber 1.
+        String xpathConvers = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathConvers, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpathConvers)).get(0).click();
+
+        //Comprobaos que solo hay 1 conversacion.
+        SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/div/table/tbody", PO_PrivateView.getTimeout());
+        Assertions.assertEquals(1, driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr")).size());
+
+        //Ver mi conversacion con el usuario01 (Marca como leigo los mensajes escritos por usuario01)
+        driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr[1]/td[4]/a[1]")).get(0).click();
+        SeleniumUtils.waitLoadElementsBy(driver,"id", "botonEnviar", PO_PrivateView.getTimeout());
+
+
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+
+        //Rellenamos el formulario con user01
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "admin");
+        //Tras esto nos redirecciona a las ofertas disponibles.
+
+        //Accedemos a mis conversaciones que solo debe haber 1.
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathConvers, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpathConvers)).get(0).click();
+
+        //Comprobaos que solo hay 1 conversacion.
+        SeleniumUtils.waitLoadElementsByXpath(driver, "/html/body/div/div/table/tbody", PO_PrivateView.getTimeout());
+        Assertions.assertEquals(1, driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr")).size());
+
+        //Ver mi conversacion con el usuario01 (Marca como leigo los mensajes escritos por usuario01)
+        driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr[1]/td[4]/a[1]")).get(0).click();
+        SeleniumUtils.waitLoadElementsBy(driver,"id", "botonEnviar", PO_PrivateView.getTimeout());
+
+        //Obtenemos nuestros mensajes vistos.
+        List<WebElement> vistos = driver.findElements(By.className("visto"));
+
+        //Comprobamos que solo hay 1.
+        Assertions.assertEquals(1, vistos.size());
+        //Comprobamos que se muestra el texto de (visto ✓✓)
+        Assertions.assertEquals("visto ✓✓", vistos.get(0).getText());
     }
 
 }

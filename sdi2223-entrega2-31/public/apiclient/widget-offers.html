@@ -1,0 +1,140 @@
+<div id="widget-songs" >
+  <input type="text" class="form-control" placeholder="Filtrar por nombre" id="filter-by-name"/>
+
+  <button class="btn" onclick="loadOffers()" >Actualizar</button>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th><a onclick="sortByTitle()">Título</a></th>
+      <th>Detalles</th>
+      <th><a onclick="sortByPrice()">Precio (€)</a></th>
+      <th>Fecha de publicación</th>
+      <th>Email del vendedor</th>
+      <th class="col-md-1"></th>
+    </tr>
+    </thead>
+    <tbody id="offersTableBody"></tbody>
+  </table>
+</div>
+
+<script>
+  window.history.pushState("", "", "/apiclient/client.html?w=offers");
+  var selectedConversationId;
+  var selectedOfferId;
+  var offers;
+  var createConver;
+
+
+  if(intervaloActualización !== undefined) {
+    clearInterval(intervaloActualización);
+  }
+
+  function loadOffers() {
+    $.ajax({
+      url: URLbase + "/offers/availablefromothers",
+      type: "GET",
+      data: {},
+      dataType: 'json',
+      headers: {"token": token},
+      success: function (response) {
+        offers = response.offers;
+        updateOffersTable(offers);
+      },
+      error: function (error) {
+        $("#main-container").load("widget-login.html");
+      }
+    });
+  }
+  function updateOffersTable(offers) {
+    $("#offersTableBody").empty(); // Vaciar la tabla
+    for (i = 0; i < offers.length; i++) {
+      $("#offersTableBody").append(
+              "<tr id=" + offers[i]._id + ">" +
+              "<td>" + offers[i].title + "</td>" +
+              "<td>" + offers[i].description + "</td>" +
+              "<td>" + offers[i].price + "</td>" +
+              "<td>" + offers[i].date + "</td>" +
+              "<td>" + offers[i].author + "</td>" +
+              "<td>" +
+              "<a onclick=conversation('" + offers[i]._id + "')>Conversación</a><br>" +
+              "</td>" +
+              "</tr>");
+    }
+  }
+  function conversation(_id) {
+    selectedOfferId = _id;
+    $.ajax({
+      url: URLbase + "/convers/" + _id,
+      type: "GET",
+      data: {},
+      dataType: 'json',
+      headers: {"token": token},
+      success: function (response) {
+        console.log(response)
+        if(response.conver !== null) {
+          selectedConversationId = response.conver._id;
+        } else {
+          selectedConversationId = undefined;
+        }
+
+        if(selectedConversationId === undefined || selectedConversationId === null) {
+          createConver = true;
+        } else {
+          createConver = false;
+        }
+        console.log(createConver);
+        console.log(selectedConversationId);
+        $("#main-container").load("widget-chat.html");
+
+      },
+      error: function (error) {
+        $("#main-container").load("widget-login.html");
+      }
+    });
+  }
+
+  $('#filter-by-name').on('input',function(e){
+    let filteredOffers = [];
+    let filterValue = $("#filter-by-name").val();
+    filteredOffers = offers.filter(offer => offer.title.toLowerCase().includes(filterValue.toLowerCase()));
+    updateOffersTable(filteredOffers);
+  });
+
+  var priceDesc = true;
+  function sortByPrice() {
+    if (priceDesc) {
+      offers.sort(function (a, b) {
+        return parseFloat(a.price) - parseFloat(b.price);
+      });
+    } else {
+      offers.sort(function (a, b) {
+        return parseFloat(b.price) - parseFloat(a.price);
+      });
+    }
+    updateOffersTable(offers);
+    priceDesc = !priceDesc //invertir ordenación
+  }
+
+  var titleDesc = true;
+  function sortByTitle() {
+    if(titleDesc) {
+      offers.sort(function (a, b) {
+        if (a.title > b.title) return 1;
+        if (a.title < b.title) return -1;
+        return 0;
+      });
+    } else {
+      offers.sort(function (a, b) {
+        if (a.title < b.title) return 1;
+        if (a.title > b.title) return -1;
+        return 0;
+      });
+    }
+
+    updateOffersTable(offers);
+    titleDesc = !titleDesc;
+  }
+
+  loadOffers();
+
+</script>

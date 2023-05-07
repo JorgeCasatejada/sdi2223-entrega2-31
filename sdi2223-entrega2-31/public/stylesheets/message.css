@@ -1,0 +1,59 @@
+/*
+Stylesheet for the conversations.
+ */
+
+.container.title {
+    text-align: center;
+    display: block;
+    background-color: #aeecff;
+}
+
+.chat {
+    margin-top: 5%;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+.chat .messageblock {
+    padding-right: 1.5em;
+    max-height: 600px;
+    overflow-y: auto;
+}
+.chat .messageblock .message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    display: block;
+}
+.chat .messageblock .message.sent {
+    background-color: #88fd92;
+    text-align: right;
+}
+
+.chat .messageblock .message.sent .visto {
+    font-size: x-small;
+}
+
+.chat .messageblock .message.received {
+    background-color: #dfe6e9;
+}
+
+.chat .messageblock input[type=text] {
+    width: calc(100% - 70px);
+    margin-right: 10px;
+}
+
+.chat .messageForm {
+    margin-top: 1.5em;
+}
+
+.chat .messageForm input {
+    margin-left: 3em;
+    width: 70%;
+    height: 2.5em;
+    margin-right: 15px;
+}
+
+.chat .messageForm button {
+    width: 15%;
+    height: 2.5em;
+}

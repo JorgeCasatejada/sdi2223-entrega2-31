@@ -1,5 +1,6 @@
 package com.uniovi.sdi2223entrega2test31.pageobjects;
 
+import com.uniovi.sdi2223entrega2test31.util.SeleniumUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,6 +8,7 @@ import org.openqa.selenium.WebElement;
 public class PO_LoginView extends PO_NavView {
 
 	static public void fillLoginForm(WebDriver driver, String emailp, String passwordp) {
+		SeleniumUtils.waitLoadElementsBy(driver, "class","btn", getTimeout());
 		WebElement email = driver.findElement(By.name("email"));
 		email.click();
 		email.clear();
