@@ -20,6 +20,10 @@
 
 <script>
 
+    if(intervaloActualización !== undefined) {
+        clearInterval(intervaloActualización);
+    }
+
     //Carga los mensajes haciendo una llamada a la API REST.
     function loadMessages() {
         $("#conversationsTableBody").empty();

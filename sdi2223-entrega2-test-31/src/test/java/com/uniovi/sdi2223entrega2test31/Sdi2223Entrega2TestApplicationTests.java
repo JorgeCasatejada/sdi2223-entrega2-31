@@ -1719,7 +1719,7 @@ class Sdi2223Entrega2TestApplicationTests {
         driver.findElements(By.xpath(xpathConvers)).get(0).click();
 
         //Ver mi conversacion con el usuario07 (Marca como leigo los mensajes escritos por usuario01)
-        driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr/td[4]/a[1]")).get(0).click();
+        driver.findElements(By.id("ConverLink")).get(0).click();
 
         //Añade un mensaje en el chat.
         PO_ChatView.createMessage(driver, "Me interesa la oferta");

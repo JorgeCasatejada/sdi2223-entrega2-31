@@ -53,10 +53,10 @@
               "<td>" + conversations[i].owner + "</td>" +
               "<td>" + conversations[i].offertant + "</td>" +
               "<td>" +
-              "<a onclick=conversationView('" + conversations[i]._id + "')>Reanudar</a><br>" +
+              "<a id='ConverLink' onclick=conversationView('" + conversations[i]._id + "')>Reanudar</a><br>" +
               "<a onclick=conversationDelete('" + conversations[i]._id + "')>Eliminar</a>" +
               "</td>" +
-              "<td>" + conversations[i].unReadMessages + "</td>" +
+              "<td id='unreadMessage'>" + conversations[i].unReadMessages + "</td>" +
               "</tr>");
     }
   }
@@ -94,7 +94,7 @@
       headers: {"token": token},
       success: function (response) {
         conversations = response.convers;
-        updateConversationsTable(conversations);
+        updateConversationsSeenMessage(conversations);
       },
       error: function (error) {
         $("#main-container").load("widget-login.html");
@@ -102,8 +102,15 @@
     });
   }
 
+  function updateConversationsSeenMessage(conversations) {
+    for (i = 0; i < conversations.length; i++) {
+      console.log(conversations[i].unReadMessages);
+      $("#"+conversations[i]._id).find("#unreadMessage").text(conversations[i].unReadMessages);
+    }
+  }
+
   intervaloActualización = setInterval(autoUpdate, 1000);
 
-  // loadConversations();
+  loadConversations();
 
 </script>
