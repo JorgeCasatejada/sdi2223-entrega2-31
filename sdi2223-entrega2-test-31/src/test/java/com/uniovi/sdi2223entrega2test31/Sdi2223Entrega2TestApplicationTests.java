@@ -1569,6 +1569,8 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(48)
     public void PR48() {
+        //Reiniciamos la base de datos para evitar problemas con tests anteriores.
+        m.resetMongo();
         //Vamos al login ligero.
         driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
 
@@ -1577,13 +1579,16 @@ class Sdi2223Entrega2TestApplicationTests {
 
         // Miramos el tamaño de la lista de ofertas
         String checkPath = "/html/body/div/div/table/tbody";
-        List<WebElement> tableBodyRows = driver.findElements(By.xpath(checkPath + "/tr"));
-        int sizeOffers = tableBodyRows.size();
+        SeleniumUtils.waitLoadElementsByXpath(driver, checkPath, PO_PrivateView.getTimeout());
+        List<WebElement> tableBodyRows = driver.findElements(By.xpath(checkPath));
+        int sizeOffers = tableBodyRows.get(0).findElements(By.tagName("tr")).size();
 
         //Comporbamos que posee al menos 1 oferta disponible
         //(normalmente poseerá varias debido a la gran cantidad de datos de prueba)
         //Esto nos asegura que tras el login correcto, se nos redirige a la página con el resto de ofertas.
         Assertions.assertTrue(sizeOffers >= 1);
+        //De hecho tiene que haber 10 ofertas por cada usuario (20 usuarios - 1 [usuario activo]) 10*19 = 190 ofertas
+        Assertions.assertEquals(190, sizeOffers);
     }
 
     //[Prueba49] Inicio de sesión con datos inválidos (email existente, pero contraseña incorrecta).
@@ -1621,6 +1626,8 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(51)
     public void PR51() {
+        //Reiniciamos la base de datos para evitar problemas con tests anteriores.
+        m.resetMongo();
         //Vamos al login ligero.
         driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
 
@@ -1631,6 +1638,7 @@ class Sdi2223Entrega2TestApplicationTests {
 
         // Obtenemos cada fila de la tabla de ofertas
         String checkPath = "/html/body/div/div/table/tbody";
+        SeleniumUtils.waitLoadElementsByXpath(driver, checkPath, PO_PrivateView.getTimeout());
         List<WebElement> tableBodyRows = driver.findElements(By.xpath(checkPath + "/tr"));
 
         //Comporbamos que existen ofertas.
@@ -1665,6 +1673,7 @@ class Sdi2223Entrega2TestApplicationTests {
 
         //Creamos una nueva conversación con el usuario 7.
         String xpathNewConver = "/html/body/div/div/table/tbody/tr[66]/td[6]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathNewConver, PO_PrivateView.getTimeout());
         driver.findElements(By.xpath(xpathNewConver)).get(0).click();
 
         //Añade un mensaje en el chat.
@@ -1701,6 +1710,7 @@ class Sdi2223Entrega2TestApplicationTests {
 
         //Creamos una nueva conversación con el usuario 7.
         String xpathNewConver = "/html/body/div/div/table/tbody/tr[66]/td[6]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathNewConver, PO_PrivateView.getTimeout());
         driver.findElements(By.xpath(xpathNewConver)).get(0).click();
 
         //Añade un mensaje en el chat.
@@ -1722,6 +1732,8 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(55)
     public void PR55() {
+        //Reiniciamos la base de datos para evitar problemas con tests anteriores.
+        m.resetMongo();
         //Vamos al login ligero.
         driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
 
@@ -1730,10 +1742,14 @@ class Sdi2223Entrega2TestApplicationTests {
         //Tras esto nos redirecciona a las ofertas disponibles.
 
         //Accedemos a mis conversaciones.
-        driver.findElements(By.xpath("/html/body/nav/div/div[2]/ul[1]/li[2]/a")).get(0).click();
+        String xpath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpath, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpath)).get(0).click();
 
         //Comprobaos que hay 10 conversaciones.
-        Assertions.assertEquals(10, driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr")).size());
+        String xpathTableElements = "/html/body/div/div/table/tbody/tr";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathTableElements, PO_PrivateView.getTimeout());
+        Assertions.assertEquals(10, driver.findElements(By.xpath(xpathTableElements)).size());
 
         //Obtenemos el nombre de la primera.
         String oldFirst = driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr[1]/td[1]")).get(0).getText();
@@ -1742,7 +1758,8 @@ class Sdi2223Entrega2TestApplicationTests {
         driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr[1]/td[4]/a[2]")).get(0).click();
 
         //Comprobaos que hay 9 conversaciones.
-        Assertions.assertEquals(9, driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr")).size());
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathTableElements, PO_PrivateView.getTimeout());
+        Assertions.assertEquals(9, driver.findElements(By.xpath(xpathTableElements)).size());
 
         //Obtenemos el nombre de la primera.
         String newFirst = driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr[1]/td[1]")).get(0).getText();
@@ -1756,6 +1773,8 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(56)
     public void PR56() {
+        //Reiniciamos la base de datos para evitar problemas con tests anteriores.
+        m.resetMongo();
         //Vamos al login ligero.
         driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
 
@@ -1764,10 +1783,14 @@ class Sdi2223Entrega2TestApplicationTests {
         //Tras esto nos redirecciona a las ofertas disponibles.
 
         //Accedemos a mis conversaciones.
-        driver.findElements(By.xpath("/html/body/nav/div/div[2]/ul[1]/li[2]/a")).get(0).click();
+        String xpath = "/html/body/nav/div/div[2]/ul[1]/li[2]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpath, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpath)).get(0).click();
 
         //Comprobaos que hay 10 conversaciones.
-        Assertions.assertEquals(10, driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr")).size());
+        String xpathTableElements = "/html/body/div/div/table/tbody/tr";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathTableElements, PO_PrivateView.getTimeout());
+        Assertions.assertEquals(10, driver.findElements(By.xpath(xpathTableElements)).size());
 
         //Obtenemos el nombre de la ultima.
         String oldFirst = driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr[10]/td[1]")).get(0).getText();
@@ -1776,7 +1799,8 @@ class Sdi2223Entrega2TestApplicationTests {
         driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr[10]/td[4]/a[2]")).get(0).click();
 
         //Comprobaos que hay 9 conversaciones.
-        Assertions.assertEquals(9, driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr")).size());
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathTableElements, PO_PrivateView.getTimeout());
+        Assertions.assertEquals(9, driver.findElements(By.xpath(xpathTableElements)).size());
 
         //Obtenemos el nombre de la primera.
         String newFirst = driver.findElements(By.xpath("/html/body/div/div/table/tbody/tr[9]/td[1]")).get(0).getText();

@@ -4,7 +4,7 @@
     <option name="serverConfigurations">
       <set>
         <ServerConfiguration>
-          <option name="label" value="database" />
+          <option name="label" value="db" />
           <option name="serverUrls">
             <list>
               <option value="localhost:27017" />
