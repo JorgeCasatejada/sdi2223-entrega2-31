@@ -8,6 +8,7 @@
       <th>Email del vendedor</th>
       <th>Email del interesado</th>
       <th class="col-md-1"></th>
+      <th>Mensajes no leídos</th>
     </tr>
     </thead>
     <tbody id="conversationsTableBody"></tbody>
@@ -52,6 +53,7 @@
               "<a onclick=conversationView('" + conversations[i]._id + "')>Reanudar</a><br>" +
               "<a onclick=conversationDelete('" + conversations[i]._id + "')>Eliminar</a>" +
               "</td>" +
+              "<td>" + conversations[i].unReadMessages + "</td>" +
               "</tr>");
     }
   }
@@ -77,6 +79,25 @@
     $("#main-container").load("widget-chat.html");
   }
 
-  loadConversations();
+  function autoUpdate() {
+    $.ajax({
+      url: URLbase + "/convers/all",
+      type: "GET",
+      data: {},
+      dataType: 'json',
+      headers: {"token": token},
+      success: function (response) {
+        conversations = response.convers;
+        updateConversationsTable(conversations);
+      },
+      error: function (error) {
+        $("#main-container").load("widget-login.html");
+      }
+    });
+  }
+
+  intervaloActualización = setInterval(autoUpdate, 1000);
+
+  // loadConversations();
 
 </script>

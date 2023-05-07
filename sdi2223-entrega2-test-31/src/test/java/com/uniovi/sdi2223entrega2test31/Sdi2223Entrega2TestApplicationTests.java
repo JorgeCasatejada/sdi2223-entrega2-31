@@ -26,11 +26,11 @@ class Sdi2223Entrega2TestApplicationTests {
 //    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 //    static String Geckodriver = "C:\\Users\\jorge\\OneDrive\\Escritorio\\SDI\\Practica\\Sesión6\\PL-SDI-Sesión5-material\\PL-SDI-Sesion5-material\\geckodriver-v0.30.0-win64.exe";
     //PATRI
-//    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-//    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
-    //ENRIQUE
     static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-    static String Geckodriver = "C:\\Program Files\\Gekodriver\\geckodriver-v0.30.0-win64.exe";
+    static String Geckodriver = "C:\\Users\\patri\\Desktop\\GitHub\\SDI\\grupo\\geckodriver-v0.30.0-win64.exe";
+    //ENRIQUE
+//    static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+//    static String Geckodriver = "C:\\Program Files\\Gekodriver\\geckodriver-v0.30.0-win64.exe";
 
     //static String Geckodriver = "/Users/USUARIO/selenium/geckodriver-v0.30.0-macos";
     //Común a Windows y a MACOSX
@@ -1044,10 +1044,13 @@ class Sdi2223Entrega2TestApplicationTests {
     @Test
     @Order(34)
     public void PR34() {
-//        final String RestAssuredURL = "http://localhost:8080/api/v1.0/convers/all";
-//        Response response = RestAssured.get(RestAssuredURL);
-//        Assertions.assertEquals(403, response.getStatusCode());
-
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=conversations");
+        // Comprobamos que aparece el campo que pregunta por el email
+        List<WebElement> email = driver.findElements(By.xpath("/html/body/div/div/div[1]/label"));
+        Assertions.assertEquals("Email:", email.get(0).getText().trim());
+        // Comprobamos que aparece el campo que pregunta por el password
+        List<WebElement> password = driver.findElements(By.xpath("/html/body/div/div/div[2]/label"));
+        Assertions.assertEquals("Password:", password.get(0).getText().trim());
     }
 
     //[Prueba35] Estando autenticado como usuario estándar intentar acceder a una opción disponible solo
@@ -1914,4 +1917,31 @@ class Sdi2223Entrega2TestApplicationTests {
         Assertions.assertEquals("visto ✓✓", vistos.get(0).getText());
     }
 
+    // [Prueba58] Identificarse en la aplicación y enviar tres mensajes a una oferta, validar que los mensajes
+    //enviados aparecen en el chat. Identificarse después con el usuario propietario de la oferta y validar
+    //que el número de mensajes sin leer aparece en su oferta.
+    @Test
+    @Order(58)
+    public void PR58() {
+        //Reiniciamos la base de datos para evitar problemas con tests anteriores.
+        m.resetMongo();
+
+        //Vamos al login ligero.
+        driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
+
+        //Rellenamos el formulario con user01
+        PO_LoginView.fillLoginForm(driver, "user01@email.com", "admin");
+        //Tras esto nos redirecciona a las ofertas disponibles.
+
+        //Creamos una conversación con el usuario02.
+        String xpathNewConver = "/html/body/div/div/table/tbody/tr[1]/td[6]/a";
+        SeleniumUtils.waitLoadElementsByXpath(driver, xpathNewConver, PO_PrivateView.getTimeout());
+        driver.findElements(By.xpath(xpathNewConver)).get(0).click();
+
+        //Añadir tres mensajes en el chat.
+        PO_ChatView.createMessage(driver, "Hey");
+        PO_ChatView.createMessage(driver, "Hey2");
+        PO_ChatView.createMessage(driver, "Hey3");
+
+    }
 }

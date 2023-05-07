@@ -329,13 +329,14 @@ module.exports = function (app, usersRepository, offersRepository, conversReposi
             const offerMap = {};
             offers.forEach((offer) => (offerMap[offer._id] = offer.title));
 
-            const result = convers.map((conver) => ({
+            const result = await Promise.all(convers.map(async (conver) => ({
                 _id: conver._id,
                 offertant: conver.offertant,
                 idOffer: conver.idOffer,
                 owner: conver.owner,
                 offerTitle: offerMap[conver.idOffer],
-            }));
+                unReadMessages: await messagesRepository.getUnreadMessages(conver._id, res.user)
+            })));
 
             res.status(200);
             res.send({ convers: result });

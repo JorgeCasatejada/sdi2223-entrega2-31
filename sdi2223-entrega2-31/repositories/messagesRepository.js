@@ -64,5 +64,24 @@ module.exports = {
         } catch (error) {
             throw (error);
         }
+    },
+    getUnreadMessages: async function (converId, autor) {
+        try {
+            const client = await this.mongoClient.connect(this.app.get('connectionStrings'));
+            const database = client.db("myWallapop");
+            const collectionName = 'messages';
+            const messagesCollection = database.collection(collectionName);
+            // Contar mensajes no leidos en la conversacion
+            const unreadMessages = await messagesCollection.find({
+                idConver: converId,
+                read: false,
+                author: { $ne: autor }
+            }).toArray();
+            // Retornar la cantidad de mensajes no leidos que tiene la conversacion
+            return unreadMessages.length;
+        } catch (error) {
+            throw (error);
+        }
     }
+
 };
