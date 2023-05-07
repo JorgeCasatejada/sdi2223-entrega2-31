@@ -1851,7 +1851,7 @@ class Sdi2223Entrega2TestApplicationTests {
 
         //Vamos al login ligero.
         driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
-        SeleniumUtils.waitLoadElementsBy(driver, "id", "email", PO_PrivateView.getTimeout());
+        SeleniumUtils.waitLoadElementsBy(driver, "id", "boton-login", PO_PrivateView.getTimeout());
 
         //Rellenamos el formulario con user01
         PO_LoginView.fillLoginForm(driver, "user01@email.com", "admin");
@@ -1868,7 +1868,7 @@ class Sdi2223Entrega2TestApplicationTests {
 
         //Vamos al login ligero.
         driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
-        SeleniumUtils.waitLoadElementsBy(driver, "id", "email", PO_PrivateView.getTimeout());
+        SeleniumUtils.waitLoadElementsBy(driver, "id", "boton-login", PO_PrivateView.getTimeout());
 
         //Rellenamos el formulario con user02
         PO_LoginView.fillLoginForm(driver, "user02@email.com", "admin");
@@ -1890,7 +1890,7 @@ class Sdi2223Entrega2TestApplicationTests {
 
         //Vamos al login ligero.
         driver.navigate().to("http://localhost:8080/apiclient/client.html?w=login");
-        SeleniumUtils.waitLoadElementsBy(driver, "id", "email", PO_PrivateView.getTimeout());
+        SeleniumUtils.waitLoadElementsBy(driver, "id", "boton-login", PO_PrivateView.getTimeout());
 
         //Rellenamos el formulario con user01
         PO_LoginView.fillLoginForm(driver, "user01@email.com", "admin");
