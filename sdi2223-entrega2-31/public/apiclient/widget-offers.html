@@ -64,14 +64,15 @@
   function conversation(_id) {
     selectedOfferId = _id;
     $.ajax({
-      url: URLbase + "/offerConversation/" + _id,
+      url: URLbase + "/convers/" + _id,
       type: "GET",
       data: {},
       dataType: 'json',
       headers: {"token": token},
       success: function (response) {
-        if(response.convers.length == 1) {
-          selectedConversationId = response.convers[0]._id;
+        console.log(response)
+        if(response.conver !== null) {
+          selectedConversationId = response.conver._id;
         } else {
           selectedConversationId = undefined;
         }
